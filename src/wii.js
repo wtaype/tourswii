@@ -18,7 +18,7 @@ export default { id, app, icon, titulo, keywii, descri, linkweb, lanzamiento, by
 git tag v1 -m "Version v1" ; git push origin v1
 
 ACTUALIZACIÓN AL MAIN PRINCIPAL DEL PROYECTO [MAIN] (2)
-git add . ; git commit -m "Actualizacion Principal v1.0.0" ; git push origin main
+git add . ; git commit -m "Actualizacion Principal v1.0.0" ; git push origin main 
 
 // REEMPLAZAR TAG DE SEGURIDAD EXISTENTE [TAG REMPLAZO] (3)
 git tag -d v1 ; git tag v1 -m "Version v1 actualizada" ; git push origin v1 --force
