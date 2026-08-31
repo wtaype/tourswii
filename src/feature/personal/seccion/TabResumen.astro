@@ -1,0 +1,44 @@
+---
+// src/feature/personal/seccion/TabResumen.astro
+// 📊 Pestaña 1: Resumen de Caja y Métricas Operativas (<55 líneas)
+import { CAJA_HOY } from '../data/caja.data.js';
+---
+
+<div class="staff-panel-tab active" id="tab_resumen">
+  <!-- Métricas Rápidas -->
+  <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1rem; margin-bottom: 1.5rem;">
+    <div style="background: var(--bg-card); border: 1px solid var(--border-card); border-radius: 1.2rem; padding: 1.2rem; box-shadow: var(--shadow-xl);">
+      <span style="font-size: 0.72rem; color: var(--text-muted); text-transform: uppercase;">Total Recaudado (PEN)</span>
+      <strong style="font-size: 1.6rem; color: var(--neon-yellow); display: block; margin-top: 0.2rem;">S/ {CAJA_HOY.ingresosTotalesPen}</strong>
+      <span style="font-size: 0.72rem; color: var(--wa-green); font-weight: 700;">+ S/ 540 vs ayer</span>
+    </div>
+
+    <div style="background: var(--bg-card); border: 1px solid var(--border-card); border-radius: 1.2rem; padding: 1.2rem; box-shadow: var(--shadow-xl);">
+      <span style="font-size: 0.72rem; color: var(--text-muted); text-transform: uppercase;">Total Dólares (USD)</span>
+      <strong style="font-size: 1.6rem; color: var(--glow-cyan); display: block; margin-top: 0.2rem;">${CAJA_HOY.ingresosTotalesUsd}</strong>
+      <span style="font-size: 0.72rem; color: var(--text-muted);">Turistas Extranjeros</span>
+    </div>
+
+    <div style="background: var(--bg-card); border: 1px solid var(--border-card); border-radius: 1.2rem; padding: 1.2rem; box-shadow: var(--shadow-xl);">
+      <span style="font-size: 0.72rem; color: var(--text-muted); text-transform: uppercase;">Pasajeros Atendidos</span>
+      <strong style="font-size: 1.6rem; color: var(--fire-orange); display: block; margin-top: 0.2rem;">{CAJA_HOY.pasajerosAtendidos}</strong>
+      <span style="font-size: 0.72rem; color: var(--text-muted);">{CAJA_HOY.salidasDespachadas} Salidas en Tubular</span>
+    </div>
+  </div>
+
+  <!-- Desglose por Método de Pago -->
+  <div style="background: var(--bg-card); border: 1px solid var(--border-card); border-radius: 1.2rem; padding: 1.4rem; box-shadow: var(--shadow-xl);">
+    <h4 style="font-size: 0.95rem; font-weight: 800; margin-bottom: 1rem; color: var(--text-main);">Cobros Registrados por Canal</h4>
+    <div style="display: flex; flex-direction: column; gap: 0.8rem;">
+      {CAJA_HOY.metodosPago.map(p => (
+        <div style="display: flex; justify-content: space-between; align-items: center; padding: 0.8rem; background: var(--bg-subtle); border-radius: 0.8rem; border: 1px solid var(--border-card); font-size: 0.85rem;">
+          <div style="display: flex; align-items: center; gap: 0.6rem;">
+            <i class={`fa-solid ${p.icono}`} style={`color: ${p.color}; font-size: 1rem;`}></i>
+            <span style="font-weight: 700; color: var(--text-main);">{p.metodo}</span>
+          </div>
+          <strong style="color: var(--neon-yellow);">S/ {p.montoPen}</strong>
+        </div>
+      ))}
+    </div>
+  </div>
+</div>

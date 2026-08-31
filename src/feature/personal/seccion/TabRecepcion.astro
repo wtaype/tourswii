@@ -1,0 +1,53 @@
+---
+// src/feature/personal/seccion/TabRecepcion.astro
+// 🏨 Pestaña 2: Check-in de Turistas, Tallas de Botas y Asignación de Lockers (<55 líneas)
+---
+
+<div class="staff-panel-tab" id="tab_recepcion" style="display: none;">
+  <div style="background: var(--bg-card); border: 1px solid var(--border-card); border-radius: 1.4rem; padding: 1.6rem; box-shadow: var(--shadow-xl); margin-bottom: 1.5rem;">
+    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.2rem;">
+      <h3 style="font-size: 1.15rem; font-weight: 800; color: var(--text-main);">Check-in Rápido en Base Hawka</h3>
+      <span style="background: rgba(37, 211, 102, 0.15); color: var(--wa-green); padding: 0.25rem 0.65rem; border-radius: 999px; font-size: 0.72rem; font-weight: 800;">EN VIVO</span>
+    </div>
+
+    <!-- Pasajeros en Espera de Equipamiento -->
+    <div style="display: flex; flex-direction: column; gap: 0.8rem;">
+      <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 0.8rem; padding: 1rem; background: var(--bg-subtle); border-radius: 0.9rem; border: 1px solid var(--border-card);">
+        <div>
+          <strong style="font-size: 0.92rem; color: var(--text-main); display: block;">Carlos Mendoza (VIP)</strong>
+          <span style="font-size: 0.75rem; color: var(--text-muted);">2 Pasajeros · SandSki Pro · Salida 16:00 PM</span>
+        </div>
+        <div style="display: flex; align-items: center; gap: 0.6rem;">
+          <span style="background: rgba(255, 230, 0, 0.12); color: var(--neon-yellow); padding: 0.3rem 0.6rem; border-radius: 0.5rem; font-size: 0.75rem; font-weight: 800;">
+            <i class="fa-solid fa-shoe-prints"></i> Botas: #42 y #38
+          </span>
+          <span style="background: rgba(0, 240, 255, 0.12); color: var(--glow-cyan); padding: 0.3rem 0.6rem; border-radius: 0.5rem; font-size: 0.75rem; font-weight: 800;">
+            <i class="fa-solid fa-key"></i> Locker #07
+          </span>
+          <button type="button" style="background: var(--wa-green); color: #fff; border: none; padding: 0.4rem 0.8rem; border-radius: 0.6rem; font-size: 0.75rem; font-weight: 800; cursor: pointer;">
+            Listo
+          </button>
+        </div>
+      </div>
+
+      <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 0.8rem; padding: 1rem; background: var(--bg-subtle); border-radius: 0.9rem; border: 1px solid var(--border-card);">
+        <div>
+          <strong style="font-size: 0.92rem; color: var(--text-main); display: block;">Emma Watson (UK)</strong>
+          <span style="font-size: 0.75rem; color: var(--text-muted);">1 Pasajero · Sandboard Pro · Salida 16:00 PM</span>
+        </div>
+        <div style="display: flex; align-items: center; gap: 0.6rem;">
+          <span style="background: rgba(255, 230, 0, 0.12); color: var(--neon-yellow); padding: 0.3rem 0.6rem; border-radius: 0.5rem; font-size: 0.75rem; font-weight: 800;">
+            <i class="fa-solid fa-shoe-prints"></i> Botas: #37
+          </span>
+          <span style="background: rgba(0, 240, 255, 0.12); color: var(--glow-cyan); padding: 0.3rem 0.6rem; border-radius: 0.5rem; font-size: 0.75rem; font-weight: 800;">
+            <i class="fa-solid fa-key"></i> Locker #12
+          </span>
+          <button type="button" style="background: var(--wa-green); color: #fff; border: none; padding: 0.4rem 0.8rem; border-radius: 0.6rem; font-size: 0.75rem; font-weight: 800; cursor: pointer;">
+            Listo
+          </button>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>

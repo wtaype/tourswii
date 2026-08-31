@@ -1,0 +1,15 @@
+---
+// src/feature/cliente/ClientePage.astro
+// 👤 Portal Cliente VIP Oficial (Experiencia Autenticada con Modal VIP y 15% OFF)
+import InicioPage from '../inicio/InicioPage.astro';
+import { getMeta } from '../../core/seo.js';
+
+interface Props {
+  idioma?: 'es' | 'en';
+}
+
+const { idioma = 'es' } = Astro.props;
+const meta = getMeta('/cliente');
+---
+
+<InicioPage idioma={idioma} esVip={true} />

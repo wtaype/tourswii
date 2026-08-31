@@ -1,0 +1,1662 @@
+---
+// src/pages/kevin13.astro
+// 🏜️ Kevin Tours Evolution - Master Cliente con Auth (Fase 1)
+// Mismo diseño pulido de kevin12 (2 Idiomas ES/EN, 2 Monedas, 2 Temas, Pilares Flex y CENTRADOS, Maps Hawka, 8 Tours),
+// con Avatar de Usuario en Header y Modal de 4 Tabs: Perfil, Seguridad, Ajustes y Promociones.
+// Mobile Responsive Ultra Pulido con Drawer con Backdrop (click fuera para cerrar), Header separado y Footer centrado.
+// Abre en: http://localhost:4321/kevin13
+
+const telefono = '+51 985 496 463';
+const telefonoLimpio = '51985496463';
+const direccionOficial = 'Av. Ángela Perotti S/n, Laguna de Huacachina, Ica 11000, Perú';
+const referenciaOficial = 'Recepción Hospedaje Hawka';
+const mapShareUrl = 'https://maps.app.goo.gl/mrCqrpsKLKYeLV9ZA';
+
+const usuario = {
+  nombre: 'Carlos Mendoza',
+  email: 'carlos.mendoza@gmail.com',
+  telefono: '+51 987 654 321',
+  pais: 'Perú',
+  tipo: 'Viajero VIP',
+  avatar: 'https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?auto=format&fit=crop&w=120&q=80',
+  cupon: 'CARLOS-VIP15'
+};
+---
+
+<!DOCTYPE html>
+<html lang="es" data-theme="futuro" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0" />
+  <link rel="icon" type="image/x-icon" href="/favicon.ico" />
+  <title>Kevin Tours | Portal VIP Huacachina Evolution 2026</title>
+  <meta name="description" content="Agencia Oficial de Turismo de Aventura en Huacachina, Ica. Tubulares 4x4, Clases de Sandboard Profesional, Cuatrimotos y Líneas de Nazca." />
+
+  <!-- Fuentes Locales y FontAwesome -->
+  <link rel="preload" href="/google/Poppins-400.woff2" as="font" type="font/woff2" crossorigin="anonymous" />
+  <link rel="preload" href="/google/Poppins-600.woff2" as="font" type="font/woff2" crossorigin="anonymous" />
+  <link rel="preload" href="/google/Poppins-700.woff2" as="font" type="font/woff2" crossorigin="anonymous" />
+  <link rel="stylesheet" href="/google/fonts.css" />
+  <link rel="stylesheet" href="/fontawesome/css/all.min.css" />
+
+  <!-- Anti-FOUC Inmediato -->
+  <script is:inline>
+    (function() {
+      try {
+        const guardado = localStorage.getItem('wiTema_kevin13');
+        const sistema = window.matchMedia('(prefers-color-scheme: dark)').matches ? 'futuro' : 'luz';
+        document.documentElement.dataset.theme = guardado || sistema || 'futuro';
+      } catch (e) {}
+    })();
+  </script>
+
+  <style is:global>
+    :root[data-theme="futuro"] {
+      --bg-body: #05080c;
+      --bg-card: rgba(13, 19, 28, 0.92);
+      --bg-card-hover: rgba(20, 29, 44, 0.98);
+      --bg-subtle: rgba(255, 255, 255, 0.04);
+      --border-card: rgba(255, 255, 255, 0.12);
+      --border-accent: rgba(255, 230, 0, 0.6);
+      --neon-yellow: #ffe600;
+      --fire-orange: #ff4500;
+      --glow-cyan: #00f0ff;
+      --wa-green: #25d366;
+      --text-main: #f8fafc;
+      --text-muted: #94a3b8;
+      --header-bg: rgba(5, 8, 12, 0.96);
+      --topbar-bg: linear-gradient(90deg, #ffe600, #ff4500, #ffe600);
+      --topbar-text: #000;
+      --shadow-xl: 0 20px 40px rgba(0, 0, 0, 0.6);
+      --input-bg: #090e17;
+    }
+
+    :root[data-theme="luz"] {
+      --bg-body: #f4f7fb;
+      --bg-card: rgba(255, 255, 255, 0.96);
+      --bg-card-hover: rgba(255, 255, 255, 1);
+      --bg-subtle: rgba(0, 0, 0, 0.04);
+      --border-card: rgba(0, 0, 0, 0.08);
+      --border-accent: rgba(234, 88, 12, 0.6);
+      --neon-yellow: #d97706;
+      --fire-orange: #ea580c;
+      --glow-cyan: #0284c7;
+      --wa-green: #16a34a;
+      --text-main: #0f172a;
+      --text-muted: #64748b;
+      --header-bg: rgba(255, 255, 255, 0.96);
+      --topbar-bg: linear-gradient(90deg, #f59e0b, #ea580c, #f59e0b);
+      --topbar-text: #fff;
+      --shadow-xl: 0 15px 35px rgba(0, 0, 0, 0.08);
+      --input-bg: #f8fafc;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Poppins', system-ui, sans-serif; }
+
+    body {
+      background-color: var(--bg-body);
+      background-image: url('/wpuntos.svg'), radial-gradient(circle at 50% 0%, rgba(255, 69, 0, 0.08) 0%, transparent 60%);
+      background-attachment: fixed;
+      color: var(--text-main);
+      overflow-x: hidden;
+      line-height: 1.55;
+      transition: background-color 0.3s, color 0.3s;
+    }
+
+    h1, h2, h3, h4, .font-heading { font-family: 'Outfit', 'Poppins', sans-serif; }
+    a { text-decoration: none; color: inherit; }
+
+    /* Ancho requerido 80vw */
+    .container-wide {
+      width: 100%;
+      max-width: 80vw;
+      margin: 0 auto;
+      padding: 0 1.2rem;
+    }
+
+    .section-88vh {
+      min-height: 88vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      padding: 7vh 0;
+      position: relative;
+    }
+
+    .btn-speed {
+      background: linear-gradient(135deg, #ffe600 0%, #ff4500 100%);
+      color: #000;
+      font-weight: 800;
+      border: none;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.5rem;
+      border-radius: 0.8rem;
+      transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    .btn-speed:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 10px 30px rgba(255, 230, 0, 0.45);
+      filter: brightness(1.06);
+    }
+
+    .btn-glass {
+      background: var(--bg-subtle);
+      border: 1px solid var(--border-card);
+      color: var(--text-main);
+      font-weight: 600;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.5rem;
+      border-radius: 0.8rem;
+      backdrop-filter: blur(10px);
+      transition: all 0.2s;
+    }
+
+    .btn-glass:hover {
+      border-color: var(--neon-yellow);
+      color: var(--neon-yellow);
+      transform: translateY(-2px);
+    }
+
+    .glass-card {
+      background: var(--bg-card);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      border: 1px solid var(--border-card);
+      border-radius: 1.2rem;
+      box-shadow: var(--shadow-xl);
+      transition: all 0.3s ease;
+      overflow: hidden;
+    }
+
+    .glass-card:hover {
+      border-color: var(--border-accent);
+      background: var(--bg-card-hover);
+    }
+
+    .text-gradient {
+      background: linear-gradient(135deg, #ffe600 0%, #f59e0b 50%, #ff4500 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    .pill-box {
+      display: inline-flex;
+      align-items: center;
+      background: var(--bg-subtle);
+      border: 1px solid var(--border-card);
+      border-radius: 999px;
+      padding: 0.2rem;
+      gap: 0.2rem;
+    }
+
+    .pill-item {
+      border: none;
+      background: transparent;
+      padding: 0.3rem 0.65rem;
+      border-radius: 999px;
+      font-size: 0.72rem;
+      font-weight: 700;
+      color: var(--text-muted);
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+
+    .pill-item.active { background: var(--neon-yellow); color: #000; }
+
+    .wa-flotante {
+      position: fixed;
+      bottom: 1.5rem;
+      right: 1.5rem;
+      z-index: 9999;
+      background: #25d366;
+      color: #fff;
+      width: 3.6rem;
+      height: 3.6rem;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.85rem;
+      box-shadow: 0 8px 25px rgba(37, 211, 102, 0.5);
+      transition: all 0.3s;
+      animation: pulse-wa 2s infinite;
+    }
+
+    .wa-flotante:hover { transform: scale(1.1); box-shadow: 0 12px 35px rgba(37, 211, 102, 0.7); }
+
+    @keyframes pulse-wa {
+      0% { box-shadow: 0 0 0 0 rgba(37, 211, 102, 0.7); }
+      70% { box-shadow: 0 0 0 16px rgba(37, 211, 102, 0); }
+      100% { box-shadow: 0 0 0 0 rgba(37, 211, 102, 0); }
+    }
+
+    /* 6 Pilares de Confianza en Display Flex con Contenidos 100% Centrados */
+    .pilares-flex-container {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 1.5rem;
+      justify-content: center;
+    }
+
+    .pilar-flex-item {
+      flex: 1 1 calc(33.333% - 1.5rem);
+      min-width: 280px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+      padding: 2.2rem 1.8rem;
+    }
+
+    .pilar-icon-box {
+      width: 3.5rem;
+      height: 3.5rem;
+      border-radius: 1rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.5rem;
+      margin-bottom: 1.2rem;
+    }
+
+    .platform-badge {
+      display: flex;
+      align-items: center;
+      gap: 0.8rem;
+      padding: 1rem 1.5rem;
+      border-radius: 1rem;
+      background: var(--bg-card);
+      border: 1px solid var(--border-card);
+      box-shadow: var(--shadow-xl);
+      transition: transform 0.2s;
+    }
+    .platform-badge:hover { transform: translateY(-3px); }
+
+    /* Badge de Usuario Clickeable */
+    .user-badge-btn {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      background: var(--bg-subtle);
+      border: 1px solid var(--border-card);
+      padding: 0.25rem 0.7rem 0.25rem 0.35rem;
+      border-radius: 999px;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+
+    .user-badge-btn:hover {
+      border-color: var(--neon-yellow);
+      background: rgba(255, 230, 0, 0.08);
+      transform: translateY(-1px);
+    }
+
+    .user-avatar-round {
+      width: 2rem;
+      height: 2rem;
+      border-radius: 50%;
+      object-fit: cover;
+      border: 2px solid var(--neon-yellow);
+    }
+
+    /* Modal de Usuario con Pestañas */
+    .modal-overlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(0, 0, 0, 0.8);
+      backdrop-filter: blur(8px);
+      z-index: 10000;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 1.2rem;
+    }
+
+    .modal-tab-btn {
+      padding: 0.65rem 0.9rem;
+      background: transparent;
+      border: none;
+      font-size: 0.8rem;
+      font-weight: 700;
+      color: var(--text-muted);
+      cursor: pointer;
+      border-bottom: 2px solid transparent;
+      transition: all 0.2s;
+      display: flex;
+      align-items: center;
+      gap: 0.4rem;
+    }
+
+    .modal-tab-btn:hover, .modal-tab-btn.activo {
+      color: var(--neon-yellow);
+      border-bottom-color: var(--neon-yellow);
+    }
+
+    /* ==================== MEDIA QUERIES ULTRA PULIDAS ==================== */
+    @media (max-width: 1024px) {
+      .container-wide { max-width: 92vw; padding: 0 1rem; }
+      .grid-hero { grid-template-columns: 1fr !important; gap: 3rem !important; }
+      .grid-faq { grid-template-columns: 1fr !important; }
+      .grid-ubicacion { grid-template-columns: 1fr !important; }
+      .pilar-flex-item { flex: 1 1 calc(50% - 1.5rem); }
+    }
+
+    @media (max-width: 768px) {
+      .nav-desktop { display: none !important; }
+      .btn-hamburger { display: flex !important; }
+      .container-wide { max-width: 100vw; padding: 0 1.2rem; }
+      .section-88vh { min-height: auto; padding: 3.5vh 0 4.5vh 0; }
+      
+      .header-mobile-bar {
+        gap: 0.8rem !important;
+      }
+      .logo-mobile-clean span.logo-title {
+        font-size: 0.98rem !important;
+      }
+      .logo-sub-mobile { display: none !important; }
+      .header-reservar-mobile { display: none !important; }
+
+      .hero-title-responsive {
+        font-size: 1.6rem !important;
+        line-height: 1.25 !important;
+        margin-bottom: 1rem !important;
+      }
+      .hero-desc-responsive {
+        font-size: 0.88rem !important;
+        line-height: 1.6 !important;
+        margin-bottom: 1.5rem !important;
+      }
+      .hero-badge-responsive {
+        font-size: 0.68rem !important;
+        padding: 0.35rem 0.75rem !important;
+        margin-bottom: 1rem !important;
+      }
+      .hero-buttons-responsive {
+        flex-direction: column !important;
+        gap: 0.8rem !important;
+        width: 100% !important;
+        margin-bottom: 2rem !important;
+      }
+      .hero-buttons-responsive a {
+        width: 100% !important;
+        justify-content: center !important;
+        padding: 0.9rem 1rem !important;
+        font-size: 0.9rem !important;
+      }
+
+      .pilar-flex-item { flex: 1 1 100%; }
+
+      .topbar-mobile {
+        font-size: 0.68rem !important;
+        padding: 0.35rem 0.8rem !important;
+        justify-content: center !important;
+        text-align: center !important;
+      }
+      .topbar-hide-mobile { display: none !important; }
+
+      .metrics-grid {
+        grid-template-columns: 1fr 1fr !important;
+        gap: 1.2rem 0.8rem !important;
+        text-align: center !important;
+      }
+
+      .grid-footer {
+        grid-template-columns: 1fr !important;
+        gap: 2.2rem !important;
+        text-align: center !important;
+      }
+      .footer-brand-center {
+        display: flex !important;
+        flex-direction: column !important;
+        align-items: center !important;
+        text-align: center !important;
+      }
+      .footer-social-center {
+        justify-content: center !important;
+      }
+      .footer-payments-center {
+        justify-content: center !important;
+      }
+      .footer-bottom-center {
+        flex-direction: column !important;
+        text-align: center !important;
+        gap: 1rem !important;
+      }
+    }
+
+    /* Backdrop para cerrar al hacer clic afuera del drawer */
+    .drawer-backdrop {
+      position: fixed;
+      inset: 0;
+      background: rgba(0, 0, 0, 0.7);
+      backdrop-filter: blur(4px);
+      z-index: 10000;
+      opacity: 0;
+      visibility: hidden;
+      transition: opacity 0.3s ease, visibility 0.3s ease;
+    }
+    .drawer-backdrop.active {
+      opacity: 1;
+      visibility: visible;
+    }
+
+    /* Mobile Drawer */
+    .mobile-drawer {
+      position: fixed;
+      top: 0;
+      right: -100%;
+      width: 82%;
+      max-width: 320px;
+      height: 100vh;
+      background: var(--bg-card);
+      border-left: 1px solid var(--border-card);
+      z-index: 10001;
+      padding: 1.8rem 1.4rem;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      transition: right 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+      box-shadow: -10px 0 35px rgba(0,0,0,0.6);
+    }
+    .mobile-drawer.open { right: 0; }
+    .drawer-link {
+      padding: 0.8rem 0;
+      font-size: 0.95rem;
+      font-weight: 700;
+      border-bottom: 1px solid var(--border-card);
+      display: flex;
+      align-items: center;
+      gap: 0.8rem;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- 🏁 BARRA SUPERIOR DE CONFIANZA -->
+  <div style="background: var(--topbar-bg); color: var(--topbar-text); padding: 0.4rem 1rem; font-size: 0.73rem; font-weight: 800; text-transform: uppercase; letter-spacing: 0.03em;">
+    <div class="container-wide topbar-mobile" style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 0.4rem;">
+      <div style="display: flex; align-items: center; gap: 0.5rem; margin: 0 auto 0 0;" class="topbar-mobile">
+        <i class="fa-solid fa-shield-halved"></i>
+        <span id="txt_topbar_cert">AGENCIA OFICIAL CERTIFICADA · MTC N° 11000</span>
+      </div>
+      <div style="display: flex; align-items: center; gap: 0.8rem;" class="topbar-hide-mobile">
+        <span><i class="fa-solid fa-location-dot"></i> {referenciaOficial}</span>
+        <a href={`https://wa.me/${telefonoLimpio}`} target="_blank" style="background: #000; color: #fff; padding: 0.2rem 0.75rem; border-radius: 999px; font-size: 0.7rem; display: inline-flex; align-items: center; gap: 0.35rem;">
+          <i class="fa-brands fa-whatsapp" style="color: var(--wa-green);"></i> {telefono}
+        </a>
+      </div>
+    </div>
+  </div>
+
+  <!-- 🌟 CABECERA (CON PERFIL DE USUARIO) -->
+  <header style="position: sticky; top: 0; z-index: 100; background: var(--header-bg); backdrop-filter: blur(16px); border-bottom: 1px solid var(--border-card); padding: 0.75rem 0;">
+    <div class="container-wide header-mobile-bar" style="display: flex; justify-content: space-between; align-items: center; gap: 1rem;">
+      <!-- Logo -->
+      <a href="/kevin13" class="logo-mobile-clean" style="display: flex; align-items: center; gap: 0.6rem; min-width: 0;">
+        <div style="width: 2.5rem; height: 2.5rem; min-width: 2.5rem; border-radius: 0.7rem; background: linear-gradient(135deg, #ffe600, #ff4500); display: flex; align-items: center; justify-content: center; color: #000; font-size: 1.15rem; box-shadow: 0 0 15px rgba(255, 230, 0, 0.4);">
+          <i class="fa-solid fa-bolt"></i>
+        </div>
+        <div style="overflow: hidden;">
+          <span class="font-heading logo-title" style="font-size: 1.05rem; font-weight: 900; line-height: 1; display: block; letter-spacing: -0.4px; white-space: nowrap;">
+            KEVIN TOURS <span class="text-gradient">EVOLUTION</span>
+          </span>
+          <span class="logo-sub-mobile" style="font-size: 0.62rem; font-weight: 700; color: var(--fire-orange); text-transform: uppercase; letter-spacing: 0.06em; display: block;" id="txt_logo_sub">
+            Sandboard & Buggies Huacachina Oficial
+          </span>
+        </div>
+      </a>
+
+      <!-- Menú Desktop -->
+      <nav class="nav-desktop" style="display: flex; align-items: center; gap: 0.25rem; background: var(--bg-subtle); padding: 0.3rem 0.5rem; border-radius: 999px; border: 1px solid var(--border-card);">
+        <a href="#inicio" class="nav-link-i18n" data-key="nav_inicio" style="padding: 0.35rem 0.75rem; border-radius: 999px; font-size: 0.78rem; font-weight: 600; color: var(--text-muted);">Inicio</a>
+        <a href="#tours" class="nav-link-i18n" data-key="nav_tours" style="padding: 0.35rem 0.75rem; border-radius: 999px; font-size: 0.78rem; font-weight: 600; color: var(--text-muted);">Tours</a>
+        <a href="#confianza" class="nav-link-i18n" data-key="nav_confianza" style="padding: 0.35rem 0.75rem; border-radius: 999px; font-size: 0.78rem; font-weight: 600; color: var(--text-muted);">Por Qué Elegirnos</a>
+        <a href="#blog" class="nav-link-i18n" data-key="nav_blog" style="padding: 0.35rem 0.75rem; border-radius: 999px; font-size: 0.78rem; font-weight: 600; color: var(--text-muted);">Blog & Tips</a>
+        <a href="#plataformas" class="nav-link-i18n" data-key="nav_plataformas" style="padding: 0.35rem 0.75rem; border-radius: 999px; font-size: 0.78rem; font-weight: 600; color: var(--text-muted);">Confianza</a>
+        <a href="#faq" class="nav-link-i18n" data-key="nav_faq" style="padding: 0.35rem 0.75rem; border-radius: 999px; font-size: 0.78rem; font-weight: 600; color: var(--text-muted);">FAQ</a>
+      </nav>
+
+      <!-- Zona Derecha: Idioma + Tema + PERFIL DE USUARIO + Hamburguesa -->
+      <div style="display: flex; align-items: center; gap: 0.6rem; flex-shrink: 0;">
+        <!-- Selector Idioma ES / EN -->
+        <div class="pill-box">
+          <button type="button" class="pill-item active" id="btn_lang_es" style="padding: 0.25rem 0.55rem; font-size: 0.7rem;">ES</button>
+          <button type="button" class="pill-item" id="btn_lang_en" style="padding: 0.25rem 0.55rem; font-size: 0.7rem;">EN</button>
+        </div>
+
+        <!-- Tema -->
+        <button type="button" class="btn-glass" id="btn_toggle_theme" style="width: 2.1rem; height: 2.1rem; border-radius: 50%; padding: 0;" title="Modo Claro / Oscuro">
+          <i class="fa-solid fa-moon" id="icon_theme" style="font-size: 0.85rem;"></i>
+        </button>
+
+        <!-- Botón de Perfil con Avatar y Nombre -->
+        <button type="button" class="user-badge-btn" id="btn_abrir_perfil_modal" title="Ver Mi Perfil y Ajustes">
+          <img src={usuario.avatar} alt={usuario.nombre} class="user-avatar-round" />
+          <div style="text-align: left;" class="topbar-hide-mobile">
+            <strong style="font-size: 0.78rem; display: block; line-height: 1; color: var(--text-main);">{usuario.nombre}</strong>
+            <span style="font-size: 0.62rem; color: var(--neon-yellow); font-weight: 700;">{usuario.tipo} <i class="fa-solid fa-chevron-down" style="font-size: 0.55rem; margin-left: 2px;"></i></span>
+          </div>
+        </button>
+
+        <!-- Botón Hamburguesa Móvil -->
+        <button type="button" class="btn-glass btn-hamburger" id="btn_open_drawer" style="display: none; width: 2.2rem; height: 2.2rem; border-radius: 0.6rem; padding: 0;">
+          <i class="fa-solid fa-bars" style="font-size: 1rem;"></i>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- ==================== BACKDROP PARA CERRAR AL HACER CLIC AFUERA ==================== -->
+  <div id="drawer_backdrop" class="drawer-backdrop"></div>
+
+  <!-- ==================== MOBILE DRAWER / MENÚ LATERAL ==================== -->
+  <div id="mobile_drawer" class="mobile-drawer">
+    <div>
+      <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.5rem; padding-bottom: 1rem; border-bottom: 1px solid var(--border-card);">
+        <div style="display: flex; align-items: center; gap: 0.7rem;">
+          <img src={usuario.avatar} alt={usuario.nombre} style="width: 2.3rem; height: 2.3rem; border-radius: 50%; border: 2px solid var(--neon-yellow);" />
+          <div>
+            <strong style="font-size: 0.9rem; display: block;">{usuario.nombre}</strong>
+            <span style="font-size: 0.68rem; color: var(--neon-yellow);">{usuario.tipo}</span>
+          </div>
+        </div>
+        <button type="button" id="btn_close_drawer" style="background: transparent; border: none; font-size: 1.6rem; color: var(--text-muted); cursor: pointer;">&times;</button>
+      </div>
+
+      <!-- Links idénticos -->
+      <nav style="display: flex; flex-direction: column;">
+        <a href="#inicio" class="drawer-link drawer-item"><i class="fa-solid fa-house" style="color: var(--neon-yellow); width: 1.2rem;"></i> Inicio</a>
+        <a href="#tours" class="drawer-link drawer-item"><i class="fa-solid fa-truck-monster" style="color: var(--fire-orange); width: 1.2rem;"></i> Tours</a>
+        <a href="#confianza" class="drawer-link drawer-item"><i class="fa-solid fa-shield-halved" style="color: var(--glow-cyan); width: 1.2rem;"></i> Por Qué Elegirnos</a>
+        <a href="#blog" class="drawer-link drawer-item"><i class="fa-solid fa-newspaper" style="color: var(--wa-green); width: 1.2rem;"></i> Blog & Tips</a>
+        <a href="#plataformas" class="drawer-link drawer-item"><i class="fa-solid fa-award" style="color: #00af87; width: 1.2rem;"></i> Confianza</a>
+        <a href="#faq" class="drawer-link drawer-item"><i class="fa-solid fa-circle-question" style="color: #a855f7; width: 1.2rem;"></i> FAQ</a>
+        <a href="#ubicacion" class="drawer-link drawer-item"><i class="fa-solid fa-location-dot" style="color: var(--fire-orange); width: 1.2rem;"></i> Ubicación Base</a>
+      </nav>
+    </div>
+
+    <div style="display: flex; flex-direction: column; gap: 0.7rem;">
+      <button type="button" id="btn_drawer_open_profile" class="btn-glass" style="width: 100%; justify-content: center; color: var(--neon-yellow); font-size: 0.88rem;">
+        <i class="fa-solid fa-user-gear"></i> Mi Cuenta & Ajustes
+      </button>
+      <a href={`https://wa.me/${telefonoLimpio}`} target="_blank" class="btn-speed" style="width: 100%; justify-content: center; font-size: 0.88rem;">
+        <i class="fa-brands fa-whatsapp"></i> Chat WhatsApp
+      </a>
+    </div>
+  </div>
+
+  <main>
+    <!-- ==================== SECCIÓN 1: HERO + COTIZADOR ==================== -->
+    <section id="inicio" class="section-88vh" style="border-bottom: 1px solid var(--border-card);">
+      <div class="container-wide grid-hero" style="display: grid; grid-template-columns: 1.15fr 0.85fr; gap: 3.5rem; align-items: center;">
+        
+        <div>
+          <div class="hero-badge-responsive" style="display: inline-flex; align-items: center; gap: 0.5rem; background: rgba(255, 230, 0, 0.12); border: 1px solid rgba(255, 230, 0, 0.35); color: var(--neon-yellow); font-size: 0.74rem; font-weight: 800; text-transform: uppercase; padding: 0.35rem 0.85rem; border-radius: 999px; margin-bottom: 1rem;">
+            <i class="fa-solid fa-trophy"></i>
+            <span id="txt_hero_badge">#1 EN TRIPADVISOR · 2,400+ RESEÑAS 5★ EN HUACACHINA</span>
+          </div>
+
+          <h1 class="hero-title-responsive" style="font-size: clamp(1.8rem, 3.4vw, 3.2rem); font-weight: 900; line-height: 1.15; margin-bottom: 1rem; text-transform: uppercase; letter-spacing: -0.5px;" id="txt_hero_title">
+            Adrenalina Extrema en el Oasis de <span class="text-gradient">Huacachina</span>
+          </h1>
+
+          <p class="hero-desc-responsive" style="font-size: clamp(0.88rem, 1vw, 1.02rem); color: var(--text-muted); line-height: 1.6; margin-bottom: 1.8rem; max-width: 540px;" id="txt_hero_desc">
+            Tubulares areneros 4x4 de alta potencia con jaula reforzada, clases de sandboard guiadas por expertos y el atardecer más espectacular del desierto de Ica.
+          </p>
+
+          <div class="hero-buttons-responsive" style="display: flex; gap: 0.8rem; flex-wrap: wrap; margin-bottom: 2rem;">
+            <a href={`https://wa.me/${telefonoLimpio}?text=Hola%20Kevin%20Tours!%20Quiero%20reservar%20el%20Tour%20Sunset%20en%20Tubulares`} target="_blank" class="btn-speed" style="padding: 0.9rem 1.6rem; font-size: 0.9rem;" id="btn_hero_reservar">
+              <i class="fa-solid fa-flag-checkered"></i>
+              <span id="txt_btn_hero_res">Reservar Sunset (S/ 45 / $12)</span>
+            </a>
+            <a href="#tours" class="btn-glass" style="padding: 0.9rem 1.4rem; font-size: 0.9rem;">
+              <i class="fa-solid fa-compass" style="color: var(--neon-yellow);"></i>
+              <span id="txt_btn_hero_exp">Ver 8 Experiencias</span>
+            </a>
+          </div>
+
+          <!-- Métricas -->
+          <div class="metrics-grid" style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 0.8rem; padding-top: 1.4rem; border-top: 1px solid var(--border-card);">
+            <div>
+              <p class="font-heading" style="font-size: 1.5rem; font-weight: 900; color: var(--neon-yellow);">4:00 PM</p>
+              <p style="font-size: 0.68rem; font-weight: 700; color: var(--text-muted); text-transform: uppercase;" id="txt_metrica_sunset">Sunset Favorito</p>
+            </div>
+            <div>
+              <p class="font-heading" style="font-size: 1.5rem; font-weight: 900; color: var(--fire-orange);">100%</p>
+              <p style="font-size: 0.68rem; font-weight: 700; color: var(--text-muted); text-transform: uppercase;" id="txt_metrica_soat">SOAT Turístico</p>
+            </div>
+            <div>
+              <p class="font-heading" style="font-size: 1.5rem; font-weight: 900; color: var(--glow-cyan);">4.9 ★</p>
+              <p style="font-size: 0.68rem; font-weight: 700; color: var(--text-muted); text-transform: uppercase;">TripAdvisor 5★</p>
+            </div>
+            <div>
+              <p class="font-heading" style="font-size: 1.5rem; font-weight: 900; color: var(--wa-green);">FREE</p>
+              <p style="font-size: 0.68rem; font-weight: 700; color: var(--text-muted); text-transform: uppercase;" id="txt_metrica_cancel">Cancela 24h</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- COTIZADOR CON SELECTOR DE MONEDA -->
+        <div id="calculadora">
+          <div class="glass-card" style="padding: 1.8rem; border-top: 4px solid var(--neon-yellow); min-height: 480px; display: flex; flex-direction: column; justify-content: space-between;">
+            
+            <div>
+              <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.2rem; padding-bottom: 0.8rem; border-bottom: 1px solid var(--border-card); gap: 0.5rem;">
+                <div>
+                  <h3 class="font-heading" style="font-size: 1.1rem; font-weight: 900; text-transform: uppercase; display: flex; align-items: center; gap: 0.4rem;" id="txt_calc_title">
+                    <i class="fa-solid fa-calculator" style="color: var(--neon-yellow);"></i>
+                    <span>Cotizador en Vivo</span>
+                  </h3>
+                  <span style="font-size: 0.68rem; color: var(--wa-green); font-weight: 700;" id="txt_calc_status">
+                    <i class="fa-solid fa-circle-dot"></i> Salidas Disponibles Hoy
+                  </span>
+                </div>
+
+                <!-- SELECTOR DE MONEDA INTEGRADO -->
+                <div class="pill-box" style="background: rgba(0,0,0,0.3); border: 1px solid var(--border-accent);">
+                  <button type="button" class="pill-item active" id="calc_cur_pen" style="padding: 0.25rem 0.55rem; font-size: 0.7rem;">S/ PEN</button>
+                  <button type="button" class="pill-item" id="calc_cur_usd" style="padding: 0.25rem 0.55rem; font-size: 0.7rem;">$ USD</button>
+                </div>
+              </div>
+
+              <!-- Formulario -->
+              <form id="form_cotizador" style="display: flex; flex-direction: column; gap: 1rem;">
+                <div>
+                  <label style="display: block; font-size: 0.74rem; font-weight: 700; text-transform: uppercase; color: var(--text-muted); margin-bottom: 0.35rem;" id="txt_label_exp">
+                    1. Experiencia en Dunas
+                  </label>
+                  <select id="cot_tour" style="width: 100%; background: var(--bg-body); border: 1px solid var(--border-card); color: var(--text-main); padding: 0.8rem; border-radius: 0.7rem; font-size: 0.85rem; font-weight: 600; outline: none;">
+                    <option value="45" data-usd="12" data-es="Tubulares + Sandboard Sunset Clásico" data-en="Dune Buggy + Sandboard Sunset Classic">🏎️ Tubulares + Sandboard Sunset (S/ 45 / $12)</option>
+                    <option value="75" data-usd="20" data-es="Clase Sandboard Pro con Botas e Instructor" data-en="Pro Sandboard Class with Boots & Instructor">🏂 Sandboard Pro con Botas (S/ 75 / $20)</option>
+                    <option value="250" data-usd="68" data-es="Buggy Privado VIP + Brindis Sunset" data-en="Private VIP Buggy + Sunset Toast">⭐ Buggy Privado VIP + Brindis (S/ 250 / $68)</option>
+                    <option value="130" data-usd="35" data-es="Full Day Islas Ballestas + Dunas Huacachina" data-en="Full Day Ballestas Islands + Huacachina Dunes">🌊 Full Day Paracas + Huacachina (S/ 130 / $35)</option>
+                    <option value="160" data-usd="43" data-es="Cuatrimotos ATV en Dunas de Huacachina" data-en="ATV Quad Bikes in Huacachina Dunes">🏍️ Cuatrimotos ATV Dunas (S/ 160 / $43)</option>
+                    <option value="780" data-usd="210" data-es="Sobrevuelo Líneas de Nazca desde Ica" data-en="Nazca Lines Flight from Ica">✈️ Sobrevuelo Líneas de Nazca (S/ 780 / $210)</option>
+                  </select>
+                </div>
+
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 0.8rem;">
+                  <div>
+                    <label style="display: block; font-size: 0.74rem; font-weight: 700; text-transform: uppercase; color: var(--text-muted); margin-bottom: 0.35rem;" id="txt_label_pax">
+                      2. Pasajeros
+                    </label>
+                    <input type="number" id="cot_personas" value="2" min="1" max="30" style="width: 100%; background: var(--bg-body); border: 1px solid var(--border-card); color: var(--text-main); padding: 0.8rem; border-radius: 0.7rem; font-size: 0.85rem; font-weight: 600; outline: none;" />
+                  </div>
+                  <div>
+                    <label style="display: block; font-size: 0.74rem; font-weight: 700; text-transform: uppercase; color: var(--text-muted); margin-bottom: 0.35rem;" id="txt_label_horario">
+                      3. Horario
+                    </label>
+                    <select id="cot_horario" style="width: 100%; background: var(--bg-body); border: 1px solid var(--border-card); color: var(--text-main); padding: 0.8rem; border-radius: 0.7rem; font-size: 0.85rem; font-weight: 600; outline: none;">
+                      <option value="4:00 PM Sunset">🌅 4:00 PM (Sunset)</option>
+                      <option value="10:00 AM Mañana">☀️ 10:00 AM (Mañana)</option>
+                      <option value="2:00 PM Tarde">🌤️ 2:00 PM (Tarde)</option>
+                    </select>
+                  </div>
+                </div>
+
+                <!-- Total Calculado -->
+                <div style="background: var(--bg-subtle); padding: 1rem; border-radius: 0.8rem; border: 1px dashed var(--border-accent); display: flex; justify-content: space-between; align-items: center;">
+                  <div>
+                    <span style="font-size: 0.7rem; color: var(--text-muted); text-transform: uppercase; font-weight: 700; display: block;" id="txt_label_total">Total a Pagar:</span>
+                    <strong id="cot_total_txt" style="font-size: 1.5rem; color: var(--neon-yellow); font-family: var(--ff-heading);">S/ 90.00</strong>
+                    <span id="badge_descuento_grupo" style="display: none; font-size: 0.65rem; color: var(--wa-green); font-weight: 800;">🎉 ¡Descuento de Grupo (-10%)!</span>
+                  </div>
+                  <div style="text-align: right;">
+                    <span style="font-size: 0.7rem; color: var(--wa-green); font-weight: 800; display: block;" id="txt_label_pago_seguro">
+                      <i class="fa-solid fa-lock"></i> Pago Seguro en Base
+                    </span>
+                    <span style="font-size: 0.65rem; color: var(--text-muted);">Yape · Plin · Tarjeta · Cash</span>
+                  </div>
+                </div>
+
+                <button type="button" id="btn_enviar_cotizacion" class="btn-speed" style="padding: 0.9rem; width: 100%; font-size: 0.9rem;">
+                  <i class="fa-brands fa-whatsapp" style="font-size: 1.15rem;"></i>
+                  <span id="txt_btn_whatsapp_cot">Confirmar Reserva por WhatsApp</span>
+                </button>
+              </form>
+            </div>
+
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- ==================== SECCIÓN 2: CATÁLOGO OFICIAL DE 8 TOURS ==================== -->
+    <section id="tours" style="padding: 7vh 0; border-bottom: 1px solid var(--border-card); background: var(--bg-subtle);">
+      <div class="container-wide">
+        <div style="text-align: center; margin-bottom: 3rem;">
+          <span style="background: rgba(255, 230, 0, 0.1); color: var(--neon-yellow); border: 1px solid rgba(255, 230, 0, 0.3); padding: 0.3rem 0.9rem; border-radius: 999px; font-size: 0.75rem; font-weight: 800; text-transform: uppercase; letter-spacing: 0.08em;" id="txt_cat_badge">
+            CATÁLOGO OFICIAL 2026
+          </span>
+          <h2 style="font-size: clamp(1.6rem, 2.8vw, 2.5rem); font-weight: 900; text-transform: uppercase; margin-top: 0.6rem;" id="txt_cat_title">
+            Experiencias Más Vendidas en <span class="text-gradient">Huacachina</span>
+          </h2>
+          <p style="font-size: 0.88rem; color: var(--text-muted); max-width: 600px; margin: 0.4rem auto 0 auto;" id="txt_cat_desc">
+            Precios oficiales garantizados sin intermediarios con equipamiento y choferes de élite.
+          </p>
+        </div>
+
+        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 1.8rem;">
+          
+          <div class="glass-card" style="display: flex; flex-direction: column; justify-content: space-between; border-top: 4px solid var(--fire-orange);">
+            <div style="height: 200px; overflow: hidden; position: relative;">
+              <img src="/tours/sandboard1.webp" alt="Tubulares Sunset Huacachina" style="width: 100%; height: 100%; object-fit: cover;" />
+              <span style="position: absolute; top: 0.8rem; left: 0.8rem; background: var(--fire-orange); color: #fff; font-size: 0.68rem; font-weight: 900; text-transform: uppercase; padding: 0.2rem 0.6rem; border-radius: 999px;">TOP #1</span>
+              <span style="position: absolute; bottom: 0.8rem; right: 0.8rem; background: rgba(0,0,0,0.85); color: var(--neon-yellow); font-size: 1.1rem; font-weight: 900; padding: 0.2rem 0.6rem; border-radius: 0.4rem;">
+                <span class="precio_tour" data-pen="45" data-usd="12">S/ 45</span> / pers
+              </span>
+            </div>
+            <div style="padding: 1.5rem;">
+              <h3 style="font-size: 1.15rem; font-weight: 800; margin-bottom: 0.5rem;">Tubulares + Sandboard Sunset</h3>
+              <p style="font-size: 0.82rem; color: var(--text-muted); line-height: 1.5; margin-bottom: 1rem;">
+                2 horas de adrenalina sobre las dunas más imponentes con parada especial para ver la puesta de sol en Huacachina.
+              </p>
+              <ul style="list-style: none; font-size: 0.78rem; color: var(--text-main); display: flex; flex-direction: column; gap: 0.35rem; margin-bottom: 1.2rem;">
+                <li><i class="fa-solid fa-circle-check" style="color: var(--wa-green); margin-right: 0.4rem;"></i> Piloto profesional acreditado MTC</li>
+                <li><i class="fa-solid fa-circle-check" style="color: var(--wa-green); margin-right: 0.4rem;"></i> Tablas de arena tradicionales</li>
+              </ul>
+              <a href={`https://wa.me/${telefonoLimpio}?text=Hola!%20Quiero%20reservar%20el%20Tour%20Sunset%20en%20Tubulares%20de%20S/%2045`} target="_blank" class="btn-speed" style="padding: 0.8rem; width: 100%; font-size: 0.85rem;">
+                Reservar Sunset Ahora
+              </a>
+            </div>
+          </div>
+
+          <div class="glass-card" style="display: flex; flex-direction: column; justify-content: space-between; border: 2px solid var(--neon-yellow);">
+            <div style="height: 200px; overflow: hidden; position: relative;">
+              <img src="/tours/sandboard2.webp" alt="Clase Sandboard Pro con Botas" style="width: 100%; height: 100%; object-fit: cover;" />
+              <span style="position: absolute; top: 0.8rem; left: 0.8rem; background: var(--neon-yellow); color: #000; font-size: 0.68rem; font-weight: 900; text-transform: uppercase; padding: 0.2rem 0.6rem; border-radius: 999px;">PRO EXPERT</span>
+              <span style="position: absolute; bottom: 0.8rem; right: 0.8rem; background: rgba(0,0,0,0.85); color: var(--neon-yellow); font-size: 1.1rem; font-weight: 900; padding: 0.2rem 0.6rem; border-radius: 0.4rem;">
+                <span class="precio_tour" data-pen="75" data-usd="20">S/ 75</span> / pers
+              </span>
+            </div>
+            <div style="padding: 1.5rem;">
+              <h3 style="font-size: 1.15rem; font-weight: 800; margin-bottom: 0.5rem;">Clases Sandboard Pro con Botas</h3>
+              <p style="font-size: 0.82rem; color: var(--text-muted); line-height: 1.5; margin-bottom: 1rem;">
+                Tablas con fijaciones de snowboard y botas térmicas a tu medida para descender de pie con instructor.
+              </p>
+              <ul style="list-style: none; font-size: 0.78rem; color: var(--text-main); display: flex; flex-direction: column; gap: 0.35rem; margin-bottom: 1.2rem;">
+                <li><i class="fa-solid fa-circle-check" style="color: var(--wa-green); margin-right: 0.4rem;"></i> Botas y fijaciones pro</li>
+                <li><i class="fa-solid fa-circle-check" style="color: var(--wa-green); margin-right: 0.4rem;"></i> Instructor federado de arena</li>
+              </ul>
+              <a href={`https://wa.me/${telefonoLimpio}?text=Hola!%20Quiero%20reservar%20la%20Clase%20de%20Sandboard%20Pro%20con%20Botas`} target="_blank" class="btn-speed" style="padding: 0.8rem; width: 100%; font-size: 0.85rem;">
+                Reservar Clase Pro con Botas
+              </a>
+            </div>
+          </div>
+
+          <div class="glass-card" style="display: flex; flex-direction: column; justify-content: space-between; border-top: 4px solid var(--glow-cyan);">
+            <div style="height: 200px; overflow: hidden; position: relative;">
+              <img src="/tours/sandboard3.webp" alt="Buggy Privado VIP Huacachina" style="width: 100%; height: 100%; object-fit: cover;" />
+              <span style="position: absolute; top: 0.8rem; left: 0.8rem; background: var(--glow-cyan); color: #000; font-size: 0.68rem; font-weight: 900; text-transform: uppercase; padding: 0.2rem 0.6rem; border-radius: 999px;">100% VIP</span>
+              <span style="position: absolute; bottom: 0.8rem; right: 0.8rem; background: rgba(0,0,0,0.85); color: var(--neon-yellow); font-size: 1.1rem; font-weight: 900; padding: 0.2rem 0.6rem; border-radius: 0.4rem;">
+                <span class="precio_tour" data-pen="250" data-usd="68">S/ 250</span> / grupo
+              </span>
+            </div>
+            <div style="padding: 1.5rem;">
+              <h3 style="font-size: 1.15rem; font-weight: 800; margin-bottom: 0.5rem;">Tubular Privado VIP + Brindis</h3>
+              <p style="font-size: 0.82rem; color: var(--text-muted); line-height: 1.5; margin-bottom: 1rem;">
+                Vehículo exclusivo para ti y tus acompañantes sin extraños con botella de espumante al atardecer.
+              </p>
+              <ul style="list-style: none; font-size: 0.78rem; color: var(--text-main); display: flex; flex-direction: column; gap: 0.35rem; margin-bottom: 1.2rem;">
+                <li><i class="fa-solid fa-circle-check" style="color: var(--wa-green); margin-right: 0.4rem;"></i> Tubular 100% privado</li>
+                <li><i class="fa-solid fa-circle-check" style="color: var(--wa-green); margin-right: 0.4rem;"></i> Brindis de espumante en dunas</li>
+              </ul>
+              <a href={`https://wa.me/${telefonoLimpio}?text=Hola!%20Quiero%20reservar%20el%20Buggy%20Privado%20VIP%20con%20Brindis`} target="_blank" class="btn-speed" style="padding: 0.8rem; width: 100%; font-size: 0.85rem;">
+                Reservar Buggy VIP
+              </a>
+            </div>
+          </div>
+
+          <div class="glass-card" style="display: flex; flex-direction: column; justify-content: space-between; border-top: 4px solid var(--wa-green);">
+            <div style="height: 200px; overflow: hidden; position: relative;">
+              <img src="/tours/sandboard4.webp" alt="Islas Ballestas Paracas" style="width: 100%; height: 100%; object-fit: cover;" />
+              <span style="position: absolute; top: 0.8rem; left: 0.8rem; background: var(--wa-green); color: #000; font-size: 0.68rem; font-weight: 900; text-transform: uppercase; padding: 0.2rem 0.6rem; border-radius: 999px;">COMBO</span>
+              <span style="position: absolute; bottom: 0.8rem; right: 0.8rem; background: rgba(0,0,0,0.85); color: var(--neon-yellow); font-size: 1.1rem; font-weight: 900; padding: 0.2rem 0.6rem; border-radius: 0.4rem;">
+                <span class="precio_tour" data-pen="130" data-usd="35">S/ 130</span> / pers
+              </span>
+            </div>
+            <div style="padding: 1.5rem;">
+              <h3 style="font-size: 1.15rem; font-weight: 800; margin-bottom: 0.5rem;">Full Day Paracas + Huacachina</h3>
+              <p style="font-size: 0.82rem; color: var(--text-muted); line-height: 1.5; margin-bottom: 1rem;">
+                Navegación en lancha a Islas Ballestas + traslado y tour de tubulares con sandboarding en Huacachina.
+              </p>
+              <ul style="list-style: none; font-size: 0.78rem; color: var(--text-main); display: flex; flex-direction: column; gap: 0.35rem; margin-bottom: 1.2rem;">
+                <li><i class="fa-solid fa-circle-check" style="color: var(--wa-green); margin-right: 0.4rem;"></i> Tour Islas Ballestas</li>
+                <li><i class="fa-solid fa-circle-check" style="color: var(--wa-green); margin-right: 0.4rem;"></i> Tubulares y sandboard Huacachina</li>
+              </ul>
+              <a href={`https://wa.me/${telefonoLimpio}?text=Hola!%20Quiero%20reservar%20el%20Full%20Day%20Paracas%20+%20Huacachina`} target="_blank" class="btn-speed" style="padding: 0.8rem; width: 100%; font-size: 0.85rem;">
+                Reservar Full Day
+              </a>
+            </div>
+          </div>
+
+        </div>
+
+        <div id="tours_adicionales" style="display: none; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 1.8rem; margin-top: 1.8rem;">
+          
+          <div class="glass-card" style="display: flex; flex-direction: column; justify-content: space-between; border-top: 4px solid var(--neon-yellow);">
+            <div style="height: 200px; overflow: hidden; position: relative;">
+              <img src="/tours/sandboard5.webp" alt="Cuatrimotos ATV Dunas" style="width: 100%; height: 100%; object-fit: cover;" />
+              <span style="position: absolute; top: 0.8rem; left: 0.8rem; background: var(--neon-yellow); color: #000; font-size: 0.68rem; font-weight: 900; padding: 0.2rem 0.6rem; border-radius: 999px;">AVENTURA 4X4</span>
+              <span style="position: absolute; bottom: 0.8rem; right: 0.8rem; background: rgba(0,0,0,0.85); color: var(--neon-yellow); font-size: 1.1rem; font-weight: 900; padding: 0.2rem 0.6rem; border-radius: 0.4rem;">
+                <span class="precio_tour" data-pen="160" data-usd="43">S/ 160</span> / atv
+              </span>
+            </div>
+            <div style="padding: 1.5rem;">
+              <h3 style="font-size: 1.15rem; font-weight: 800; margin-bottom: 0.5rem;">Cuatrimotos ATV en Dunas</h3>
+              <p style="font-size: 0.82rem; color: var(--text-muted); line-height: 1.5; margin-bottom: 1rem;">Conduce tu propia cuatrimoto de 250cc por senderos del desierto guiado por un líder certificado.</p>
+              <a href={`https://wa.me/${telefonoLimpio}?text=Hola!%20Quiero%20reservar%20Cuatrimotos%20ATV`} target="_blank" class="btn-speed" style="padding: 0.8rem; width: 100%; font-size: 0.85rem;">Reservar Cuatrimotos</a>
+            </div>
+          </div>
+
+          <div class="glass-card" style="display: flex; flex-direction: column; justify-content: space-between; border-top: 4px solid #a855f7;">
+            <div style="height: 200px; overflow: hidden; position: relative;">
+              <img src="/tours/sandboar6.webp" alt="Líneas de Nazca" style="width: 100%; height: 100%; object-fit: cover;" />
+              <span style="position: absolute; top: 0.8rem; left: 0.8rem; background: #a855f7; color: #fff; font-size: 0.68rem; font-weight: 900; padding: 0.2rem 0.6rem; border-radius: 999px;">CULTURA & VUELO</span>
+              <span style="position: absolute; bottom: 0.8rem; right: 0.8rem; background: rgba(0,0,0,0.85); color: var(--neon-yellow); font-size: 1.1rem; font-weight: 900; padding: 0.2rem 0.6rem; border-radius: 0.4rem;">
+                <span class="precio_tour" data-pen="780" data-usd="210">S/ 780</span> / pers
+              </span>
+            </div>
+            <div style="padding: 1.5rem;">
+              <h3 style="font-size: 1.15rem; font-weight: 800; margin-bottom: 0.5rem;">Sobrevuelo Líneas de Nazca</h3>
+              <p style="font-size: 0.82rem; color: var(--text-muted); line-height: 1.5; margin-bottom: 1rem;">Vuelo panorámico de 35 minutos en avioneta Cessna sobre los geoglifos milenarios de Nazca.</p>
+              <a href={`https://wa.me/${telefonoLimpio}?text=Hola!%20Quiero%20reservar%20el%20Sobrevuelo%20Líneas%20de%20Nazca`} target="_blank" class="btn-speed" style="padding: 0.8rem; width: 100%; font-size: 0.85rem;">Reservar Vuelo Nazca</a>
+            </div>
+          </div>
+
+          <div class="glass-card" style="display: flex; flex-direction: column; justify-content: space-between; border-top: 4px solid var(--fire-orange);">
+            <div style="height: 200px; overflow: hidden; position: relative;">
+              <img src="/tours/sandboard7.webp" alt="Ruta del Pisco en Ica" style="width: 100%; height: 100%; object-fit: cover;" />
+              <span style="position: absolute; top: 0.8rem; left: 0.8rem; background: var(--fire-orange); color: #fff; font-size: 0.68rem; font-weight: 900; padding: 0.2rem 0.6rem; border-radius: 999px;">TRADICIÓN & CATA</span>
+              <span style="position: absolute; bottom: 0.8rem; right: 0.8rem; background: rgba(0,0,0,0.85); color: var(--neon-yellow); font-size: 1.1rem; font-weight: 900; padding: 0.2rem 0.6rem; border-radius: 0.4rem;">
+                <span class="precio_tour" data-pen="65" data-usd="18">S/ 65</span> / pers
+              </span>
+            </div>
+            <div style="padding: 1.5rem;">
+              <h3 style="font-size: 1.15rem; font-weight: 800; margin-bottom: 0.5rem;">Ruta del Pisco & Bodegas</h3>
+              <p style="font-size: 0.82rem; color: var(--text-muted); line-height: 1.5; margin-bottom: 1rem;">Recorrido por bodegas tradicionales y cata guiada de piscos y vinos premiados de Ica.</p>
+              <a href={`https://wa.me/${telefonoLimpio}?text=Hola!%20Quiero%20reservar%20la%20Ruta%20del%20Pisco`} target="_blank" class="btn-speed" style="padding: 0.8rem; width: 100%; font-size: 0.85rem;">Reservar Ruta del Pisco</a>
+            </div>
+          </div>
+
+          <div class="glass-card" style="display: flex; flex-direction: column; justify-content: space-between; border-top: 4px solid var(--glow-cyan);">
+            <div style="height: 200px; overflow: hidden; position: relative;">
+              <img src="/tours/sandboard8.webp" alt="Camping en el Desierto" style="width: 100%; height: 100%; object-fit: cover;" />
+              <span style="position: absolute; top: 0.8rem; left: 0.8rem; background: var(--glow-cyan); color: #000; font-size: 0.68rem; font-weight: 900; padding: 0.2rem 0.6rem; border-radius: 999px;">EXPERIENCIA MÁGICA</span>
+              <span style="position: absolute; bottom: 0.8rem; right: 0.8rem; background: rgba(0,0,0,0.85); color: var(--neon-yellow); font-size: 1.1rem; font-weight: 900; padding: 0.2rem 0.6rem; border-radius: 0.4rem;">
+                <span class="precio_tour" data-pen="220" data-usd="60">S/ 220</span> / pers
+              </span>
+            </div>
+            <div style="padding: 1.5rem;">
+              <h3 style="font-size: 1.15rem; font-weight: 800; margin-bottom: 0.5rem;">Camping Nocturno en Dunas</h3>
+              <p style="font-size: 0.82rem; color: var(--text-muted); line-height: 1.5; margin-bottom: 1rem;">Noche inolvidable en carpas de lujo con fogata, cena gourmet y observación estelar en el desierto.</p>
+              <a href={`https://wa.me/${telefonoLimpio}?text=Hola!%20Quiero%20reservar%20el%20Camping%20en%20Dunas`} target="_blank" class="btn-speed" style="padding: 0.8rem; width: 100%; font-size: 0.85rem;">Reservar Camping</a>
+            </div>
+          </div>
+
+        </div>
+
+        <!-- Botón Ver Más Tours -->
+        <div style="text-align: center; margin-top: 2.5rem;">
+          <button type="button" id="btn_toggle_mas_tours" class="btn-glass" style="padding: 0.8rem 1.8rem; font-size: 0.88rem; font-weight: 700;">
+            <i class="fa-solid fa-plus" id="icon_toggle_tours"></i> <span id="txt_toggle_tours">Mostrar Más Tours & Paquetes (4 Adicionales)</span>
+          </button>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- ==================== SECCIÓN 3: POR QUÉ MILES DE VIAJEROS ELIGEN KEVIN TOURS (FLEX Y CENTRADO) ==================== -->
+    <section id="confianza" style="padding: 7vh 0; border-bottom: 1px solid var(--border-card);">
+      <div class="container-wide">
+        <div style="text-align: center; margin-bottom: 3rem;">
+          <span style="color: var(--neon-yellow); font-size: 0.75rem; font-weight: 800; text-transform: uppercase;" id="txt_pilar_badge">
+            SEGURIDAD Y CONFIANZA TOTAL
+          </span>
+          <h2 style="font-size: clamp(1.6rem, 2.8vw, 2.5rem); font-weight: 900; text-transform: uppercase; margin-top: 0.4rem;" id="txt_pilar_title">
+            Por Qué Miles de Viajeros Eligen <span class="text-gradient">Kevin Tours</span>
+          </h2>
+          <p style="font-size: 0.88rem; color: var(--text-muted); max-width: 580px; margin: 0.4rem auto 0 auto;" id="txt_pilar_desc">
+            6 razones sólidas que nos convierten en la agencia líder y con mejor reputación de Huacachina.
+          </p>
+        </div>
+
+        <!-- 6 Pilares con display: flex y Contenidos 100% Centrados -->
+        <div class="pilares-flex-container">
+          
+          <div class="glass-card pilar-flex-item">
+            <div class="pilar-icon-box" style="background: rgba(255, 230, 0, 0.15); color: var(--neon-yellow);">
+              <i class="fa-solid fa-car-on"></i>
+            </div>
+            <h3 style="font-size: 1.1rem; font-weight: 800; margin-bottom: 0.4rem;">1. Tubulares Homologados MTC</h3>
+            <p style="font-size: 0.82rem; color: var(--text-muted); line-height: 1.55;">
+              Vehículos equipados con jaula antivuelco de acero estructural, cinturones de 4 puntos y revisión mecánica diaria antes de cada salida.
+            </p>
+          </div>
+
+          <div class="glass-card pilar-flex-item">
+            <div class="pilar-icon-box" style="background: rgba(255, 69, 0, 0.15); color: var(--fire-orange);">
+              <i class="fa-solid fa-person-snowboarding"></i>
+            </div>
+            <h3 style="font-size: 1.1rem; font-weight: 800; margin-bottom: 0.4rem;">2. Equipamiento Snowboard Pro</h3>
+            <p style="font-size: 0.82rem; color: var(--text-muted); line-height: 1.55;">
+              Tablas de alta gama con fijaciones ergonómicas y botas a medida que protegen tus tobillos al deslizarte de pie en dunas gigantes.
+            </p>
+          </div>
+
+          <div class="glass-card pilar-flex-item">
+            <div class="pilar-icon-box" style="background: rgba(0, 240, 255, 0.15); color: var(--glow-cyan);">
+              <i class="fa-solid fa-id-card"></i>
+            </div>
+            <h3 style="font-size: 1.1rem; font-weight: 800; margin-bottom: 0.4rem;">3. Pilotos Locales con 12+ Años</h3>
+            <p style="font-size: 0.82rem; color: var(--text-muted); line-height: 1.55;">
+              Nacidos y criados en Ica. Conocen cada curva y relieve del desierto, garantizando pura adrenalina pero con control y seguridad total.
+            </p>
+          </div>
+
+          <div class="glass-card pilar-flex-item">
+            <div class="pilar-icon-box" style="background: rgba(37, 211, 102, 0.15); color: var(--wa-green);">
+              <i class="fa-solid fa-shield-heart"></i>
+            </div>
+            <h3 style="font-size: 1.1rem; font-weight: 800; margin-bottom: 0.4rem;">4. Seguro SOAT Turístico Incluido</h3>
+            <p style="font-size: 0.82rem; color: var(--text-muted); line-height: 1.55;">
+              Todas nuestras unidades cuentan con póliza de seguro vehicular y cobertura médica turística completa ante cualquier eventualidad.
+            </p>
+          </div>
+
+          <div class="glass-card pilar-flex-item">
+            <div class="pilar-icon-box" style="background: rgba(168, 85, 247, 0.15); color: #a855f7;">
+              <i class="fa-solid fa-vault"></i>
+            </div>
+            <h3 style="font-size: 1.1rem; font-weight: 800; margin-bottom: 0.4rem;">5. Lockers Gratuitos en Base</h3>
+            <p style="font-size: 0.82rem; color: var(--text-muted); line-height: 1.55;">
+              Guarda tus mochilas, pasaportes y pertenencias en casilleros con llave sin costo adicional antes de subir a las dunas.
+            </p>
+          </div>
+
+          <div class="glass-card pilar-flex-item">
+            <div class="pilar-icon-box" style="background: rgba(255, 230, 0, 0.15); color: var(--neon-yellow);">
+              <i class="fa-solid fa-rotate-left"></i>
+            </div>
+            <h3 style="font-size: 1.1rem; font-weight: 800; margin-bottom: 0.4rem;">6. Cancelación Flexible 24 Horas</h3>
+            <p style="font-size: 0.82rem; color: var(--text-muted); line-height: 1.55;">
+              ¿Cambio de planes? Cancela o reprograma el horario de tu tour sin penalidades avisando con hasta 24 horas de anticipación.
+            </p>
+          </div>
+
+        </div>
+      </div>
+    </section>
+
+    <!-- ==================== SECCIÓN 4: BLOG & CONSEJOS ==================== -->
+    <section id="blog" style="padding: 7vh 0; border-bottom: 1px solid var(--border-card); background: var(--bg-subtle);">
+      <div class="container-wide">
+        <div style="text-align: center; margin-bottom: 3rem;">
+          <span style="color: var(--glow-cyan); font-size: 0.75rem; font-weight: 800; text-transform: uppercase;" id="txt_blog_badge">
+            GUÍAS Y CONSEJOS DE VIAJE
+          </span>
+          <h2 style="font-size: clamp(1.6rem, 2.8vw, 2.5rem); font-weight: 900; text-transform: uppercase; margin-top: 0.4rem;" id="txt_blog_title">
+            Blog Oficial de <span class="text-gradient">Aventura en Ica</span>
+          </h2>
+        </div>
+
+        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 1.8rem;">
+          
+          <article class="glass-card" style="display: flex; flex-direction: column; justify-content: space-between;">
+            <div style="height: 190px; overflow: hidden;">
+              <img src="/tours/sandboard9.webp" alt="Guía de Sandboard" style="width: 100%; height: 100%; object-fit: cover;" />
+            </div>
+            <div style="padding: 1.5rem;">
+              <span style="font-size: 0.7rem; color: var(--neon-yellow); font-weight: 700; text-transform: uppercase;">Consejos de Sandboard</span>
+              <h3 style="font-size: 1.05rem; font-weight: 800; margin: 0.4rem 0 0.6rem 0;">Guía Definitiva de Sandboard: Cómo Bajar de Pie</h3>
+              <p style="font-size: 0.8rem; color: var(--text-muted); line-height: 1.5; margin-bottom: 1rem;">
+                Aprende la postura correcta y los secretos para deslizarte a toda velocidad con total control.
+              </p>
+              <a href="#inicio" style="color: var(--neon-yellow); font-size: 0.8rem; font-weight: 700;">Leer Artículo →</a>
+            </div>
+          </article>
+
+          <article class="glass-card" style="display: flex; flex-direction: column; justify-content: space-between;">
+            <div style="height: 190px; overflow: hidden;">
+              <img src="/tours/sandboard10.webp" alt="Sunset en Huacachina" style="width: 100%; height: 100%; object-fit: cover;" />
+            </div>
+            <div style="padding: 1.5rem;">
+              <span style="font-size: 0.7rem; color: var(--fire-orange); font-weight: 700; text-transform: uppercase;">Fotografía & Atardeceres</span>
+              <h3 style="font-size: 1.05rem; font-weight: 800; margin: 0.4rem 0 0.6rem 0;">Los 3 Mejores Puntos para Fotografiar el Sunset</h3>
+              <p style="font-size: 0.8rem; color: var(--text-muted); line-height: 1.5; margin-bottom: 1rem;">
+                Descubre por qué el turno de las 4:00 PM ofrece la iluminación dorada perfecta para fotos virales.
+              </p>
+              <a href="#inicio" style="color: var(--fire-orange); font-size: 0.8rem; font-weight: 700;">Leer Artículo →</a>
+            </div>
+          </article>
+
+          <article class="glass-card" style="display: flex; flex-direction: column; justify-content: space-between;">
+            <div style="height: 190px; overflow: hidden;">
+              <img src="/tours/sandboard3.webp" alt="Buggy Privado vs Compartido" style="width: 100%; height: 100%; object-fit: cover;" />
+            </div>
+            <div style="padding: 1.5rem;">
+              <span style="font-size: 0.7rem; color: var(--glow-cyan); font-weight: 700; text-transform: uppercase;">Comparativa de Tours</span>
+              <h3 style="font-size: 1.05rem; font-weight: 800; margin: 0.4rem 0 0.6rem 0;">¿Buggy Compartido o Tubular Privado VIP?</h3>
+              <p style="font-size: 0.8rem; color: var(--text-muted); line-height: 1.5; margin-bottom: 1rem;">
+                Analizamos las ventajas de cada modalidad según viajes en pareja, amigos o en familia.
+              </p>
+              <a href="#inicio" style="color: var(--glow-cyan); font-size: 0.8rem; font-weight: 700;">Leer Artículo →</a>
+            </div>
+          </article>
+
+        </div>
+      </div>
+    </section>
+
+    <!-- ==================== SECCIÓN 5: PLATAFORMAS GLOBALES DE CONFIANZA ==================== -->
+    <section id="plataformas" style="padding: 6vh 0; border-bottom: 1px solid var(--border-card);">
+      <div class="container-wide">
+        <div style="text-align: center; margin-bottom: 2.2rem;">
+          <span style="color: var(--wa-green); font-size: 0.75rem; font-weight: 800; text-transform: uppercase;">
+            RECONOCIMIENTO INTERNACIONAL
+          </span>
+          <h2 style="font-size: clamp(1.5rem, 2.4vw, 2.1rem); font-weight: 900; text-transform: uppercase; margin-top: 0.3rem;">
+            Presencia en las <span class="text-gradient">Mejores Plataformas</span>
+          </h2>
+        </div>
+
+        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(230px, 1fr)); gap: 1.2rem;">
+          <div class="platform-badge">
+            <i class="fa-solid fa-award" style="font-size: 2.2rem; color: #00af87;"></i>
+            <div>
+              <strong style="font-size: 0.9rem; display: block;">TripAdvisor</strong>
+              <span style="font-size: 0.72rem; color: var(--text-muted);">Travellers' Choice · 4.9★ (2,400+ reseñas)</span>
+            </div>
+          </div>
+
+          <div class="platform-badge">
+            <i class="fa-brands fa-google" style="font-size: 2.2rem; color: #4285F4;"></i>
+            <div>
+              <strong style="font-size: 0.9rem; display: block;">Google Maps</strong>
+              <span style="font-size: 0.72rem; color: var(--text-muted);">Empresa Verificada · 4.9★ (1,850+ reseñas)</span>
+            </div>
+          </div>
+
+          <div class="platform-badge">
+            <i class="fa-solid fa-compass" style="font-size: 2.2rem; color: #ff5533;"></i>
+            <div>
+              <strong style="font-size: 0.9rem; display: block;">GetYourGuide</strong>
+              <span style="font-size: 0.72rem; color: var(--text-muted);">Partner Oficial Certificado en Ica</span>
+            </div>
+          </div>
+
+          <div class="platform-badge">
+            <i class="fa-solid fa-certificate" style="font-size: 2.2rem; color: #003580;"></i>
+            <div>
+              <strong style="font-size: 0.9rem; display: block;">Viator & Booking</strong>
+              <span style="font-size: 0.72rem; color: var(--text-muted);">Operador de Excelencia Turística</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ==================== SECCIÓN 6: PREGUNTAS FRECUENTES ==================== -->
+    <section id="faq" style="padding: 7vh 0; border-bottom: 1px solid var(--border-card); background: var(--bg-subtle);">
+      <div class="container-wide">
+        <div style="text-align: center; margin-bottom: 3rem;">
+          <span style="color: var(--neon-yellow); font-size: 0.75rem; font-weight: 800; text-transform: uppercase;">RESPUESTAS CLARAS</span>
+          <h2 style="font-size: clamp(1.6rem, 2.6vw, 2.3rem); font-weight: 900; text-transform: uppercase; margin-top: 0.4rem;">
+            Preguntas Frecuentes
+          </h2>
+        </div>
+
+        <div class="grid-faq" style="display: grid; grid-template-columns: 1fr 1.3fr; gap: 2.5rem; align-items: center;">
+          
+          <div class="glass-card" style="height: 460px; position: relative;">
+            <img src="/tours/sandboard2.webp" alt="Sandboard Huacachina" style="width: 100%; height: 100%; object-fit: cover;" />
+            <div style="position: absolute; inset: 0; background: linear-gradient(to top, rgba(0,0,0,0.85) 0%, transparent 60%); display: flex; flex-direction: column; justify-content: flex-end; padding: 1.8rem;">
+              <span style="color: var(--neon-yellow); font-weight: 800; font-size: 0.75rem; text-transform: uppercase;">ATENCIÓN AL TURISTA</span>
+              <h3 style="font-size: 1.25rem; font-weight: 900; color: #fff; margin-top: 0.2rem;">¿Tienes consultas especiales?</h3>
+              <p style="font-size: 0.8rem; color: #ddd; margin: 0.4rem 0 1rem 0;">Escríbenos y te responderemos en menos de 5 minutos.</p>
+              <a href={`https://wa.me/${telefonoLimpio}`} target="_blank" class="btn-speed" style="padding: 0.75rem 1.3rem; width: fit-content; font-size: 0.82rem;">
+                <i class="fa-brands fa-whatsapp"></i> Hablar con un Guía Oficial
+              </a>
+            </div>
+          </div>
+
+          <div style="display: flex; flex-direction: column; gap: 0.8rem;">
+            <details class="glass-card" style="padding: 1.1rem; cursor: pointer;" open>
+              <summary style="font-weight: 700; font-size: 0.9rem; color: var(--neon-yellow);">
+                1. ¿Diferencia entre Sandboard Tradicional y Pro con Botas?
+              </summary>
+              <p style="font-size: 0.82rem; color: var(--text-muted); margin-top: 0.6rem; line-height: 1.55;">
+                En el tour tradicional (S/ 45) te deslizas acostado. En la clase Pro (S/ 75), usas botas y fijaciones de snowboard para descender de pie como un surfista de arena guiado por un instructor.
+              </p>
+            </details>
+
+            <details class="glass-card" style="padding: 1.1rem; cursor: pointer;">
+              <summary style="font-weight: 700; font-size: 0.9rem; color: var(--neon-yellow);">
+                2. ¿El tour incluye la tasa turística municipal?
+              </summary>
+              <p style="font-size: 0.82rem; color: var(--text-muted); margin-top: 0.6rem; line-height: 1.55;">
+                La tasa municipal (S/ 3.70 por persona) se abona directamente en la caseta de control antes del ingreso al área de dunas.
+              </p>
+            </details>
+
+            <details class="glass-card" style="padding: 1.1rem; cursor: pointer;">
+              <summary style="font-weight: 700; font-size: 0.9rem; color: var(--neon-yellow);">
+                3. ¿Qué vestimenta recomiendan llevar?
+              </summary>
+              <p style="font-size: 0.82rem; color: var(--text-muted); margin-top: 0.6rem; line-height: 1.55;">
+                Ropa cómoda, zapatillas cerradas, lentes de sol, bloqueador solar y una casaca ligera para el retorno al anochecer.
+              </p>
+            </details>
+
+            <details class="glass-card" style="padding: 1.1rem; cursor: pointer;">
+              <summary style="font-weight: 700; font-size: 0.9rem; color: var(--neon-yellow);">
+                4. ¿Dónde guardo mis maletas o mochilas?
+              </summary>
+              <p style="font-size: 0.82rem; color: var(--text-muted); margin-top: 0.6rem; line-height: 1.55;">
+                En nuestra oficina principal en Av. Ángela Perotti S/n (Recepción Hospedaje Hawka) disponemos de lockers con llave 100% gratuitos.
+              </p>
+            </details>
+          </div>
+
+        </div>
+      </div>
+    </section>
+
+    <!-- ==================== SECCIÓN 7: UBICACIÓN ==================== -->
+    <section id="ubicacion" style="padding: 7vh 0; border-bottom: 1px solid var(--border-card);">
+      <div class="container-wide">
+        <div class="grid-ubicacion" style="display: grid; grid-template-columns: 1fr 1.2fr; gap: 2.5rem; align-items: center;">
+          <div class="glass-card" style="padding: 2rem;">
+            <span style="color: var(--glow-cyan); font-size: 0.75rem; font-weight: 800; text-transform: uppercase;">PUNTO DE ENCUENTRO OFICIAL</span>
+            <h3 class="font-heading" style="font-size: 1.45rem; font-weight: 900; margin: 0.4rem 0 1.2rem 0; text-transform: uppercase;">
+              Visítanos en Huacachina
+            </h3>
+
+            <div style="display: flex; flex-direction: column; gap: 1rem; margin-bottom: 1.6rem;">
+              <p style="font-size: 0.85rem;">
+                <i class="fa-solid fa-map-pin" style="color: var(--neon-yellow); margin-right: 0.4rem;"></i>
+                <strong>Dirección:</strong> {direccionOficial}
+              </p>
+              <p style="font-size: 0.85rem; color: var(--neon-yellow); font-weight: 700;">
+                <i class="fa-solid fa-hotel" style="margin-right: 0.4rem;"></i>
+                <strong>Referencia de Base:</strong> {referenciaOficial}
+              </p>
+              <p style="font-size: 0.85rem;">
+                <i class="fa-brands fa-whatsapp" style="color: var(--wa-green); margin-right: 0.4rem;"></i>
+                <strong>WhatsApp / Reservas:</strong> {telefono}
+              </p>
+              <p style="font-size: 0.85rem;">
+                <i class="fa-solid fa-clock" style="color: var(--fire-orange); margin-right: 0.4rem;"></i>
+                <strong>Horario:</strong> Lunes a Domingo: 8:00 AM – 7:00 PM
+              </p>
+            </div>
+
+            <a href={mapShareUrl} target="_blank" rel="noopener noreferrer" class="btn-speed" style="padding: 0.8rem 1.4rem; font-size: 0.85rem; width: 100%;">
+              <i class="fa-solid fa-location-arrow"></i> Abrir en Google Maps Oficial
+            </a>
+          </div>
+
+          <div style="height: 350px; border-radius: 1.2rem; overflow: hidden; border: 1px solid var(--border-card); box-shadow: var(--shadow-xl);">
+            <iframe 
+              src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3870.211475514686!2d-75.76569142398505!3d-14.08836528634125!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x9110e2eb3e479639%3A0xc3f9828d54c86e68!2sHuacachina!5e0!3m2!1ses!2spe!4v1715874251234" 
+              width="100%" 
+              height="100%" 
+              style="border:0;" 
+              allowfullscreen="" 
+              loading="lazy">
+            </iframe>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- ==================== PIE DE PÁGINA INSTITUCIONAL 100% CENTRADO EN MÓVIL ==================== -->
+  <footer style="background: var(--bg-body); border-top: 1px solid var(--border-card); padding: 5vh 0 4vh 0; font-size: 0.85rem; color: var(--text-muted);">
+    <div class="container-wide">
+      <div class="grid-footer" style="display: grid; grid-template-columns: 1.4fr 1fr 1fr 1.2fr; gap: 2.5rem; margin-bottom: 3.5vh;">
+        
+        <div class="footer-brand-center">
+          <div style="display: inline-flex; align-items: center; gap: 0.7rem; margin-bottom: 0.8rem;">
+            <div style="width: 2.2rem; height: 2.2rem; border-radius: 0.6rem; background: linear-gradient(135deg, #ffe600, #ff4500); display: flex; align-items: center; justify-content: center; color: #000; font-size: 1rem; font-weight: 900;">
+              <i class="fa-solid fa-bolt"></i>
+            </div>
+            <strong style="color: var(--text-main); font-size: 1.1rem;">Kevin Tours Evolution</strong>
+          </div>
+          <p style="font-size: 0.8rem; line-height: 1.6; margin-bottom: 1.2rem; max-width: 320px;">
+            Operador oficial de turismo de aventura en el Oasis de Huacachina, Ica. Especialistas en tubulares 4x4 y sandboard.
+          </p>
+          <div class="footer-social-center" style="display: flex; gap: 0.6rem;">
+            <a href="https://facebook.com" target="_blank" rel="noopener noreferrer" style="width: 2.2rem; height: 2.2rem; border-radius: 50%; background: #1877F2; color: #fff; display: flex; align-items: center; justify-content: center; font-size: 0.85rem;" title="Facebook"><i class="fa-brands fa-facebook-f"></i></a>
+            <a href="https://instagram.com" target="_blank" rel="noopener noreferrer" style="width: 2.2rem; height: 2.2rem; border-radius: 50%; background: linear-gradient(45deg,#f58529,#dd2a7b,#515bd4); color: #fff; display: flex; align-items: center; justify-content: center; font-size: 0.85rem;" title="Instagram"><i class="fa-brands fa-instagram"></i></a>
+            <a href="https://tiktok.com" target="_blank" rel="noopener noreferrer" style="width: 2.2rem; height: 2.2rem; border-radius: 50%; background: #000; color: #fff; display: flex; align-items: center; justify-content: center; font-size: 0.85rem; border: 1px solid rgba(255,255,255,0.2);" title="TikTok"><i class="fa-brands fa-tiktok"></i></a>
+            <a href="https://youtube.com" target="_blank" rel="noopener noreferrer" style="width: 2.2rem; height: 2.2rem; border-radius: 50%; background: #ff0000; color: #fff; display: flex; align-items: center; justify-content: center; font-size: 0.85rem;" title="YouTube"><i class="fa-brands fa-youtube"></i></a>
+            <a href={`https://wa.me/${telefonoLimpio}`} target="_blank" rel="noopener noreferrer" style="width: 2.2rem; height: 2.2rem; border-radius: 50%; background: #25d366; color: #fff; display: flex; align-items: center; justify-content: center; font-size: 0.85rem;" title="WhatsApp"><i class="fa-brands fa-whatsapp"></i></a>
+          </div>
+        </div>
+
+        <div>
+          <h4 style="color: var(--text-main); font-size: 0.9rem; font-weight: 800; text-transform: uppercase; margin-bottom: 0.9rem;">Explorar</h4>
+          <ul style="list-style: none; display: flex; flex-direction: column; gap: 0.5rem; font-size: 0.8rem;">
+            <li><a href="#inicio" style="color: var(--text-muted);">Inicio</a></li>
+            <li><a href="#tours" style="color: var(--text-muted);">Tubulares & Dunas</a></li>
+            <li><a href="#tours" style="color: var(--text-muted);">Clases de Sandboard Pro</a></li>
+            <li><a href="#tours" style="color: var(--text-muted);">Buggy Privado VIP</a></li>
+            <li><a href="#calculadora" style="color: var(--text-muted);">Cotizador en Vivo</a></li>
+          </ul>
+        </div>
+
+        <div>
+          <h4 style="color: var(--text-main); font-size: 0.9rem; font-weight: 800; text-transform: uppercase; margin-bottom: 0.9rem;">Legal & Ayuda</h4>
+          <ul style="list-style: none; display: flex; flex-direction: column; gap: 0.5rem; font-size: 0.8rem;">
+            <li><a href="#faq" style="color: var(--text-muted);">Acerca de Nosotros</a></li>
+            <li><a href="#faq" style="color: var(--text-muted);">Términos y Condiciones</a></li>
+            <li><a href="#faq" style="color: var(--text-muted);">Política de Privacidad</a></li>
+            <li><a href="#faq" style="color: var(--text-muted);">Seguros y SOAT Turístico</a></li>
+            <li><a href="#faq" style="color: var(--text-muted);">Libro de Reclamaciones</a></li>
+          </ul>
+        </div>
+
+        <div>
+          <h4 style="color: var(--text-main); font-size: 0.9rem; font-weight: 800; text-transform: uppercase; margin-bottom: 0.9rem;">Contacto Base</h4>
+          <p style="font-size: 0.8rem; margin-bottom: 0.4rem;"><i class="fa-solid fa-location-dot" style="color: var(--neon-yellow); margin-right: 0.4rem;"></i> {direccionOficial}</p>
+          <p style="font-size: 0.8rem; color: var(--neon-yellow); margin-bottom: 0.4rem;"><strong>Ref:</strong> {referenciaOficial}</p>
+          <p style="font-size: 0.8rem; margin-bottom: 0.8rem;"><i class="fa-brands fa-whatsapp" style="color: var(--wa-green); margin-right: 0.4rem;"></i> {telefono}</p>
+          
+          <span style="display: block; font-size: 0.7rem; text-transform: uppercase; font-weight: 700; color: var(--text-muted); margin-bottom: 0.4rem;">Métodos de Pago:</span>
+          <div class="footer-payments-center" style="display: flex; gap: 0.4rem; flex-wrap: wrap; font-size: 0.72rem; font-weight: 800;">
+            <span style="background: rgba(255,255,255,0.08); padding: 0.2rem 0.5rem; border-radius: 0.4rem; color: #fff;">VISA</span>
+            <span style="background: #742774; color: #fff; padding: 0.2rem 0.5rem; border-radius: 0.4rem;">YAPE</span>
+            <span style="background: #00bcd4; color: #fff; padding: 0.2rem 0.5rem; border-radius: 0.4rem;">PLIN</span>
+            <span style="background: #25d366; color: #000; padding: 0.2rem 0.5rem; border-radius: 0.4rem;">Efectivo</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="footer-bottom-center" style="border-top: 1px solid var(--border-card); padding-top: 2.5vh; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 1rem; font-size: 0.78rem;">
+        <p>© 2026 Kevin Tours & Sandboard Huacachina Evolution. Todos los derechos reservados.</p>
+        <div style="display: flex; gap: 1.2rem; justify-content: center;">
+          <a href="/kevin12" style="color: var(--neon-yellow); font-weight: 700;">Vista Sin Auth (kevin12) →</a>
+          <a href="/kevin14" style="color: var(--glow-cyan); font-weight: 700;">Dashboard Staff (kevin14) →</a>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <!-- 🟢 BOTÓN FLOTANTE DE WHATSAPP -->
+  <a href={`https://wa.me/${telefonoLimpio}?text=¡Hola!%20Soy%20Carlos%20Mendoza,%20tengo%20una%20consulta%20sobre%20mi%20reserva%20de%20hoy.`} target="_blank" class="wa-flotante" title="Hablar con mi Asesor VIP">
+    <i class="fa-brands fa-whatsapp"></i>
+  </a>
+
+  <!-- ==================== MODAL DE USUARIO / CUENTA VIP (4 TABS) ==================== -->
+  <div id="modal_usuario" class="modal-overlay" style="display: none;">
+    <div class="glass-card" style="width: 100%; max-width: 580px; padding: 0; position: relative;">
+      
+      <div style="display: flex; justify-content: space-between; align-items: center; padding: 1.3rem 1.6rem; border-bottom: 1px solid var(--border-card); background: rgba(0,0,0,0.2);">
+        <div style="display: flex; align-items: center; gap: 0.8rem;">
+          <img src={usuario.avatar} alt={usuario.nombre} style="width: 2.6rem; height: 2.6rem; border-radius: 50%; border: 2px solid var(--neon-yellow);" />
+          <div>
+            <h3 style="font-size: 1.05rem; font-weight: 900; margin: 0; line-height: 1.1;">{usuario.nombre}</h3>
+            <span style="font-size: 0.7rem; color: var(--neon-yellow); font-weight: 700;">{usuario.tipo} · Turista Verificado</span>
+          </div>
+        </div>
+        <button type="button" id="btn_cerrar_modal_usuario" style="background: transparent; border: none; font-size: 1.8rem; color: var(--text-muted); cursor: pointer; line-height: 1;">&times;</button>
+      </div>
+
+      <div style="display: flex; border-bottom: 1px solid var(--border-card); padding: 0 0.8rem; background: var(--bg-subtle); overflow-x: auto;">
+        <button class="modal-tab-btn activo" data-tab="tab_perfil"><i class="fa-solid fa-user"></i> Perfil</button>
+        <button class="modal-tab-btn" data-tab="tab_seguridad"><i class="fa-solid fa-shield-halved"></i> Seguridad</button>
+        <button class="modal-tab-btn" data-tab="tab_ajustes"><i class="fa-solid fa-sliders"></i> Ajustes</button>
+        <button class="modal-tab-btn" data-tab="tab_promociones"><i class="fa-solid fa-gift"></i> Promos</button>
+      </div>
+
+      <div style="padding: 1.5rem;">
+        <div id="tab_perfil" class="modal_tab_content">
+          <form style="display: grid; grid-template-columns: 1fr 1fr; gap: 0.8rem;">
+            <div>
+              <label style="display: block; font-size: 0.72rem; font-weight: 700; color: var(--text-muted); margin-bottom: 0.25rem;">Nombre</label>
+              <input type="text" value={usuario.nombre} style="width: 100%; padding: 0.7rem; background: var(--input-bg); border: 1px solid var(--border-card); color: var(--text-main); border-radius: 0.6rem; font-size: 0.82rem;" />
+            </div>
+            <div>
+              <label style="display: block; font-size: 0.72rem; font-weight: 700; color: var(--text-muted); margin-bottom: 0.25rem;">Correo</label>
+              <input type="email" value={usuario.email} style="width: 100%; padding: 0.7rem; background: var(--input-bg); border: 1px solid var(--border-card); color: var(--text-main); border-radius: 0.6rem; font-size: 0.82rem;" />
+            </div>
+            <div>
+              <label style="display: block; font-size: 0.72rem; font-weight: 700; color: var(--text-muted); margin-bottom: 0.25rem;">WhatsApp</label>
+              <input type="text" value={usuario.telefono} style="width: 100%; padding: 0.7rem; background: var(--input-bg); border: 1px solid var(--border-card); color: var(--text-main); border-radius: 0.6rem; font-size: 0.82rem;" />
+            </div>
+            <div>
+              <label style="display: block; font-size: 0.72rem; font-weight: 700; color: var(--text-muted); margin-bottom: 0.25rem;">País</label>
+              <input type="text" value={usuario.pais} style="width: 100%; padding: 0.7rem; background: var(--input-bg); border: 1px solid var(--border-card); color: var(--text-main); border-radius: 0.6rem; font-size: 0.82rem;" />
+            </div>
+            <div style="grid-column: span 2; margin-top: 0.3rem;">
+              <button type="button" onclick="alert('Perfil actualizado con éxito')" class="btn-speed" style="padding: 0.7rem 1.2rem; font-size: 0.82rem;">
+                Guardar Cambios
+              </button>
+            </div>
+          </form>
+        </div>
+
+        <div id="tab_seguridad" class="modal_tab_content" style="display: none;">
+          <form style="display: flex; flex-direction: column; gap: 0.8rem;">
+            <div>
+              <label style="display: block; font-size: 0.72rem; font-weight: 700; color: var(--text-muted); margin-bottom: 0.25rem;">Contraseña Actual</label>
+              <input type="password" placeholder="••••••••" style="width: 100%; padding: 0.7rem; background: var(--input-bg); border: 1px solid var(--border-card); color: var(--text-main); border-radius: 0.6rem; font-size: 0.82rem;" />
+            </div>
+            <div>
+              <label style="display: block; font-size: 0.72rem; font-weight: 700; color: var(--text-muted); margin-bottom: 0.25rem;">Nueva Contraseña</label>
+              <input type="password" placeholder="••••••••" style="width: 100%; padding: 0.7rem; background: var(--input-bg); border: 1px solid var(--border-card); color: var(--text-main); border-radius: 0.6rem; font-size: 0.82rem;" />
+            </div>
+            <button type="button" onclick="alert('Contraseña actualizada')" class="btn-speed" style="width: fit-content; padding: 0.7rem 1.2rem; font-size: 0.82rem;">
+              Actualizar Contraseña
+            </button>
+          </form>
+        </div>
+
+        <div id="tab_ajustes" class="modal_tab_content" style="display: none;">
+          <div style="display: flex; flex-direction: column; gap: 1rem;">
+            <div style="display: flex; justify-content: space-between; align-items: center;">
+              <div>
+                <strong style="font-size: 0.85rem; display: block;">Notificaciones por WhatsApp</strong>
+                <span style="font-size: 0.72rem; color: var(--text-muted);">Confirmaciones de salidas y horarios</span>
+              </div>
+              <input type="checkbox" checked style="width: 1.1rem; height: 1.1rem;" />
+            </div>
+            <div style="display: flex; justify-content: space-between; align-items: center;">
+              <div>
+                <strong style="font-size: 0.85rem; display: block;">Moneda Predeterminada</strong>
+                <span style="font-size: 0.72rem; color: var(--text-muted);">Soles (PEN) o Dólares (USD)</span>
+              </div>
+              <select style="padding: 0.35rem 0.7rem; background: var(--input-bg); border: 1px solid var(--border-card); color: var(--text-main); border-radius: 0.5rem; font-size: 0.78rem;">
+                <option>S/ PEN (Soles)</option>
+                <option>$ USD (Dólares)</option>
+              </select>
+            </div>
+          </div>
+        </div>
+
+        <div id="tab_promociones" class="modal_tab_content" style="display: none;">
+          <div style="background: rgba(255, 230, 0, 0.08); border: 1px dashed var(--neon-yellow); padding: 1rem; border-radius: 0.8rem;">
+            <span style="font-size: 0.7rem; font-weight: 700; color: var(--text-muted); text-transform: uppercase;">Tu Cupón Personal:</span>
+            <strong style="display: block; font-size: 1.3rem; color: var(--neon-yellow); letter-spacing: 2px; margin: 0.2rem 0;">{usuario.cupon}</strong>
+            <p style="font-size: 0.75rem; color: var(--text-muted);">Obtén <strong>15% de descuento</strong> al reservar cualquier tour adicional.</p>
+          </div>
+        </div>
+      </div>
+
+      <div style="padding: 1rem 1.6rem; border-top: 1px solid var(--border-card); display: flex; justify-content: space-between; align-items: center; background: rgba(0,0,0,0.15);">
+        <span style="font-size: 0.72rem; color: var(--text-muted);">Sesión: {usuario.email}</span>
+        <a href="/kevin12" class="btn-glass" style="color: #ff3849; border-color: rgba(255,56,73,0.4); padding: 0.45rem 0.85rem; font-size: 0.75rem;">
+          <i class="fa-solid fa-power-off"></i> Cerrar Sesión
+        </a>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ⚡ LÓGICA DE INTERACTIVIDAD & IDIOMA -->
+  <script is:inline>
+    (function() {
+      // 1. Modal de Usuario & Pestañas
+      const modalUser = document.getElementById('modal_usuario');
+      const btnAbrirUser = document.getElementById('btn_abrir_perfil_modal');
+      const btnCerrarUser = document.getElementById('btn_cerrar_modal_usuario');
+      const btnDrawerProfile = document.getElementById('btn_drawer_open_profile');
+
+      function abrirModal() { if (modalUser) modalUser.style.display = 'flex'; }
+      function cerrarModal() { if (modalUser) modalUser.style.display = 'none'; }
+
+      btnAbrirUser?.addEventListener('click', abrirModal);
+      btnDrawerProfile?.addEventListener('click', () => {
+        cerrarDrawer();
+        abrirModal();
+      });
+      btnCerrarUser?.addEventListener('click', cerrarModal);
+      modalUser?.addEventListener('click', (e) => { if (e.target === modalUser) cerrarModal(); });
+
+      const tabBtns = document.querySelectorAll('.modal-tab-btn');
+      const tabContents = document.querySelectorAll('.modal_tab_content');
+
+      tabBtns.forEach(btn => {
+        btn.addEventListener('click', () => {
+          tabBtns.forEach(b => b.classList.remove('activo'));
+          tabContents.forEach(c => c.style.display = 'none');
+
+          btn.classList.add('activo');
+          const targetId = btn.getAttribute('data-tab');
+          const targetContent = document.getElementById(targetId);
+          if (targetContent) targetContent.style.display = 'block';
+        });
+      });
+
+      // 2. Selector de Moneda en Cotizador
+      let monedaActual = 'PEN';
+      let idiomaActual = 'ES';
+      const btnPen = document.getElementById('calc_cur_pen');
+      const btnUsd = document.getElementById('calc_cur_usd');
+
+      function aplicarMoneda(cur) {
+        monedaActual = cur;
+        btnPen?.classList.toggle('active', cur === 'PEN');
+        btnUsd?.classList.toggle('active', cur === 'USD');
+
+        document.querySelectorAll('.precio_tour').forEach(el => {
+          const pen = el.getAttribute('data-pen');
+          const usd = el.getAttribute('data-usd');
+          el.textContent = cur === 'PEN' ? `S/ ${pen}` : `$ ${usd} USD`;
+        });
+        recalcularTotal();
+      }
+
+      btnPen?.addEventListener('click', () => aplicarMoneda('PEN'));
+      btnUsd?.addEventListener('click', () => aplicarMoneda('USD'));
+
+      // 3. Diccionario ES / EN
+      const i18n = {
+        ES: {
+          topbar: 'AGENCIA OFICIAL CERTIFICADA · MTC N° 11000',
+          sublogo: 'Sandboard & Buggies Huacachina Oficial',
+          nav_inicio: 'Inicio',
+          nav_tours: 'Tours',
+          nav_confianza: 'Por Qué Elegirnos',
+          nav_blog: 'Blog & Tips',
+          nav_plataformas: 'Confianza',
+          nav_faq: 'FAQ',
+          btn_reservar: '<i class="fa-brands fa-whatsapp"></i> Reservar',
+          hero_badge: '#1 EN TRIPADVISOR · 2,400+ RESEÑAS 5★ EN HUACACHINA',
+          hero_title: 'Adrenalina Extrema en el Oasis de <span class="text-gradient">Huacachina</span>',
+          hero_desc: 'Tubulares areneros 4x4 de alta potencia con jaula reforzada, clases de sandboard guiadas por expertos y el atardecer más espectacular del desierto de Ica.',
+          hero_res: 'Reservar Sunset (S/ 45 / $12)',
+          hero_exp: 'Ver 8 Experiencias',
+          metrica_sunset: 'Sunset Favorito',
+          metrica_soat: 'SOAT Turístico',
+          metrica_cancel: 'Cancela 24h',
+          calc_title: '<i class="fa-solid fa-calculator" style="color: var(--neon-yellow);"></i> Cotizador en Vivo',
+          calc_status: '<i class="fa-solid fa-circle-dot"></i> Salidas Disponibles Hoy',
+          label_exp: '1. Experiencia en Dunas',
+          label_pax: '2. Pasajeros',
+          label_horario: '3. Horario',
+          label_total: 'Total a Pagar:',
+          label_pago_seguro: '<i class="fa-solid fa-lock"></i> Pago Seguro en Base',
+          btn_whatsapp_cot: 'Confirmar Reserva por WhatsApp'
+        },
+        EN: {
+          topbar: 'OFFICIAL CERTIFIED AGENCY · MTC N° 11000',
+          sublogo: 'Official Sandboard & Buggies Huacachina',
+          nav_inicio: 'Home',
+          nav_tours: 'Tours',
+          nav_confianza: 'Why Choose Us',
+          nav_blog: 'Blog & Tips',
+          nav_plataformas: 'Trust',
+          nav_faq: 'FAQ',
+          btn_reservar: '<i class="fa-brands fa-whatsapp"></i> Book Now',
+          hero_badge: '#1 ON TRIPADVISOR · 2,400+ 5★ REVIEWS IN HUACACHINA',
+          hero_title: 'Extreme Adrenaline in the Oasis of <span class="text-gradient">Huacachina</span>',
+          hero_desc: 'High-power 4x4 dune buggies with reinforced cage, expert-guided sandboarding lessons, and the most spectacular sunset in the Ica desert.',
+          hero_res: 'Book Sunset Tour (S/ 45 / $12)',
+          hero_exp: 'Explore 8 Tours',
+          metrica_sunset: 'Sunset Favorite',
+          metrica_soat: 'Tourist Insurance',
+          metrica_cancel: 'Free Cancel 24h',
+          calc_title: '<i class="fa-solid fa-calculator" style="color: var(--neon-yellow);"></i> Live Calculator',
+          calc_status: '<i class="fa-solid fa-circle-dot"></i> Departures Today',
+          label_exp: '1. Dune Experience',
+          label_pax: '2. Guests',
+          label_horario: '3. Schedule',
+          label_total: 'Total to Pay:',
+          label_pago_seguro: '<i class="fa-solid fa-lock"></i> Secure Payment on Arrival',
+          btn_whatsapp_cot: 'Confirm Booking via WhatsApp'
+        }
+      };
+
+      function aplicarIdioma(lang) {
+        idiomaActual = lang;
+        document.getElementById('btn_lang_es')?.classList.toggle('active', lang === 'ES');
+        document.getElementById('btn_lang_en')?.classList.toggle('active', lang === 'EN');
+
+        const d = i18n[lang];
+        if (!d) return;
+
+        const elTop = document.getElementById('txt_topbar_cert'); if (elTop) elTop.textContent = d.topbar;
+        const elSub = document.getElementById('txt_logo_sub'); if (elSub) elSub.textContent = d.sublogo;
+        const elRes = document.getElementById('btn_txt_reservar'); if (elRes) elRes.innerHTML = d.btn_reservar;
+        const elHBadge = document.getElementById('txt_hero_badge'); if (elHBadge) elHBadge.textContent = d.hero_badge;
+        const elHTitle = document.getElementById('txt_hero_title'); if (elHTitle) elHTitle.innerHTML = d.hero_title;
+        const elHDesc = document.getElementById('txt_hero_desc'); if (elHDesc) elHDesc.textContent = d.hero_desc;
+        const elHRes = document.getElementById('txt_btn_hero_res'); if (elHRes) elHRes.textContent = d.hero_res;
+        const elHExp = document.getElementById('txt_btn_hero_exp'); if (elHExp) elHExp.textContent = d.hero_exp;
+        const elMSun = document.getElementById('txt_metrica_sunset'); if (elMSun) elMSun.textContent = d.metrica_sunset;
+        const elMSoat = document.getElementById('txt_metrica_soat'); if (elMSoat) elMSoat.textContent = d.metrica_soat;
+        const elMCancel = document.getElementById('txt_metrica_cancel'); if (elMCancel) elMCancel.textContent = d.metrica_cancel;
+        const elCTitle = document.getElementById('txt_calc_title'); if (elCTitle) elCTitle.innerHTML = d.calc_title;
+        const elCStatus = document.getElementById('txt_calc_status'); if (elCStatus) elCStatus.innerHTML = d.calc_status;
+        const elLExp = document.getElementById('txt_label_exp'); if (elLExp) elLExp.textContent = d.label_exp;
+        const elLPax = document.getElementById('txt_label_pax'); if (elLPax) elLPax.textContent = d.label_pax;
+        const elLHor = document.getElementById('txt_label_horario'); if (elLHor) elLHor.textContent = d.label_horario;
+        const elLTot = document.getElementById('txt_label_total'); if (elLTot) elLTot.textContent = d.label_total;
+        const elLSec = document.getElementById('txt_label_pago_seguro'); if (elLSec) elLSec.innerHTML = d.label_pago_seguro;
+        const elBCot = document.getElementById('txt_btn_whatsapp_cot'); if (elBCot) elBCot.textContent = d.btn_whatsapp_cot;
+
+        document.querySelectorAll('.nav-link-i18n').forEach(el => {
+          const key = el.getAttribute('data-key');
+          if (d[key]) el.textContent = d[key];
+        });
+      }
+
+      document.getElementById('btn_lang_es')?.addEventListener('click', () => aplicarIdioma('ES'));
+      document.getElementById('btn_lang_en')?.addEventListener('click', () => aplicarIdioma('EN'));
+
+      // 4. Conmutador de Tema
+      const btnTheme = document.getElementById('btn_toggle_theme');
+      const iconTheme = document.getElementById('icon_theme');
+
+      function toggleTema() {
+        const actual = document.documentElement.dataset.theme || 'futuro';
+        const nuevo = actual === 'futuro' ? 'luz' : 'futuro';
+        document.documentElement.dataset.theme = nuevo;
+        localStorage.setItem('wiTema_kevin13', nuevo);
+        if (iconTheme) iconTheme.className = nuevo === 'futuro' ? 'fa-solid fa-sun' : 'fa-solid fa-moon';
+      }
+
+      btnTheme?.addEventListener('click', toggleTema);
+
+      // 5. Cotizador Dinámico
+      const selectTour = document.getElementById('cot_tour');
+      const inputPersonas = document.getElementById('cot_personas');
+      const txtTotal = document.getElementById('cot_total_txt');
+      const badgeDesc = document.getElementById('badge_descuento_grupo');
+      const btnEnviar = document.getElementById('btn_enviar_cotizacion');
+
+      function recalcularTotal() {
+        const opt = selectTour.options[selectTour.selectedIndex];
+        const precioUnitario = monedaActual === 'PEN' ? parseFloat(opt.value) : parseFloat(opt.getAttribute('data-usd'));
+        const personas = parseInt(inputPersonas.value) || 1;
+        const esPrivado = parseFloat(opt.value) === 250;
+
+        let total = esPrivado ? precioUnitario : precioUnitario * personas;
+
+        if (personas >= 5 && !esPrivado) {
+          total = total * 0.90;
+          if (badgeDesc) badgeDesc.style.display = 'block';
+        } else {
+          if (badgeDesc) badgeDesc.style.display = 'none';
+        }
+
+        const simbolo = monedaActual === 'PEN' ? 'S/' : '$';
+        txtTotal.textContent = `${simbolo} ${total.toFixed(2)} ${monedaActual === 'USD' ? 'USD' : ''}`;
+      }
+
+      if (selectTour && inputPersonas) {
+        selectTour.addEventListener('change', recalcularTotal);
+        inputPersonas.addEventListener('input', recalcularTotal);
+        recalcularTotal();
+      }
+
+      if (btnEnviar) {
+        btnEnviar.addEventListener('click', function() {
+          const selectedOption = selectTour.options[selectTour.selectedIndex];
+          const nombreTour = idiomaActual === 'ES' ? selectedOption.getAttribute('data-es') : selectedOption.getAttribute('data-en');
+          const personas = inputPersonas.value;
+          const horario = document.getElementById('cot_horario').value;
+          const total = txtTotal.textContent;
+
+          const msg = `¡Hola Kevin Tours! Soy Carlos Mendoza (Miembro VIP) y deseo reservar:%0A%0A` +
+            `📍 *Tour:* ${encodeURIComponent(nombreTour)}%0A` +
+            `👥 *Pasajeros:* ${personas}%0A` +
+            `⏰ *Horario:* ${encodeURIComponent(horario)}%0A` +
+            `💰 *Total Estimado:* ${encodeURIComponent(total)}%0A` +
+            `📍 *Punto:* Recepción Hospedaje Hawka%0A%0A` +
+            `¿Podrían confirmarme la disponibilidad?`;
+
+          window.open(`https://wa.me/51985496463?text=${msg}`, '_blank');
+        });
+      }
+
+      // 6. Mostrar / Ocultar Tours Adicionales
+      const btnToggleTours = document.getElementById('btn_toggle_mas_tours');
+      const boxToursExtra = document.getElementById('tours_adicionales');
+      const txtToggleTours = document.getElementById('txt_toggle_tours');
+      const iconToggleTours = document.getElementById('icon_toggle_tours');
+
+      btnToggleTours?.addEventListener('click', () => {
+        const estaOculto = boxToursExtra.style.display === 'none';
+        boxToursExtra.style.display = estaOculto ? 'grid' : 'none';
+        txtToggleTours.textContent = estaOculto ? 'Ocultar Tours Adicionales' : 'Mostrar Más Tours & Paquetes (4 Adicionales)';
+        iconToggleTours.className = estaOculto ? 'fa-solid fa-minus' : 'fa-solid fa-plus';
+      });
+
+      // 7. Mobile Drawer Toggle & Cierre al hacer click afuera (Backdrop)
+      const drawer = document.getElementById('mobile_drawer');
+      const backdrop = document.getElementById('drawer_backdrop');
+      const btnOpen = document.getElementById('btn_open_drawer');
+      const btnClose = document.getElementById('btn_close_drawer');
+
+      function abrirDrawer() {
+        drawer?.classList.add('open');
+        backdrop?.classList.add('active');
+      }
+
+      function cerrarDrawer() {
+        drawer?.classList.remove('open');
+        backdrop?.classList.remove('active');
+      }
+
+      btnOpen?.addEventListener('click', abrirDrawer);
+      btnClose?.addEventListener('click', cerrarDrawer);
+      backdrop?.addEventListener('click', cerrarDrawer);
+
+      document.querySelectorAll('.drawer-item').forEach(link => {
+        link.addEventListener('click', cerrarDrawer);
+      });
+    })();
+  </script>
+</body>
+</html>

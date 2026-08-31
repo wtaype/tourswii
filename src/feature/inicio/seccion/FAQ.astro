@@ -1,0 +1,64 @@
+---
+// src/feature/inicio/seccion/FAQ.astro
+// ❓ Preguntas Frecuentes al Final Antes del Footer (<70 líneas)
+import { FAQS } from '../data/faqs.data.js';
+import { NEGOCIO } from '../../../core/config/constantes.js';
+
+interface Props {
+  idioma?: 'es' | 'en';
+}
+
+const { idioma = 'es' } = Astro.props;
+---
+
+<section id="faq" style="padding: 7vh 0; border-bottom: 1px solid var(--border-card); background: var(--bg-subtle);">
+  <div class="container-wide">
+    
+    <!-- Encabezado -->
+    <div style="text-align: center; margin-bottom: 3rem;">
+      <span style="color: var(--neon-yellow); font-size: 0.75rem; font-weight: 800; text-transform: uppercase;">
+        {idioma === 'en' ? 'Clear Answers' : 'Respuestas Claras'}
+      </span>
+      <h2 style="font-size: clamp(1.6rem, 2.6vw, 2.3rem); font-weight: 900; text-transform: uppercase; margin-top: 0.4rem; color: var(--text-main);">
+        {idioma === 'en' ? 'Frequently Asked Questions' : 'Preguntas Frecuentes'}
+      </h2>
+    </div>
+
+    <!-- Grid: Banner de Ayuda + Acordeones -->
+    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 2rem; align-items: start;">
+      
+      <!-- Card Izquierda -->
+      <div style="background: var(--bg-card); border: 1px solid var(--border-card); border-radius: 1.4rem; overflow: hidden; position: relative; height: 380px; box-shadow: var(--shadow-xl);">
+        <img src="/tours/sandski_laguna.png" alt="SandSki Huacachina" style="width: 100%; height: 100%; object-fit: cover;" />
+        <div style="position: absolute; inset: 0; background: linear-gradient(to top, rgba(0,0,0,0.88) 0%, transparent 60%); display: flex; flex-direction: column; justify-content: flex-end; padding: 1.8rem;">
+          <span style="color: var(--neon-yellow); font-weight: 800; font-size: 0.75rem; text-transform: uppercase;">ATENCIÓN DIRECTA</span>
+          <h3 style="font-size: 1.25rem; font-weight: 900; color: #fff; margin-top: 0.2rem;">
+            {idioma === 'en' ? 'First time skiing or sandboarding?' : '¿Primera vez en SandSki o Sandboard?'}
+          </h3>
+          <p style="font-size: 0.8rem; color: #ddd; margin: 0.4rem 0 1rem 0;">
+            {idioma === 'en' ? 'Our certified instructors guide you on every slope.' : 'Nuestros instructores te acompañan en cada bajada.'}
+          </p>
+          <a href={NEGOCIO.redes.whatsapp} target="_blank" rel="noopener noreferrer" style="background: linear-gradient(135deg, #ffe600, #ff4500); color: #000; font-weight: 800; padding: 0.75rem 1.3rem; border-radius: 0.8rem; font-size: 0.82rem; text-decoration: none; width: fit-content;">
+            <i class="fa-brands fa-whatsapp"></i> {idioma === 'en' ? 'Talk with a Guide' : 'Hablar con un Guía Oficial'}
+          </a>
+        </div>
+      </div>
+
+      <!-- Acordeones -->
+      <div style="display: flex; flex-direction: column; gap: 0.8rem;">
+        {FAQS.map((faq, idx) => (
+          <details style="background: var(--bg-card); border: 1px solid var(--border-card); border-radius: 0.9rem; padding: 1.1rem; cursor: pointer; box-shadow: var(--shadow-xl);" open={idx === 0}>
+            <summary style="font-weight: 700; font-size: 0.9rem; color: var(--neon-yellow); outline: none;">
+              {idioma === 'en' ? faq.pregunta_en : faq.pregunta_es}
+            </summary>
+            <p style="font-size: 0.82rem; color: var(--text-muted); margin-top: 0.6rem; line-height: 1.55;">
+              {idioma === 'en' ? faq.respuesta_en : faq.respuesta_es}
+            </p>
+          </details>
+        ))}
+      </div>
+
+    </div>
+
+  </div>
+</section>

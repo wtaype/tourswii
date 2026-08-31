@@ -12,7 +12,13 @@ export let linkme = 'https://wtaype.github.io/';
 export let versionName = '1.0.0';
 export let version = 'v1';
 
-export default { id, app, icon, titulo, keywii, descri, linkweb, lanzamiento, by, linkme, version, versionName };
+import { NEGOCIO } from './core/config/constantes.js';
+
+export const telefono = NEGOCIO.telefono;
+export const telefonoLimpio = NEGOCIO.telefonoLimpio;
+export const direccion = NEGOCIO.ubicacion.direccion;
+
+export default { id, app, icon, titulo, keywii, descri, linkweb, lanzamiento, by, linkme, version, versionName, telefono, telefonoLimpio, direccion };
 
 /** ACTUALIZAR AL TAG POR SEGURIDAD [TAG NUEVO] (1)
 git tag v1 -m "Version v1" ; git push origin v1

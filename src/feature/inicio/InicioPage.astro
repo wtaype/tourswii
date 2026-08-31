@@ -1,0 +1,32 @@
+---
+// src/feature/inicio/InicioPage.astro
+// 🏖️ Orquestador Modular de Inicio sobre Layout Principal (<35 líneas)
+import Principal from '../../core/layouts/Principal.astro';
+
+import Hero from './seccion/Hero.astro';
+import Disciplines from './seccion/Disciplines.astro';
+import HawkaBase from './seccion/HawkaBase.astro';
+import LocationMap from './seccion/LocationMap.astro';
+import TrustPillars from './seccion/TrustPillars.astro';
+import Reputation from './seccion/Reputation.astro';
+import FAQ from './seccion/FAQ.astro';
+
+interface Props {
+  idioma?: 'es' | 'en';
+  esVip?: boolean;
+}
+
+const { idioma = 'es', esVip = false } = Astro.props;
+---
+
+<Principal idioma={idioma} esVip={esVip} ruta={idioma === 'en' ? '/en' : '/'}>
+  <main>
+    <Hero idioma={idioma} />
+    <Disciplines idioma={idioma} />
+    <HawkaBase idioma={idioma} />
+    <LocationMap idioma={idioma} />
+    <TrustPillars idioma={idioma} />
+    <Reputation idioma={idioma} />
+    <FAQ idioma={idioma} />
+  </main>
+</Principal>

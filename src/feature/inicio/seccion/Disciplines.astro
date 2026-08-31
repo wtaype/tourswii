@@ -1,0 +1,81 @@
+---
+// src/feature/inicio/seccion/Disciplines.astro
+// 🎿 Las 4 Disciplinas Oficiales en Tarjetas Interactivas (<85 líneas)
+import { DISCIPLINAS } from '../data/disciplinas.data.js';
+import { NEGOCIO } from '../../../core/config/constantes.js';
+
+interface Props {
+  idioma?: 'es' | 'en';
+}
+
+const { idioma = 'es' } = Astro.props;
+---
+
+<section id="tours" style="padding: 7vh 0; border-bottom: 1px solid var(--border-card);">
+  <div class="container-wide">
+    
+    <!-- Encabezado de Sección -->
+    <div style="text-align: center; margin-bottom: 3rem;">
+      <span style="color: var(--neon-yellow); font-size: 0.75rem; font-weight: 800; text-transform: uppercase;">
+        {idioma === 'en' ? 'Exclusive Experiences in Huacachina' : 'Experiencias Exclusivas en Huacachina'}
+      </span>
+      <h2 style="font-size: clamp(1.6rem, 2.8vw, 2.5rem); font-weight: 900; text-transform: uppercase; margin-top: 0.4rem;">
+        {idioma === 'en' ? 'Our' : 'Nuestras'} <span style="background: linear-gradient(90deg, #ffe600, #ff4500); -webkit-background-clip: text; -webkit-text-fill-color: transparent;">4 {idioma === 'en' ? 'Disciplines' : 'Disciplinas'}</span>
+      </h2>
+      <p style="font-size: 0.88rem; color: var(--text-muted); max-width: 550px; margin: 0.4rem auto 0 auto;">
+        {idioma === 'en' ? 'Equipped with real snow boots, pro alpine bindings, high-speed wax and certified local instructors.' : 'Equipamiento con botas rígidas de nieve, fijaciones pro, cera de alta velocidad y guías locales certificados.'}
+      </p>
+    </div>
+
+    <!-- Grid de 4 Disciplinas -->
+    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 1.5rem;">
+      {DISCIPLINAS.map(item => (
+        <div style={`background: var(--bg-card); border: 1px solid var(--border-card); border-top: 3px solid ${item.color_borde}; border-radius: 1.2rem; overflow: hidden; display: flex; flex-direction: column; box-shadow: var(--shadow-xl);`}>
+          
+          <!-- Imagen de la Disciplina -->
+          <div style="position: relative; height: 180px; overflow: hidden;">
+            <img src={item.imagen} alt={item.nombre_es} style="width: 100%; height: 100%; object-fit: cover;" />
+            <span style={`position: absolute; top: 0.8rem; right: 0.8rem; background: #000; color: ${item.color_borde}; font-size: 0.68rem; font-weight: 900; padding: 0.25rem 0.65rem; border-radius: 999px; border: 1px solid ${item.color_borde};`}>
+              {item.badge}
+            </span>
+          </div>
+
+          <!-- Información y Beneficios -->
+          <div style="padding: 1.2rem; display: flex; flex-direction: column; flex-grow: 1;">
+            <h3 style="font-size: 1.15rem; font-weight: 800; margin-bottom: 0.4rem; color: var(--text-main);">
+              {idioma === 'en' ? item.nombre_en : item.nombre_es}
+            </h3>
+            <p style="font-size: 0.8rem; color: var(--text-muted); line-height: 1.5; margin-bottom: 1rem;">
+              {idioma === 'en' ? item.desc_en : item.desc_es}
+            </p>
+
+            <ul style="list-style: none; padding: 0; display: flex; flex-direction: column; gap: 0.4rem; font-size: 0.78rem; margin-bottom: 1.2rem;">
+              {(idioma === 'en' ? item.beneficios_en : item.beneficios_es).map(b => (
+                <li style="display: flex; align-items: center; gap: 0.4rem;">
+                  <i class="fa-solid fa-circle-check" style="color: var(--wa-green); font-size: 0.8rem;"></i>
+                  <span>{b}</span>
+                </li>
+              ))}
+            </ul>
+
+            <!-- Precio y Botón de Reserva -->
+            <div style="margin-top: auto; padding-top: 0.8rem; border-top: 1px solid var(--border-card); display: flex; justify-content: space-between; align-items: center;">
+              <div>
+                <span style="font-size: 0.68rem; color: var(--text-muted); display: block;">Por persona</span>
+                <strong style="font-size: 1.25rem; color: var(--neon-yellow); font-weight: 900;">
+                  S/ {item.precio_pen} <span style="font-size: 0.75rem; color: var(--text-muted);">(${item.precio_usd})</span>
+                </strong>
+              </div>
+              <a href={`https://wa.me/${NEGOCIO.telefonoLimpio}?text=${encodeURIComponent(`Hola Kevin Tours! Deseo reservar ${item.nombre_es}`)}`} target="_blank" rel="noopener noreferrer" style="background: var(--bg-subtle); color: var(--neon-yellow); border: 1px solid var(--border-card); padding: 0.5rem 0.9rem; border-radius: 0.6rem; font-size: 0.76rem; font-weight: 700; text-decoration: none;">
+                Reservar <i class="fa-solid fa-arrow-right" style="font-size: 0.7rem;"></i>
+              </a>
+            </div>
+
+          </div>
+
+        </div>
+      ))}
+    </div>
+
+  </div>
+</section>

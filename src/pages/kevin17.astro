@@ -1,0 +1,842 @@
+---
+// src/pages/kevin17.astro
+// 🛠️ Kevin Tours Evolution - Panel de Personal & Recepción Base Hawka
+// Operaciones para Kevin (Dueño), Anthony y Michael (Pilotos/Guías)
+// Especialidad: 1. SandSki Pro | 2. Sandboard Pro | 3. Snowboard Pro | 4. Bodyboard en Arena
+// Header fijo sticky y Mobile Bottom Navigation 100% garantizados en todas las pestañas.
+// Abre en: http://localhost:4321/kevin17
+
+const telefono = '+51 985 496 463';
+const baseHawka = 'Av. Ángela Perotti S/n (Hospedaje Hawka)';
+---
+
+<!DOCTYPE html>
+<html lang="es" data-theme="futuro">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0" />
+  <link rel="icon" type="image/x-icon" href="/favicon.ico" />
+  <title>Kevin Tours Staff | Recepción Base Hawka & Despacho</title>
+  <meta name="robots" content="noindex, nofollow" />
+
+  <!-- Fuentes Locales y FontAwesome -->
+  <link rel="preload" href="/google/Poppins-400.woff2" as="font" type="font/woff2" crossorigin="anonymous" />
+  <link rel="preload" href="/google/Poppins-600.woff2" as="font" type="font/woff2" crossorigin="anonymous" />
+  <link rel="preload" href="/google/Poppins-700.woff2" as="font" type="font/woff2" crossorigin="anonymous" />
+  <link rel="stylesheet" href="/google/fonts.css" />
+  <link rel="stylesheet" href="/fontawesome/css/all.min.css" />
+
+  <!-- Anti-FOUC -->
+  <script is:inline>
+    (function() {
+      try {
+        const guardado = localStorage.getItem('wiTema_kevin17');
+        const sistema = window.matchMedia('(prefers-color-scheme: dark)').matches ? 'futuro' : 'luz';
+        document.documentElement.dataset.theme = guardado || sistema || 'futuro';
+      } catch (e) {}
+    })();
+  </script>
+
+  <style is:global>
+    :root[data-theme="futuro"] {
+      --bg-body: #05080c;
+      --bg-sidebar: #090e17;
+      --bg-card: rgba(13, 19, 28, 0.96);
+      --bg-card-hover: rgba(20, 29, 44, 1);
+      --bg-subtle: rgba(255, 255, 255, 0.04);
+      --border-color: rgba(255, 255, 255, 0.1);
+      --neon-yellow: #ffe600;
+      --fire-orange: #ff4500;
+      --glow-cyan: #00f0ff;
+      --wa-green: #25d366;
+      --text-main: #f8fafc;
+      --text-muted: #94a3b8;
+      --badge-bg: rgba(255, 230, 0, 0.12);
+      --badge-color: #ffe600;
+    }
+
+    :root[data-theme="luz"] {
+      --bg-body: #f1f5f9;
+      --bg-sidebar: #ffffff;
+      --bg-card: #ffffff;
+      --bg-card-hover: #f8fafc;
+      --bg-subtle: rgba(0, 0, 0, 0.04);
+      --border-color: rgba(0, 0, 0, 0.08);
+      --neon-yellow: #d97706;
+      --fire-orange: #ea580c;
+      --glow-cyan: #0284c7;
+      --wa-green: #16a34a;
+      --text-main: #0f172a;
+      --text-muted: #64748b;
+      --badge-bg: rgba(217, 119, 6, 0.12);
+      --badge-color: #b45309;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Poppins', system-ui, sans-serif; }
+
+    body {
+      background-color: var(--bg-body);
+      color: var(--text-main);
+      min-height: 100vh;
+      display: block;
+      overflow-x: hidden;
+    }
+
+    a { text-decoration: none; color: inherit; }
+
+    /* Barra Superior Móvil Fija Garantizada */
+    .mobile-header-bar {
+      display: none;
+      position: sticky;
+      top: 0;
+      left: 0;
+      right: 0;
+      z-index: 9999;
+      background: var(--bg-sidebar);
+      border-bottom: 1px solid var(--border-color);
+      padding: 0.75rem 1rem;
+      justify-content: space-between;
+      align-items: center;
+      backdrop-filter: blur(12px);
+    }
+
+    /* Sidebar Desktop */
+    .admin-sidebar {
+      width: 260px;
+      background: var(--bg-sidebar);
+      border-right: 1px solid var(--border-color);
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      position: fixed;
+      top: 0;
+      bottom: 0;
+      left: 0;
+      z-index: 1000;
+      transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    .admin-main {
+      margin-left: 260px;
+      padding: 2rem;
+      min-height: 100vh;
+      max-width: calc(100vw - 260px);
+      padding-bottom: 7rem;
+    }
+
+    .sidebar-brand {
+      padding: 1.5rem;
+      border-bottom: 1px solid var(--border-color);
+      display: flex;
+      align-items: center;
+      gap: 0.8rem;
+    }
+
+    .sidebar-menu {
+      padding: 1rem 0.8rem;
+      display: flex;
+      flex-direction: column;
+      gap: 0.35rem;
+    }
+
+    .sidebar-btn {
+      display: flex;
+      align-items: center;
+      gap: 0.8rem;
+      padding: 0.75rem 1rem;
+      border-radius: 0.7rem;
+      font-size: 0.85rem;
+      font-weight: 600;
+      color: var(--text-muted);
+      background: transparent;
+      border: none;
+      cursor: pointer;
+      width: 100%;
+      text-align: left;
+      transition: all 0.2s;
+    }
+
+    .sidebar-btn:hover, .sidebar-btn.activo {
+      background: var(--bg-subtle);
+      color: var(--neon-yellow);
+      font-weight: 700;
+    }
+
+    .sidebar-btn.activo {
+      border-left: 3px solid var(--neon-yellow);
+      background: rgba(255, 230, 0, 0.08);
+    }
+
+    .card-panel {
+      background: var(--bg-card);
+      border: 1px solid var(--border-color);
+      border-radius: 1rem;
+      padding: 1.5rem;
+      margin-bottom: 1.5rem;
+      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
+    }
+
+    .stats-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 1.2rem;
+      margin-bottom: 1.5rem;
+    }
+
+    .pill-box {
+      display: inline-flex;
+      align-items: center;
+      background: var(--bg-subtle);
+      border: 1px solid var(--border-color);
+      border-radius: 999px;
+      padding: 0.2rem;
+      gap: 0.2rem;
+    }
+
+    .pill-item {
+      border: none;
+      background: transparent;
+      padding: 0.3rem 0.65rem;
+      border-radius: 999px;
+      font-size: 0.72rem;
+      font-weight: 700;
+      color: var(--text-muted);
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+    .pill-item.active { background: var(--neon-yellow); color: #000; }
+
+    /* Barra de Navegación Inferior Móvil Fija Garantizada */
+    .mobile-bottom-nav {
+      display: none;
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      z-index: 9999;
+      background: var(--bg-sidebar);
+      border-top: 1px solid var(--border-color);
+      padding: 0.4rem 0.6rem;
+      justify-content: space-around;
+      align-items: center;
+      backdrop-filter: blur(12px);
+      box-shadow: 0 -5px 20px rgba(0,0,0,0.5);
+    }
+
+    .mobile-bottom-btn {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 0.2rem;
+      background: transparent;
+      border: none;
+      color: var(--text-muted);
+      font-size: 0.65rem;
+      font-weight: 600;
+      padding: 0.3rem 0.5rem;
+      cursor: pointer;
+      border-radius: 0.5rem;
+    }
+    .mobile-bottom-btn.activo { color: var(--neon-yellow); font-weight: 700; }
+
+    /* Grid de reportes responsivo */
+    .grid-resumen-reportes {
+      display: grid;
+      grid-template-columns: 1.15fr 0.85fr;
+      gap: 1.5rem;
+      margin-top: 1.5rem;
+    }
+
+    /* Backdrop para sidebar offcanvas */
+    .sidebar-backdrop {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(0, 0, 0, 0.7);
+      backdrop-filter: blur(4px);
+      z-index: 10000;
+    }
+    .sidebar-backdrop.active { display: block !important; }
+
+    /* ==================== MEDIA QUERIES MOBILE APP ==================== */
+    @media (max-width: 1024px) {
+      .grid-resumen-reportes {
+        grid-template-columns: 1fr !important;
+        gap: 1.2rem !important;
+      }
+      .admin-sidebar {
+        transform: translateX(-100%);
+        box-shadow: 10px 0 30px rgba(0,0,0,0.5);
+        z-index: 10001;
+      }
+      .admin-sidebar.open {
+        transform: translateX(0);
+      }
+      .admin-main {
+        margin-left: 0 !important;
+        width: 100% !important;
+        max-width: 100vw !important;
+        padding: 1rem !important;
+        padding-bottom: 7rem !important;
+      }
+      .mobile-header-bar {
+        display: flex !important;
+      }
+      .mobile-bottom-nav {
+        display: flex !important;
+      }
+      .stats-grid {
+        grid-template-columns: 1fr 1fr !important;
+        gap: 0.8rem !important;
+      }
+      .table-responsive-container {
+        overflow-x: auto;
+        -webkit-overflow-scrolling: touch;
+      }
+      .top-controls-bar {
+        display: none !important;
+      }
+    }
+
+    @media (max-width: 640px) {
+      .stats-grid {
+        grid-template-columns: 1fr !important;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ==================== BARRA SUPERIOR MÓVIL (FIJA STICKY) ==================== -->
+  <div class="mobile-header-bar">
+    <div style="display: flex; align-items: center; gap: 0.6rem;">
+      <button type="button" id="btn_toggle_sidebar_mobile" style="background: var(--bg-subtle); border: 1px solid var(--border-color); color: var(--text-main); width: 2.2rem; height: 2.2rem; border-radius: 0.5rem; display: flex; align-items: center; justify-content: center;">
+        <i class="fa-solid fa-bars"></i>
+      </button>
+      <div style="width: 1.8rem; height: 1.8rem; border-radius: 0.4rem; background: linear-gradient(135deg, #ffe600, #ff4500); display: flex; align-items: center; justify-content: center; color: #000; font-size: 0.85rem;">
+        <i class="fa-solid fa-person-skiing"></i>
+      </div>
+      <div>
+        <strong style="font-size: 0.88rem; display: block; line-height: 1;">Kevin Tours Staff</strong>
+        <span style="font-size: 0.62rem; color: var(--neon-yellow);">Base Hawka · 4 Disciplinas</span>
+      </div>
+    </div>
+
+    <div style="display: flex; align-items: center; gap: 0.5rem;">
+      <!-- Moneda Móvil -->
+      <div class="pill-box">
+        <button type="button" class="pill-item active btn-cur-pen" style="padding: 0.2rem 0.45rem; font-size: 0.65rem;">S/</button>
+        <button type="button" class="pill-item btn-cur-usd" style="padding: 0.2rem 0.45rem; font-size: 0.65rem;">$</button>
+      </div>
+
+      <!-- Modo Luz/Futuro -->
+      <button type="button" class="btn-toggle-theme-global" style="background: var(--bg-subtle); border: 1px solid var(--border-color); color: var(--text-main); width: 2rem; height: 2rem; border-radius: 50%; display: flex; align-items: center; justify-content: center;">
+        <i class="fa-solid fa-moon icon-theme-target" style="font-size: 0.8rem;"></i>
+      </button>
+    </div>
+  </div>
+
+  <!-- BACKDROP SIDEBAR MÓVIL -->
+  <div id="sidebar_backdrop" class="sidebar-backdrop"></div>
+
+  <!-- ==================== SIDEBAR LATERAL (ESCRITORIO Y OFFCANVAS MÓVIL) ==================== -->
+  <aside id="admin_sidebar" class="admin-sidebar">
+    <div>
+      <div class="sidebar-brand" style="justify-content: space-between;">
+        <div style="display: flex; align-items: center; gap: 0.8rem;">
+          <div style="width: 2.2rem; height: 2.2rem; border-radius: 0.6rem; background: linear-gradient(135deg, #ffe600, #ff4500); display: flex; align-items: center; justify-content: center; color: #000; font-size: 1.1rem; box-shadow: 0 0 10px rgba(255, 230, 0, 0.4);">
+            <i class="fa-solid fa-person-skiing"></i>
+          </div>
+          <div>
+            <strong style="font-size: 0.95rem; display: block; line-height: 1;">Kevin Tours</strong>
+            <span style="font-size: 0.65rem; color: var(--neon-yellow); font-weight: 700; text-transform: uppercase;">Staff & Base Hawka</span>
+          </div>
+        </div>
+        <button type="button" id="btn_close_sidebar_mobile" style="display: none; background: transparent; border: none; font-size: 1.5rem; color: var(--text-muted); cursor: pointer;">&times;</button>
+      </div>
+
+      <div style="padding: 1rem 1.2rem; border-bottom: 1px solid var(--border-color); background: rgba(0,0,0,0.15);">
+        <div style="display: flex; align-items: center; gap: 0.7rem;">
+          <div style="width: 2.2rem; height: 2.2rem; border-radius: 50%; background: #ffe600; color: #000; display: flex; align-items: center; justify-content: center; font-weight: 900; font-size: 0.85rem;">
+            KF
+          </div>
+          <div>
+            <strong style="font-size: 0.82rem; display: block; line-height: 1.1;">Kevin Salazar</strong>
+            <span style="font-size: 0.68rem; color: var(--wa-green); font-weight: 700;"><i class="fa-solid fa-circle" style="font-size: 0.5rem;"></i> Pilotos: Anthony & Michael</span>
+          </div>
+        </div>
+      </div>
+
+      <nav class="sidebar-menu">
+        <button class="sidebar-btn activo" data-target="tab_resumen">
+          <i class="fa-solid fa-chart-line" style="color: var(--neon-yellow); width: 1.2rem;"></i> Resumen & Ventas
+        </button>
+        <button class="sidebar-btn" data-target="tab_recepcion">
+          <i class="fa-solid fa-id-card-clip" style="color: var(--glow-cyan); width: 1.2rem;"></i> Recepción & Check-in
+        </button>
+        <button class="sidebar-btn" data-target="tab_salidas">
+          <i class="fa-solid fa-car-side" style="color: var(--fire-orange); width: 1.2rem;"></i> Salidas & Despacho
+        </button>
+        <button class="sidebar-btn" data-target="tab_equipos">
+          <i class="fa-solid fa-person-skiing" style="color: #a855f7; width: 1.2rem;"></i> Inventario de Botas & Esquís
+        </button>
+        <button class="sidebar-btn" data-target="tab_tarifas">
+          <i class="fa-solid fa-tags" style="color: var(--wa-green); width: 1.2rem;"></i> Tarifario 4 Disciplinas
+        </button>
+      </nav>
+    </div>
+
+    <div style="padding: 1.2rem; border-top: 1px solid var(--border-color); display: flex; flex-direction: column; gap: 0.8rem;">
+      <a href="/kevin15" class="sidebar-btn" style="padding: 0.5rem 0.8rem; font-size: 0.78rem; justify-content: center; background: var(--bg-subtle); border: 1px solid var(--border-color);">
+        <i class="fa-solid fa-globe"></i> Ver Web Pública (kevin15)
+      </a>
+      <div style="display: flex; justify-content: space-between; align-items: center; font-size: 0.7rem; color: var(--text-muted);">
+        <span>Base Hawka · Ica</span>
+        <span style="color: var(--wa-green); font-weight: 700;">v2.6 Online</span>
+      </div>
+    </div>
+  </aside>
+
+  <!-- ==================== CONTENIDO PRINCIPAL ==================== -->
+  <main class="admin-main">
+    
+    <!-- Barra Superior Desktop -->
+    <div class="top-controls-bar" style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.8rem;">
+      <div>
+        <h1 id="txt_header_tab_title" style="font-size: 1.5rem; font-weight: 900; margin: 0; line-height: 1.1;">
+          Resumen General & Ventas
+        </h1>
+        <p style="font-size: 0.8rem; color: var(--text-muted); margin-top: 0.2rem;">
+          Control en vivo de caja, check-in en base Hawka y despacho de tubulares.
+        </p>
+      </div>
+
+      <div style="display: flex; align-items: center; gap: 1rem;">
+        <!-- Selector Moneda PEN / USD -->
+        <div class="pill-box">
+          <button type="button" class="pill-item active btn-cur-pen" style="padding: 0.35rem 0.75rem; font-size: 0.75rem;">S/ Soles (PEN)</button>
+          <button type="button" class="pill-item btn-cur-usd" style="padding: 0.35rem 0.75rem; font-size: 0.75rem;">$ USD</button>
+        </div>
+
+        <!-- Modo Luz / Futuro -->
+        <button type="button" class="btn-toggle-theme-global" style="background: var(--bg-card); border: 1px solid var(--border-color); color: var(--text-main); width: 2.4rem; height: 2.4rem; border-radius: 50%; cursor: pointer; display: flex; align-items: center; justify-content: center;" title="Cambiar Tema">
+          <i class="fa-solid fa-moon icon-theme-target"></i>
+        </button>
+
+        <a href={`https://wa.me/51985496463`} target="_blank" style="background: var(--wa-green); color: #fff; padding: 0.55rem 1rem; border-radius: 0.7rem; font-size: 0.82rem; font-weight: 700; display: inline-flex; align-items: center; gap: 0.4rem;">
+          <i class="fa-brands fa-whatsapp"></i> Central {telefono}
+        </a>
+      </div>
+    </div>
+
+    <!-- ==================== PESTAÑA 0: RESUMEN GENERAL & VENTAS ==================== -->
+    <div id="tab_resumen" class="tab-content-panel">
+      <!-- 4 Tarjetas de Métricas -->
+      <div class="stats-grid">
+        <div class="card-panel" style="border-left: 4px solid var(--neon-yellow); margin-bottom: 0;">
+          <span style="font-size: 0.72rem; font-weight: 700; color: var(--text-muted); text-transform: uppercase;">Pasajeros Hoy (Hawka)</span>
+          <h3 style="font-size: 1.8rem; font-weight: 900; margin: 0.2rem 0; color: var(--neon-yellow);">84 Pax</h3>
+          <span style="font-size: 0.7rem; color: var(--wa-green); font-weight: 600;">+24% vs. ayer</span>
+        </div>
+
+        <div class="card-panel" style="border-left: 4px solid var(--fire-orange); margin-bottom: 0;">
+          <span style="font-size: 0.72rem; font-weight: 700; color: var(--text-muted); text-transform: uppercase;">Botas de Nieve Asignadas</span>
+          <h3 style="font-size: 1.8rem; font-weight: 900; margin: 0.2rem 0; color: var(--fire-orange);">46 Pares</h3>
+          <span style="font-size: 0.7rem; color: var(--text-muted);">Stock disponible: 18 pares</span>
+        </div>
+
+        <div class="card-panel" style="border-left: 4px solid var(--glow-cyan); margin-bottom: 0;">
+          <span style="font-size: 0.72rem; font-weight: 700; color: var(--text-muted); text-transform: uppercase;">Ingresos Totales Hoy</span>
+          <h3 id="stat_ingresos_hoy" style="font-size: 1.8rem; font-weight: 900; margin: 0.2rem 0; color: var(--glow-cyan);" data-pen="4520" data-usd="1221">S/ 4,520</h3>
+          <span style="font-size: 0.7rem; color: var(--wa-green); font-weight: 600;">94% cobrado en caja</span>
+        </div>
+
+        <div class="card-panel" style="border-left: 4px solid var(--wa-green); margin-bottom: 0;">
+          <span style="font-size: 0.72rem; font-weight: 700; color: var(--text-muted); text-transform: uppercase;">Próxima Salida Sunset</span>
+          <h3 style="font-size: 1.8rem; font-weight: 900; margin: 0.2rem 0; color: var(--wa-green);">4:00 PM</h3>
+          <span style="font-size: 0.7rem; color: var(--fire-orange); font-weight: 700;">¡3 Tubulares Llenos!</span>
+        </div>
+      </div>
+
+      <!-- Detalle de Balance y Ventas por Disciplina -->
+      <div class="grid-resumen-reportes">
+        <div class="card-panel" style="margin-bottom: 0;">
+          <h3 style="font-size: 1.05rem; font-weight: 800; margin-bottom: 1.2rem; display: flex; align-items: center; gap: 0.5rem;">
+            <i class="fa-solid fa-cash-register" style="color: var(--neon-yellow);"></i> Balance de Caja Diario en Base Hawka
+          </h3>
+          <div style="display: flex; flex-direction: column; gap: 0.75rem;">
+            <div style="display: flex; justify-content: space-between; align-items: center; padding: 0.8rem 1rem; background: var(--bg-body); border-radius: 0.7rem; border: 1px solid var(--border-color);">
+              <span style="font-size: 0.82rem; font-weight: 600;"><i class="fa-solid fa-money-bill-wave" style="color: var(--wa-green); margin-right: 0.5rem;"></i> Efectivo Recaudado</span>
+              <strong class="precio_staff" data-pen="1850" data-usd="500" style="color: var(--neon-yellow); font-size: 0.95rem;">S/ 1,850</strong>
+            </div>
+            <div style="display: flex; justify-content: space-between; align-items: center; padding: 0.8rem 1rem; background: var(--bg-body); border-radius: 0.7rem; border: 1px solid var(--border-color);">
+              <span style="font-size: 0.82rem; font-weight: 600;"><i class="fa-solid fa-mobile-screen-button" style="color: #742774; margin-right: 0.5rem;"></i> Transferencias Yape / Plin</span>
+              <strong class="precio_staff" data-pen="1920" data-usd="518" style="color: var(--neon-yellow); font-size: 0.95rem;">S/ 1,920</strong>
+            </div>
+            <div style="display: flex; justify-content: space-between; align-items: center; padding: 0.8rem 1rem; background: var(--bg-body); border-radius: 0.7rem; border: 1px solid var(--border-color);">
+              <span style="font-size: 0.82rem; font-weight: 600;"><i class="fa-regular fa-credit-card" style="color: var(--glow-cyan); margin-right: 0.5rem;"></i> Tarjeta POS Visa / Mastercard</span>
+              <strong class="precio_staff" data-pen="600" data-usd="162" style="color: var(--neon-yellow); font-size: 0.95rem;">S/ 600</strong>
+            </div>
+            <div style="display: flex; justify-content: space-between; align-items: center; padding: 0.8rem 1rem; background: rgba(255,69,0,0.08); border-radius: 0.7rem; border: 1px dashed var(--fire-orange);">
+              <span style="color: var(--fire-orange); font-weight: 700; font-size: 0.82rem;"><i class="fa-solid fa-clock-rotate-left" style="margin-right: 0.5rem;"></i> Pendiente de Cobro en Base</span>
+              <strong class="precio_staff" data-pen="150" data-usd="41" style="color: var(--fire-orange); font-size: 0.95rem;">S/ 150</strong>
+            </div>
+          </div>
+        </div>
+
+        <div class="card-panel" style="margin-bottom: 0;">
+          <h3 style="font-size: 1.05rem; font-weight: 800; margin-bottom: 1.2rem; display: flex; align-items: center; gap: 0.5rem;">
+            <i class="fa-solid fa-chart-pie" style="color: var(--fire-orange);"></i> Ventas por Disciplina (Hoy)
+          </h3>
+          <div style="display: flex; flex-direction: column; gap: 0.8rem;">
+            <div>
+              <div style="display: flex; justify-content: space-between; font-size: 0.8rem; margin-bottom: 0.2rem;">
+                <span>🎿 SandSki Pro con Botas y Bastones</span>
+                <strong>38 Pax (45%)</strong>
+              </div>
+              <div style="height: 6px; background: rgba(255,255,255,0.1); border-radius: 999px; overflow: hidden;">
+                <div style="width: 45%; height: 100%; background: var(--neon-yellow);"></div>
+              </div>
+            </div>
+            <div>
+              <div style="display: flex; justify-content: space-between; font-size: 0.8rem; margin-bottom: 0.2rem;">
+                <span>🏂 Sandboard Pro con Botas</span>
+                <strong>26 Pax (31%)</strong>
+              </div>
+              <div style="height: 6px; background: rgba(255,255,255,0.1); border-radius: 999px; overflow: hidden;">
+                <div style="width: 31%; height: 100%; background: var(--fire-orange);"></div>
+              </div>
+            </div>
+            <div>
+              <div style="display: flex; justify-content: space-between; font-size: 0.8rem; margin-bottom: 0.2rem;">
+                <span>🏔️ Snowboard Pro en Dunas</span>
+                <strong>12 Pax (14%)</strong>
+              </div>
+              <div style="height: 6px; background: rgba(255,255,255,0.1); border-radius: 999px; overflow: hidden;">
+                <div style="width: 14%; height: 100%; background: var(--glow-cyan);"></div>
+              </div>
+            </div>
+            <div>
+              <div style="display: flex; justify-content: space-between; font-size: 0.8rem; margin-bottom: 0.2rem;">
+                <span>🏄‍♂️ Bodyboard en Arena (Familiar)</span>
+                <strong>8 Pax (10%)</strong>
+              </div>
+              <div style="height: 6px; background: rgba(255,255,255,0.1); border-radius: 999px; overflow: hidden;">
+                <div style="width: 10%; height: 100%; background: var(--wa-green);"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ==================== PESTAÑA 1: RECEPCIÓN & CHECK-IN EN VIVO ==================== -->
+    <div id="tab_recepcion" class="tab-content-panel" style="display: none;">
+      <div class="card-panel">
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.2rem; flex-wrap: wrap; gap: 1rem;">
+          <div>
+            <h3 style="font-size: 1.1rem; font-weight: 800;">Check-in & Asignación de Botas y Lockers</h3>
+            <p style="font-size: 0.78rem; color: var(--text-muted);">Recepción de turistas en Base Hospedaje Hawka.</p>
+          </div>
+          <button type="button" onclick="alert('Abriendo formulario de nuevo pasajero')" style="background: var(--neon-yellow); color: #000; border: none; font-weight: 800; font-size: 0.8rem; padding: 0.6rem 1rem; border-radius: 0.6rem; cursor: pointer; display: inline-flex; align-items: center; gap: 0.4rem;">
+            <i class="fa-solid fa-user-plus"></i> Registrar Turista Walk-in
+          </button>
+        </div>
+
+        <div class="table-responsive-container">
+          <table style="width: 100%; border-collapse: collapse; text-align: left; font-size: 0.82rem; min-width: 650px;">
+            <thead>
+              <tr style="border-bottom: 1px solid var(--border-color); color: var(--text-muted); font-size: 0.72rem; text-transform: uppercase;">
+                <th style="padding: 0.8rem;">Ticket / Turista</th>
+                <th style="padding: 0.8rem;">Disciplina</th>
+                <th style="padding: 0.8rem;">Talla Bota</th>
+                <th style="padding: 0.8rem;">Locker</th>
+                <th style="padding: 0.8rem;">Turno / Chofer</th>
+                <th style="padding: 0.8rem;">Estado Pago</th>
+                <th style="padding: 0.8rem;">Acciones</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr style="border-bottom: 1px solid var(--border-color);">
+                <td style="padding: 0.8rem;">
+                  <strong style="display: block;">#KT-901 · Carlos Mendoza</strong>
+                  <span style="font-size: 0.7rem; color: var(--text-muted);">2 Pax · Perú</span>
+                </td>
+                <td style="padding: 0.8rem;"><span style="color: var(--neon-yellow); font-weight: 700;">🎿 SandSki Pro</span></td>
+                <td style="padding: 0.8rem;"><span style="background: rgba(255,230,0,0.15); color: var(--neon-yellow); padding: 0.2rem 0.5rem; border-radius: 0.4rem; font-weight: 800;">Talla 42 y 39</span></td>
+                <td style="padding: 0.8rem;"><strong>Locker #04</strong></td>
+                <td style="padding: 0.8rem;">4:00 PM · Anthony</td>
+                <td style="padding: 0.8rem;"><span style="background: rgba(37,211,102,0.15); color: var(--wa-green); padding: 0.2rem 0.5rem; border-radius: 0.4rem; font-weight: 700;">Pagado Yape</span></td>
+                <td style="padding: 0.8rem;">
+                  <button type="button" onclick="alert('Boleto digital enviado por WhatsApp a Carlos')" style="background: var(--bg-subtle); border: 1px solid var(--border-color); color: var(--text-main); padding: 0.3rem 0.6rem; border-radius: 0.4rem; cursor: pointer; font-size: 0.72rem;">
+                    <i class="fa-brands fa-whatsapp" style="color: var(--wa-green);"></i> Enviar Ticket
+                  </button>
+                </td>
+              </tr>
+              <tr style="border-bottom: 1px solid var(--border-color);">
+                <td style="padding: 0.8rem;">
+                  <strong style="display: block;">#KT-902 · Emma Watson</strong>
+                  <span style="font-size: 0.7rem; color: var(--text-muted);">4 Pax · UK (Inglés)</span>
+                </td>
+                <td style="padding: 0.8rem;"><span style="color: var(--fire-orange); font-weight: 700;">🏂 Sandboard Pro</span></td>
+                <td style="padding: 0.8rem;"><span style="background: rgba(255,69,0,0.15); color: var(--fire-orange); padding: 0.2rem 0.5rem; border-radius: 0.4rem; font-weight: 800;">38, 40, 43, 44</span></td>
+                <td style="padding: 0.8rem;"><strong>Locker #07 y #08</strong></td>
+                <td style="padding: 0.8rem;">4:00 PM · Michael</td>
+                <td style="padding: 0.8rem;"><span style="background: rgba(37,211,102,0.15); color: var(--wa-green); padding: 0.2rem 0.5rem; border-radius: 0.4rem; font-weight: 700;">Pagado Tarjeta</span></td>
+                <td style="padding: 0.8rem;">
+                  <button type="button" onclick="alert('Ticket reenviado en inglés')" style="background: var(--bg-subtle); border: 1px solid var(--border-color); color: var(--text-main); padding: 0.3rem 0.6rem; border-radius: 0.4rem; cursor: pointer; font-size: 0.72rem;">
+                    <i class="fa-brands fa-whatsapp" style="color: var(--wa-green);"></i> Enviar Ticket
+                  </button>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+
+    <!-- ==================== PESTAÑA 2: SALIDAS & DESPACHO ==================== -->
+    <div id="tab_salidas" class="tab-content-panel" style="display: none;">
+      <div class="card-panel">
+        <h3 style="font-size: 1.1rem; font-weight: 800; margin-bottom: 1.2rem;">Despacho de Salidas (Pilotos: Anthony & Michael)</h3>
+        
+        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 1.2rem;">
+          <div class="card-panel" style="border-top: 4px solid var(--neon-yellow); margin-bottom: 0;">
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.8rem;">
+              <span style="font-size: 0.8rem; font-weight: 800; color: var(--neon-yellow);">TUBULAR #01 · ANTHONY</span>
+              <span style="background: rgba(37,211,102,0.15); color: var(--wa-green); font-size: 0.68rem; font-weight: 800; padding: 0.2rem 0.5rem; border-radius: 0.4rem;">LISTO EN BASE</span>
+            </div>
+            <p style="font-size: 0.82rem; margin-bottom: 0.4rem;"><strong>Turno:</strong> 4:00 PM Sunset</p>
+            <p style="font-size: 0.82rem; margin-bottom: 0.4rem;"><strong>Pasajeros:</strong> 12 Pax (8 SandSki + 4 Sandboard Pro)</p>
+            <p style="font-size: 0.82rem; margin-bottom: 1rem; color: var(--text-muted);">Equipos cargados: 8 pares esquís, 4 tablas pro, bastones y ceras.</p>
+            <button type="button" onclick="alert('Salida iniciada con tubular #01')" style="width: 100%; background: var(--neon-yellow); color: #000; border: none; font-weight: 800; padding: 0.6rem; border-radius: 0.6rem; cursor: pointer; font-size: 0.8rem;">
+              <i class="fa-solid fa-play"></i> Iniciar Salida a Dunas
+            </button>
+          </div>
+
+          <div class="card-panel" style="border-top: 4px solid var(--fire-orange); margin-bottom: 0;">
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.8rem;">
+              <span style="font-size: 0.8rem; font-weight: 800; color: var(--fire-orange);">TUBULAR #02 · MICHAEL</span>
+              <span style="background: rgba(255,69,0,0.15); color: var(--fire-orange); font-size: 0.68rem; font-weight: 800; padding: 0.2rem 0.5rem; border-radius: 0.4rem;">ABORDANDO</span>
+            </div>
+            <p style="font-size: 0.82rem; margin-bottom: 0.4rem;"><strong>Turno:</strong> 4:00 PM Sunset</p>
+            <p style="font-size: 0.82rem; margin-bottom: 0.4rem;"><strong>Pasajeros:</strong> 12 Pax (6 Snowboard Pro + 6 Bodyboard)</p>
+            <p style="font-size: 0.82rem; margin-bottom: 1rem; color: var(--text-muted);">Equipos cargados: 6 snowboards, 6 bodyboards, cascos y antiparras.</p>
+            <button type="button" onclick="alert('Salida iniciada con tubular #02')" style="width: 100%; background: var(--fire-orange); color: #fff; border: none; font-weight: 800; padding: 0.6rem; border-radius: 0.6rem; cursor: pointer; font-size: 0.8rem;">
+              <i class="fa-solid fa-play"></i> Iniciar Salida a Dunas
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ==================== PESTAÑA 3: INVENTARIO DE BOTAS & ESQUÍS ==================== -->
+    <div id="tab_equipos" class="tab-content-panel" style="display: none;">
+      <div class="card-panel">
+        <h3 style="font-size: 1.1rem; font-weight: 800; margin-bottom: 1.2rem;">Stock de Equipamiento en Base Hawka</h3>
+        
+        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1rem;">
+          <div style="background: var(--bg-body); padding: 1rem; border-radius: 0.8rem; border: 1px solid var(--border-color);">
+            <strong style="color: var(--neon-yellow); font-size: 0.85rem; display: block;">🎿 Pares de Esquís Alpinos</strong>
+            <span style="font-size: 1.5rem; font-weight: 900; display: block; margin: 0.2rem 0;">24 Pares</span>
+            <span style="font-size: 0.7rem; color: var(--wa-green);">16 en uso · 8 disponibles</span>
+          </div>
+
+          <div style="background: var(--bg-body); padding: 1rem; border-radius: 0.8rem; border: 1px solid var(--border-color);">
+            <strong style="color: var(--fire-orange); font-size: 0.85rem; display: block;">🏂 Tablas Sandboard / Snowboard</strong>
+            <span style="font-size: 1.5rem; font-weight: 900; display: block; margin: 0.2rem 0;">32 Tablas</span>
+            <span style="font-size: 0.7rem; color: var(--wa-green);">22 en uso · 10 disponibles</span>
+          </div>
+
+          <div style="background: var(--bg-body); padding: 1rem; border-radius: 0.8rem; border: 1px solid var(--border-color);">
+            <strong style="color: var(--glow-cyan); font-size: 0.85rem; display: block;">👟 Botas de Nieve (35 a 45)</strong>
+            <span style="font-size: 1.5rem; font-weight: 900; display: block; margin: 0.2rem 0;">58 Pares</span>
+            <span style="font-size: 0.7rem; color: var(--wa-green);">46 en uso · 12 disponibles</span>
+          </div>
+
+          <div style="background: var(--bg-body); padding: 1rem; border-radius: 0.8rem; border: 1px solid var(--border-color);">
+            <strong style="color: var(--wa-green); font-size: 0.85rem; display: block;">🔒 Lockers en Recepción</strong>
+            <span style="font-size: 1.5rem; font-weight: 900; display: block; margin: 0.2rem 0;">20 Casilleros</span>
+            <span style="font-size: 0.7rem; color: var(--fire-orange);">14 ocupados · 6 libres</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ==================== PESTAÑA 4: TARIFARIO 4 DISCIPLINAS ==================== -->
+    <div id="tab_tarifas" class="tab-content-panel" style="display: none;">
+      <div class="card-panel">
+        <h3 style="font-size: 1.1rem; font-weight: 800; margin-bottom: 1.2rem;">Tarifario de las 4 Disciplinas (PEN / USD)</h3>
+        
+        <div style="display: flex; flex-direction: column; gap: 0.8rem;">
+          <div style="display: flex; justify-content: space-between; align-items: center; padding: 0.8rem 1rem; background: var(--bg-body); border-radius: 0.7rem; border: 1px solid var(--border-color); flex-wrap: wrap; gap: 0.5rem;">
+            <div>
+              <strong style="display: block;">1. SandSki Pro con Botas y Bastones</strong>
+              <span style="font-size: 0.72rem; color: var(--text-muted);">Incluye esquís alpinos, bastones, botas e instructor</span>
+            </div>
+            <strong class="precio_staff" data-pen="85" data-usd="23" style="color: var(--neon-yellow); font-size: 1.1rem;">S/ 85.00</strong>
+          </div>
+
+          <div style="display: flex; justify-content: space-between; align-items: center; padding: 0.8rem 1rem; background: var(--bg-body); border-radius: 0.7rem; border: 1px solid var(--border-color); flex-wrap: wrap; gap: 0.5rem;">
+            <div>
+              <strong style="display: block;">2. Sandboard Pro con Botas</strong>
+              <span style="font-size: 0.72rem; color: var(--text-muted);">Tabla de arena con fijaciones de carraca + clase</span>
+            </div>
+            <strong class="precio_staff" data-pen="75" data-usd="20" style="color: var(--fire-orange); font-size: 1.1rem;">S/ 75.00</strong>
+          </div>
+
+          <div style="display: flex; justify-content: space-between; align-items: center; padding: 0.8rem 1rem; background: var(--bg-body); border-radius: 0.7rem; border: 1px solid var(--border-color); flex-wrap: wrap; gap: 0.5rem;">
+            <div>
+              <strong style="display: block;">3. Snowboard Pro en Dunas</strong>
+              <span style="font-size: 0.72rem; color: var(--text-muted);">Tabla de snowboard de montaña con cera de alta velocidad</span>
+            </div>
+            <strong class="precio_staff" data-pen="80" data-usd="22" style="color: var(--glow-cyan); font-size: 1.1rem;">S/ 80.00</strong>
+          </div>
+
+          <div style="display: flex; justify-content: space-between; align-items: center; padding: 0.8rem 1rem; background: var(--bg-body); border-radius: 0.7rem; border: 1px solid var(--border-color); flex-wrap: wrap; gap: 0.5rem;">
+            <div>
+              <strong style="display: block;">4. Bodyboard en Arena (Familiar)</strong>
+              <span style="font-size: 0.72rem; color: var(--text-muted);">Deslizamiento acostado en tabla encerada para principiantes</span>
+            </div>
+            <strong class="precio_staff" data-pen="45" data-usd="12" style="color: var(--wa-green); font-size: 1.1rem;">S/ 45.00</strong>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </main>
+
+  <!-- ==================== BARRA DE NAVEGACIÓN INFERIOR MÓVIL (100% FIJA Y VISIBLE) ==================== -->
+  <nav class="mobile-bottom-nav">
+    <button class="mobile-bottom-btn activo" data-target="tab_resumen">
+      <i class="fa-solid fa-chart-line" style="font-size: 1rem;"></i>
+      <span>Resumen</span>
+    </button>
+    <button class="mobile-bottom-btn" data-target="tab_recepcion">
+      <i class="fa-solid fa-id-card-clip" style="font-size: 1rem;"></i>
+      <span>Check-in</span>
+    </button>
+    <button class="mobile-bottom-btn" data-target="tab_salidas">
+      <i class="fa-solid fa-car-side" style="font-size: 1rem;"></i>
+      <span>Salidas</span>
+    </button>
+    <button class="mobile-bottom-btn" data-target="tab_equipos">
+      <i class="fa-solid fa-person-skiing" style="font-size: 1rem;"></i>
+      <span>Equipos</span>
+    </button>
+    <button class="mobile-bottom-btn" data-target="tab_tarifas">
+      <i class="fa-solid fa-tags" style="font-size: 1rem;"></i>
+      <span>Tarifas</span>
+    </button>
+  </nav>
+
+  <!-- ⚡ LÓGICA DE CONTROL STAFF & PESTAÑAS -->
+  <script is:inline>
+    (function() {
+      // 1. Selector de Moneda en Panel de Staff
+      let monedaStaff = 'PEN';
+      const btnsPen = document.querySelectorAll('.btn-cur-pen');
+      const btnsUsd = document.querySelectorAll('.btn-cur-usd');
+
+      function aplicarMonedaStaff(cur) {
+        monedaStaff = cur;
+        btnsPen.forEach(b => b.classList.toggle('active', cur === 'PEN'));
+        btnsUsd.forEach(b => b.classList.toggle('active', cur === 'USD'));
+
+        document.querySelectorAll('.precio_staff').forEach(el => {
+          const pen = el.getAttribute('data-pen');
+          const usd = el.getAttribute('data-usd');
+          el.textContent = cur === 'PEN' ? `S/ ${pen}` : `$ ${usd} USD`;
+        });
+
+        const statIng = document.getElementById('stat_ingresos_hoy');
+        if (statIng) {
+          const pen = statIng.getAttribute('data-pen');
+          const usd = statIng.getAttribute('data-usd');
+          statIng.textContent = cur === 'PEN' ? `S/ ${pen}` : `$ ${usd} USD`;
+        }
+      }
+
+      btnsPen.forEach(b => b.addEventListener('click', () => aplicarMonedaStaff('PEN')));
+      btnsUsd.forEach(b => b.addEventListener('click', () => aplicarMonedaStaff('USD')));
+
+      // 2. Conmutador de Tema Global
+      const btnsTheme = document.querySelectorAll('.btn-toggle-theme-global');
+      const iconsTheme = document.querySelectorAll('.icon-theme-target');
+
+      function toggleTemaStaff() {
+        const actual = document.documentElement.dataset.theme || 'futuro';
+        const nuevo = actual === 'futuro' ? 'luz' : 'futuro';
+        document.documentElement.dataset.theme = nuevo;
+        localStorage.setItem('wiTema_kevin17', nuevo);
+        iconsTheme.forEach(icon => {
+          icon.className = nuevo === 'futuro' ? 'fa-solid fa-sun' : 'fa-solid fa-moon';
+        });
+      }
+
+      btnsTheme.forEach(btn => btn.addEventListener('click', toggleTemaStaff));
+
+      // 3. Control de Pestañas (Sidebar + Bottom Nav Móvil)
+      const titulos = {
+        tab_resumen: 'Resumen General & Ventas',
+        tab_recepcion: 'Recepción & Check-in en Base Hawka',
+        tab_salidas: 'Despacho de Salidas (Anthony & Michael)',
+        tab_equipos: 'Inventario de Botas, Esquís & Tablas',
+        tab_tarifas: 'Tarifario de las 4 Disciplinas'
+      };
+
+      function cambiarPestana(targetId) {
+        document.querySelectorAll('.tab-content-panel').forEach(p => p.style.display = 'none');
+        const targetPanel = document.getElementById(targetId);
+        if (targetPanel) targetPanel.style.display = 'block';
+
+        document.querySelectorAll('.sidebar-btn').forEach(btn => {
+          btn.classList.toggle('activo', btn.getAttribute('data-target') === targetId);
+        });
+
+        document.querySelectorAll('.mobile-bottom-btn').forEach(btn => {
+          btn.classList.toggle('activo', btn.getAttribute('data-target') === targetId);
+        });
+
+        const txtHeader = document.getElementById('txt_header_tab_title');
+        if (txtHeader && titulos[targetId]) txtHeader.textContent = titulos[targetId];
+
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+      }
+
+      document.querySelectorAll('.sidebar-btn[data-target]').forEach(btn => {
+        btn.addEventListener('click', () => {
+          cambiarPestana(btn.getAttribute('data-target'));
+          cerrarSidebarMobile();
+        });
+      });
+
+      document.querySelectorAll('.mobile-bottom-btn[data-target]').forEach(btn => {
+        btn.addEventListener('click', () => {
+          cambiarPestana(btn.getAttribute('data-target'));
+        });
+      });
+
+      // 4. Sidebar Offcanvas Móvil
+      const sidebar = document.getElementById('admin_sidebar');
+      const backdrop = document.getElementById('sidebar_backdrop');
+      const btnOpenSidebar = document.getElementById('btn_toggle_sidebar_mobile');
+      const btnCloseSidebar = document.getElementById('btn_close_sidebar_mobile');
+
+      function abrirSidebarMobile() {
+        sidebar?.classList.add('open');
+        backdrop?.classList.add('active');
+      }
+
+      function cerrarSidebarMobile() {
+        sidebar?.classList.remove('open');
+        backdrop?.classList.remove('active');
+      }
+
+      btnOpenSidebar?.addEventListener('click', abrirSidebarMobile);
+      btnCloseSidebar?.addEventListener('click', cerrarSidebarMobile);
+      backdrop?.addEventListener('click', cerrarSidebarMobile);
+    })();
+  </script>
+</body>
+</html>

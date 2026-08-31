@@ -1,0 +1,74 @@
+---
+// src/feature/inicio/seccion/TrustPillars.astro
+// 🛡️ 6 Pilares de Seguridad y Confianza (Grid Simétrico 3x2 en Desktop) (<60 líneas)
+import { PILARES } from '../data/pilares.data.js';
+
+interface Props {
+  idioma?: 'es' | 'en';
+}
+
+const { idioma = 'es' } = Astro.props;
+---
+
+<section id="confianza" style="padding: 7vh 0; border-bottom: 1px solid var(--border-card); background: var(--bg-subtle);">
+  <div class="container-wide">
+    
+    <!-- Encabezado -->
+    <div style="text-align: center; margin-bottom: 3rem;">
+      <span style="color: var(--neon-yellow); font-size: 0.75rem; font-weight: 800; text-transform: uppercase;">
+        {idioma === 'en' ? 'Total Safety & Trust' : 'Seguridad y Confianza Total'}
+      </span>
+      <h2 style="font-size: clamp(1.6rem, 2.8vw, 2.5rem); font-weight: 900; text-transform: uppercase; margin-top: 0.4rem;">
+        {idioma === 'en' ? 'Why Choose' : 'Por Qué Elegir'} <span style="background: linear-gradient(90deg, #ffe600, #ff4500); -webkit-background-clip: text; -webkit-text-fill-color: transparent;">Kevin Tours</span>
+      </h2>
+      <p style="font-size: 0.88rem; color: var(--text-muted); max-width: 580px; margin: 0.4rem auto 0 auto;">
+        {idioma === 'en' ? '6 key guarantees that make our desert adventure the safest and most exhilarating in Peru.' : '6 pilares que garantizan la mejor experiencia deportiva y segura en Huacachina.'}
+      </p>
+    </div>
+
+    <!-- Grid Simétrico 3 Columnas x 2 Filas -->
+    <div class="grid-pilares-3x2">
+      {PILARES.map(p => (
+        <div class="pilar-card glass-card">
+          <div style={`width: 3rem; height: 3rem; border-radius: 0.8rem; background: ${p.bg}; color: ${p.color}; display: flex; align-items: center; justify-content: center; font-size: 1.25rem; margin-bottom: 1.1rem;`}>
+            <i class={`fa-solid ${p.icono}`}></i>
+          </div>
+          <h3 style="font-size: 1.1rem; font-weight: 800; margin-bottom: 0.5rem; color: var(--text-main);">
+            {idioma === 'en' ? p.titulo_en : p.titulo_es}
+          </h3>
+          <p style="font-size: 0.84rem; color: var(--text-muted); line-height: 1.55; margin: 0;">
+            {idioma === 'en' ? p.desc_en : p.desc_es}
+          </p>
+        </div>
+      ))}
+    </div>
+
+  </div>
+</section>
+
+<style>
+  .grid-pilares-3x2 {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1.8rem;
+  }
+  .pilar-card {
+    padding: 1.8rem;
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    border-radius: 1.2rem;
+  }
+  @media (max-width: 1024px) {
+    .grid-pilares-3x2 {
+      grid-template-columns: repeat(2, 1fr);
+      gap: 1.2rem;
+    }
+  }
+  @media (max-width: 640px) {
+    .grid-pilares-3x2 {
+      grid-template-columns: 1fr;
+      gap: 1rem;
+    }
+  }
+</style>

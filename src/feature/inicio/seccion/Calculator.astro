@@ -1,0 +1,158 @@
+---
+// src/feature/inicio/seccion/Calculator.astro
+// 🧮 Tarjeta Flotante del Cotizador Oficial en Vivo (<90 líneas)
+import { DISCIPLINAS } from '../data/disciplinas.data.js';
+import { NEGOCIO } from '../../../core/config/constantes.js';
+
+interface Props {
+  idioma?: 'es' | 'en';
+}
+
+const { idioma = 'es' } = Astro.props;
+---
+
+<div class="glass-card" style="padding: 1.8rem; border-top: 4px solid var(--neon-yellow); min-height: 460px; display: flex; flex-direction: column; justify-content: space-between;">
+  
+  <div>
+    <!-- Encabezado con Selector de Moneda -->
+    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.2rem; padding-bottom: 0.8rem; border-bottom: 1px solid var(--border-card); gap: 0.5rem;">
+      <div>
+        <h3 style="font-size: 1.1rem; font-weight: 900; text-transform: uppercase; display: flex; align-items: center; gap: 0.4rem; color: var(--text-main);">
+          <i class="fa-solid fa-calculator" style="color: var(--neon-yellow);"></i>
+          <span>{idioma === 'en' ? 'Official Calculator' : 'Cotizador Oficial'}</span>
+        </h3>
+        <span style="font-size: 0.68rem; color: var(--wa-green); font-weight: 700;">
+          <i class="fa-solid fa-circle-dot"></i> {idioma === 'en' ? 'Gear Available at Base Hawka' : 'Equipos Disponibles en Base Hawka'}
+        </span>
+      </div>
+
+      <!-- Selector S/ PEN vs $ USD -->
+      <div class="pill-box" style="background: rgba(0,0,0,0.3); border: 1px solid var(--border-accent);">
+        <button type="button" class="pill-item active" id="calc_cur_pen" style="padding: 0.25rem 0.55rem; font-size: 0.7rem;">S/ PEN</button>
+        <button type="button" class="pill-item" id="calc_cur_usd" style="padding: 0.25rem 0.55rem; font-size: 0.7rem;">$ USD</button>
+      </div>
+    </div>
+
+    <!-- Formulario de Selección -->
+    <form id="form_cotizador" style="display: flex; flex-direction: column; gap: 1rem;">
+      <div>
+        <label style="display: block; font-size: 0.74rem; font-weight: 700; text-transform: uppercase; color: var(--text-muted); margin-bottom: 0.35rem;">
+          {idioma === 'en' ? '1. Select Dune Discipline' : '1. Elige tu Disciplina en Dunas'}
+        </label>
+        <select id="cot_tour" style="width: 100%; background: var(--bg-body); border: 1px solid var(--border-card); color: var(--text-main); padding: 0.8rem; border-radius: 0.7rem; font-size: 0.85rem; font-weight: 600; outline: none;">
+          {DISCIPLINAS.map(d => (
+            <option value={d.precio_pen} data-usd={d.precio_usd} data-nombre={idioma === 'en' ? d.nombre_en : d.nombre_es}>
+              {idioma === 'en' ? d.nombre_en : d.nombre_es} (S/ {d.precio_pen} / ${d.precio_usd})
+            </option>
+          ))}
+        </select>
+      </div>
+
+      <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 0.8rem;">
+        <div>
+          <label style="display: block; font-size: 0.74rem; font-weight: 700; text-transform: uppercase; color: var(--text-muted); margin-bottom: 0.35rem;">
+            {idioma === 'en' ? '2. Passengers' : '2. Pasajeros'}
+          </label>
+          <input type="number" id="cot_personas" value="2" min="1" max="30" style="width: 100%; background: var(--bg-body); border: 1px solid var(--border-card); color: var(--text-main); padding: 0.8rem; border-radius: 0.7rem; font-size: 0.85rem; font-weight: 600; outline: none;" />
+        </div>
+        <div>
+          <label style="display: block; font-size: 0.74rem; font-weight: 700; text-transform: uppercase; color: var(--text-muted); margin-bottom: 0.35rem;">
+            {idioma === 'en' ? '3. Schedule' : '3. Horario'}
+          </label>
+          <select id="cot_horario" style="width: 100%; background: var(--bg-body); border: 1px solid var(--border-card); color: var(--text-main); padding: 0.8rem; border-radius: 0.7rem; font-size: 0.85rem; font-weight: 600; outline: none;">
+            <option value="4:00 PM Sunset (Recomendado)">🌅 4:00 PM (Sunset)</option>
+            <option value="10:00 AM Mañana">☀️ 10:00 AM (Mañana)</option>
+            <option value="2:00 PM Tarde">🌤️ 2:00 PM (Tarde)</option>
+          </select>
+        </div>
+      </div>
+
+      <!-- Resumen Calculado -->
+      <div style="background: var(--bg-subtle); padding: 1rem; border-radius: 0.8rem; border: 1px dashed var(--border-accent); display: flex; justify-content: space-between; align-items: center;">
+        <div>
+          <span style="font-size: 0.7rem; color: var(--text-muted); text-transform: uppercase; font-weight: 700; display: block;">
+            {idioma === 'en' ? 'Estimated Total:' : 'Total Estimado:'}
+          </span>
+          <strong id="cot_total_txt" style="font-size: 1.5rem; color: var(--neon-yellow); font-weight: 900;">S/ 170.00</strong>
+        </div>
+        <div style="text-align: right;">
+          <span style="font-size: 0.7rem; color: var(--wa-green); font-weight: 800; display: block;">
+            <i class="fa-solid fa-lock"></i> Punto: Hospedaje Hawka
+          </span>
+          <span style="font-size: 0.65rem; color: var(--text-muted);">Yape · Plin · Tarjeta · Cash</span>
+        </div>
+      </div>
+
+      <!-- Botón WhatsApp -->
+      <button type="button" id="btn_enviar_cotizacion" class="btn-speed" style="padding: 0.9rem; width: 100%; font-size: 0.9rem;">
+        <i class="fa-brands fa-whatsapp" style="font-size: 1.15rem;"></i>
+        <span>{idioma === 'en' ? 'Confirm Booking via WhatsApp' : 'Confirmar Reserva por WhatsApp'}</span>
+      </button>
+    </form>
+  </div>
+
+</div>
+
+<script>
+  import { NEGOCIO } from '../../../core/config/constantes.js';
+
+  let monedaActual = 'PEN';
+
+  function recalcularTotal() {
+    const selTour = document.getElementById('cot_tour') as HTMLSelectElement;
+    const inpPax = document.getElementById('cot_personas') as HTMLInputElement;
+    const txtTotal = document.getElementById('cot_total_txt');
+    if (!selTour || !inpPax || !txtTotal) return;
+
+    const opt = selTour.options[selTour.selectedIndex];
+    const precio = monedaActual === 'USD' ? parseFloat(opt.dataset.usd || '23') : parseFloat(opt.value);
+    const pax = Math.max(1, parseInt(inpPax.value, 10) || 1);
+    const subtotal = precio * pax;
+    const simbolo = monedaActual === 'USD' ? '$' : 'S/';
+
+    txtTotal.textContent = `${simbolo} ${subtotal.toFixed(2)}`;
+  }
+
+  document.addEventListener('DOMContentLoaded', () => {
+    document.getElementById('cot_tour')?.addEventListener('change', recalcularTotal);
+    document.getElementById('cot_personas')?.addEventListener('input', recalcularTotal);
+
+    document.getElementById('calc_cur_pen')?.addEventListener('click', () => {
+      monedaActual = 'PEN';
+      document.getElementById('calc_cur_pen')?.classList.add('active');
+      document.getElementById('calc_cur_usd')?.classList.remove('active');
+      recalcularTotal();
+    });
+
+    document.getElementById('calc_cur_usd')?.addEventListener('click', () => {
+      monedaActual = 'USD';
+      document.getElementById('calc_cur_usd')?.classList.add('active');
+      document.getElementById('calc_cur_pen')?.classList.remove('active');
+      recalcularTotal();
+    });
+
+    document.getElementById('btn_enviar_cotizacion')?.addEventListener('click', () => {
+      const selTour = document.getElementById('cot_tour') as HTMLSelectElement;
+      const inpPax = document.getElementById('cot_personas') as HTMLInputElement;
+      const selHorario = document.getElementById('cot_horario') as HTMLSelectElement;
+      const txtTotal = document.getElementById('cot_total_txt');
+
+      const tourNombre = selTour?.options[selTour.selectedIndex]?.dataset.nombre || selTour?.value;
+      const pax = inpPax?.value || '2';
+      const horario = selHorario?.value || '4:00 PM (Sunset)';
+      const total = txtTotal?.textContent || 'S/ 170.00';
+
+      const msg = `Hola Kevin Tours! 👋 Deseo confirmar mi reserva:
+🎿 *Tour:* ${tourNombre}
+👥 *Pasajeros:* ${pax}
+⏰ *Horario:* ${horario}
+💰 *Total Estimado:* ${total}
+🏨 *Punto de Encuentro:* ${NEGOCIO.ubicacion.referencia} (${NEGOCIO.ubicacion.direccion})
+¿Tienen disponibilidad para hoy?`;
+
+      window.open(`https://wa.me/${NEGOCIO.telefonoLimpio}?text=${encodeURIComponent(msg)}`, '_blank');
+    });
+
+    recalcularTotal();
+  });
+</script>

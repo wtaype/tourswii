@@ -1,0 +1,34 @@
+{
+  "hero": {
+    "badge": "Aventura en las Dunas de Ica",
+    "titulo_1": "Siente la Adrenalina en el",
+    "titulo_resaltado": "Oasis de Huacachina",
+    "subtitulo": "Experimenta el SandSki alpino real y Sandboard profesional con fijaciones en el mejor atardecer de Sudamérica.",
+    "btn_whatsapp": "Reservar por WhatsApp",
+    "btn_tours": "Ver 4 Disciplinas"
+  },
+  "stats": {
+    "turistas": "+15,000",
+    "turistas_label": "Turistas Satisfechos",
+    "experiencia": "8 Años",
+    "experiencia_label": "Operando en Huacachina",
+    "rating": "4.9 / 5",
+    "rating_label": "Calificación 5 Estrellas"
+  },
+  "ventajas": {
+    "titulo": "¿Por Qué Elegir Kevin Tours?",
+    "seguridad_tit": "100% Seguridad",
+    "seguridad_desc": "Nuestros tubulares cuentan con jaula antivuelco homologada y choferes con brevete MTC.",
+    "equipos_tit": "Equipos Profesionales",
+    "equipos_desc": "Esquís alpinos reales, bastones y tablas con fijaciones y botas de nieve incluidas.",
+    "fotos_tit": "Fotos en Atardecer",
+    "fotos_desc": "Paradas estratégicas en las cimas más altas para capturar las mejores fotos del sunset."
+  },
+  "faq": {
+    "titulo": "Preguntas Frecuentes",
+    "p1": "¿Cuál es el mejor horario para el tour de dunas?",
+    "r1": "El turno de 4:00 PM a 6:00 PM es el más solicitado para disfrutar del atardecer dorado en el desierto.",
+    "p2": "¿Se necesita experiencia previa?",
+    "r2": "No, nuestros instructores te enseñan paso a paso desde dunas bajas con total seguridad."
+  }
+}

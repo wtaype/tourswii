@@ -1,0 +1,30 @@
+---
+// src/feature/inicio/seccion/Reputation.astro
+// ⭐ Insignias y Sellos de Reputación Internacional (<55 líneas)
+import { REPUTACION } from '../data/reputacion.data.js';
+
+interface Props {
+  idioma?: 'es' | 'en';
+}
+
+const { idioma = 'es' } = Astro.props;
+---
+
+<section style="padding: 4vh 0; border-bottom: 1px solid var(--border-card);">
+  <div class="container-wide">
+    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 1rem;">
+      {REPUTACION.map(rep => (
+        <div style="background: var(--bg-card); border: 1px solid var(--border-card); border-radius: 1rem; padding: 1.1rem; display: flex; align-items: center; gap: 0.9rem; box-shadow: var(--shadow-xl);">
+          <div style={`width: 2.6rem; height: 2.6rem; border-radius: 0.6rem; background: ${rep.color}22; color: ${rep.color}; display: flex; align-items: center; justify-content: center; font-size: 1.1rem; flex-shrink: 0;`}>
+            <i class={`fa-solid ${rep.icono}`}></i>
+          </div>
+          <div>
+            <strong style="font-size: 0.88rem; display: block; color: var(--text-main); line-height: 1.2;">{rep.plataforma}</strong>
+            <span style="font-size: 0.72rem; color: var(--neon-yellow); font-weight: 700; display: block;">{rep.insignia}</span>
+            <span style="font-size: 0.68rem; color: var(--text-muted);">{rep.score}</span>
+          </div>
+        </div>
+      ))}
+    </div>
+  </div>
+</section>

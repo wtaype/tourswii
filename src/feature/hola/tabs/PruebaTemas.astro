@@ -1,0 +1,49 @@
+---
+// src/feature/hola/tabs/PruebaTemas.astro
+import { useTranslations } from '../../../core/idioma/idioma';
+import holaEs from '../idioma/es.json';
+import holaEn from '../idioma/en.json';
+
+interface Props {
+  lang?: string;
+}
+
+const { lang = 'es' } = Astro.props;
+const t = useTranslations(lang, { es: holaEs, en: holaEn });
+---
+
+<div class="hola_tab_card">
+  <div class="hola_tab_header">
+    <div class="hola_tab_icon"><i class="fa-solid fa-palette"></i></div>
+    <div>
+      <h3>{t('temas_test.titulo')}</h3>
+      <p>{t('temas_test.desc')}</p>
+    </div>
+  </div>
+
+  <div class="hola_grid_tests">
+    <!-- Monitor del Tema Activo -->
+    <div class="hola_caja_test">
+      <span class="hola_label">{t('temas_test.tema_activo')}</span>
+      <div class="hola_valor_tema" id="test_tema_display">
+        <span class="punto_indicador"></span> <strong id="test_tema_nombre">luz</strong>
+      </div>
+    </div>
+
+    <!-- Detector del Sistema Operativo -->
+    <div class="hola_caja_test">
+      <span class="hola_label">{t('temas_test.so_detectado')}</span>
+      <div class="hola_valor_so" id="test_so_display">
+        <i class="fa-brands fa-windows"></i> <span id="test_so_nombre">Detectando...</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- Botón de Acción -->
+  <div class="hola_acciones_test">
+    <button class="btn_tema hola_btn_accion" type="button">
+      <i class="fa-solid fa-moon"></i> {t('temas_test.btn_toggle')}
+    </button>
+    <span class="hola_tip"><i class="fa-solid fa-check-circle"></i> {t('temas_test.sin_fouc')}</span>
+  </div>
+</div>

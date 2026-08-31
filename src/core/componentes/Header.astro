@@ -1,0 +1,100 @@
+---
+// src/core/componentes/Header.astro
+// 🌟 Cabecera Responsive y Bilingüe con Selector de Tema (<80 líneas)
+import { NEGOCIO } from '../config/constantes.js';
+import { NAV_LINKS } from '../rutas.js';
+
+interface Props {
+  idioma?: 'es' | 'en';
+  esVip?: boolean;
+  usuarioNombre?: string;
+  usuarioAvatar?: string;
+}
+
+const { idioma = 'es', esVip = false, usuarioNombre = 'Carlos Mendoza', usuarioAvatar = 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=100&auto=format&fit=crop&q=80' } = Astro.props;
+---
+
+<header style="position: sticky; top: 0; z-index: 100; background: var(--header-bg); backdrop-filter: blur(16px); border-bottom: 1px solid var(--border-card); padding: 0.75rem 0;">
+  <div class="container-wide" style="display: flex; justify-content: space-between; align-items: center; gap: 1rem;">
+    <!-- Logo -->
+    <a href={idioma === 'en' ? '/en' : '/'} style="display: flex; align-items: center; gap: 0.6rem; text-decoration: none; color: inherit; min-width: 0;">
+      <div style="width: 2.5rem; height: 2.5rem; min-width: 2.5rem; border-radius: 0.7rem; background: linear-gradient(135deg, #ffe600, #ff4500); display: flex; align-items: center; justify-content: center; color: #000; font-size: 1.15rem; box-shadow: 0 0 15px rgba(255, 230, 0, 0.4);">
+        <i class="fa-solid fa-person-skiing"></i>
+      </div>
+      <div style="overflow: hidden;">
+        <span style="font-size: 1.05rem; font-weight: 900; line-height: 1; display: block; letter-spacing: -0.4px; white-space: nowrap;">
+          KEVIN TOURS <span style="background: linear-gradient(90deg, #ffe600, #ff4500); -webkit-background-clip: text; -webkit-text-fill-color: transparent;">EVOLUTION</span>
+        </span>
+        <span style="font-size: 0.62rem; font-weight: 700; color: var(--fire-orange); text-transform: uppercase; letter-spacing: 0.06em; display: block;" id="txt_logo_sub">
+          {NEGOCIO.slogan}
+        </span>
+      </div>
+    </a>
+
+    <!-- Menú Desktop -->
+    <nav class="nav-desktop-container" style="display: flex; align-items: center; gap: 0.25rem; background: var(--bg-subtle); padding: 0.3rem 0.5rem; border-radius: 999px; border: 1px solid var(--border-card);">
+      {NAV_LINKS.map(link => (
+        <a href={link.href} class="nav-link-i18n" data-key={link.key} style="padding: 0.35rem 0.75rem; border-radius: 999px; font-size: 0.78rem; font-weight: 600; color: var(--text-muted); text-decoration: none; transition: var(--tr_f);">
+          {link.id === 'inicio' ? (idioma === 'en' ? 'Home' : 'Inicio') :
+           link.id === 'tours' ? (idioma === 'en' ? '4 Disciplines' : '4 Disciplinas') :
+           link.id === 'galeria' ? (idioma === 'en' ? 'Hawka Base' : 'Base Hawka') :
+           link.id === 'ubicacion' ? (idioma === 'en' ? 'Location' : 'Ubicación') :
+           link.id === 'confianza' ? (idioma === 'en' ? 'Why Us' : 'Por Qué Elegirnos') : 'FAQ'}
+        </a>
+      ))}
+    </nav>
+
+    <!-- Zona Derecha: Idioma + Tema + Acción/VIP + Hamburguesa -->
+    <div style="display: flex; align-items: center; gap: 0.6rem; flex-shrink: 0;">
+      <div style="display: inline-flex; background: var(--bg-subtle); padding: 0.2rem; border-radius: 999px; border: 1px solid var(--border-card);">
+        <a href="/" class={`pill-btn ${idioma === 'es' ? 'active' : ''}`} id="btn_lang_es">ES</a>
+        <a href="/en" class={`pill-btn ${idioma === 'en' ? 'active' : ''}`} id="btn_lang_en">EN</a>
+      </div>
+
+      <button type="button" id="btn_toggle_theme" class="btn-theme-circle" title="Modo Claro / Oscuro">
+        <i class="fa-solid fa-moon" id="icon_theme"></i>
+      </button>
+
+      {esVip ? (
+        <button type="button" id="btn_abrir_perfil_modal" class="user-badge-btn" title="Mi Cuenta VIP">
+          <img src={usuarioAvatar} alt={usuarioNombre} style="width: 1.8rem; height: 1.8rem; border-radius: 50%; object-fit: cover;" />
+          <div style="text-align: left;" class="hide-mobile">
+            <strong style="font-size: 0.78rem; display: block; line-height: 1; color: var(--text-main);">{usuarioNombre}</strong>
+            <span style="font-size: 0.62rem; color: var(--neon-yellow); font-weight: 700;">CLIENTE VIP <i class="fa-solid fa-chevron-down" style="font-size: 0.55rem;"></i></span>
+          </div>
+        </button>
+      ) : (
+        <>
+          <a href="/cliente" class="btn-ingresar-link">
+            <i class="fa-solid fa-arrow-right-to-bracket"></i> {idioma === 'en' ? 'Sign In' : 'Ingresar'}
+          </a>
+          <a href="#cotizador" class="btn-speed btn-reservar-header">
+            <i class="fa-solid fa-calendar-check"></i> {idioma === 'en' ? 'Book' : 'Reservar'}
+          </a>
+        </>
+      )}
+
+      <button type="button" id="btn_open_drawer" class="btn-hamburger">
+        <i class="fa-solid fa-bars"></i>
+      </button>
+    </div>
+  </div>
+</header>
+
+<style>
+  .pill-btn { padding: 0.25rem 0.55rem; font-size: 0.7rem; font-weight: 700; border-radius: 999px; text-decoration: none; color: var(--text-muted); transition: 0.2s; }
+  .pill-btn.active { background: var(--neon-yellow); color: #000; }
+  .btn-theme-circle { width: 2.1rem; height: 2.1rem; border-radius: 50%; background: var(--bg-subtle); border: 1px solid var(--border-card); color: var(--neon-yellow); cursor: pointer; display: flex; align-items: center; justify-content: center; font-size: 0.85rem; }
+  .btn-ingresar-link { display: inline-flex; align-items: center; gap: 0.4rem; padding: 0.4rem 0.9rem; border-radius: 999px; background: rgba(255, 230, 0, 0.1); color: var(--glow-cyan); border: 1px solid var(--glow-cyan); font-size: 0.75rem; font-weight: 700; text-decoration: none; transition: 0.2s; }
+  .btn-reservar-header { display: inline-flex; align-items: center; gap: 0.35rem; padding: 0.4rem 0.95rem; border-radius: 999px; background: linear-gradient(135deg, #ffe600, #ff4500); color: #000; font-size: 0.75rem; font-weight: 800; text-decoration: none; box-shadow: 0 0 15px rgba(255, 230, 0, 0.35); transition: 0.2s; }
+  .btn-reservar-header:hover { transform: translateY(-2px); filter: brightness(1.08); }
+  .user-badge-btn { display: inline-flex; align-items: center; gap: 0.5rem; background: var(--bg-subtle); border: 1px solid var(--border-card); padding: 0.25rem 0.6rem 0.25rem 0.3rem; border-radius: 999px; cursor: pointer; }
+  .btn-hamburger { display: none; width: 2.2rem; height: 2.2rem; border-radius: 0.6rem; background: var(--bg-subtle); border: 1px solid var(--border-card); color: var(--text-main); font-size: 1rem; cursor: pointer; }
+  
+  @media (max-width: 900px) {
+    .nav-desktop-container { display: none !important; }
+    .btn-reservar-header { display: none !important; }
+    .btn-hamburger { display: flex !important; align-items: center; justify-content: center; }
+    .hide-mobile { display: none !important; }
+  }
+</style>

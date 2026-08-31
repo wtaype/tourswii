@@ -1,0 +1,44 @@
+---
+// src/feature/cliente/componentes/PerfilTab.astro
+// 👤 Pestaña de Perfil y Datos Personales (<50 líneas)
+import { CLIENTE_VIP } from '../data/cliente.data.js';
+
+interface Props {
+  cliente?: typeof CLIENTE_VIP;
+}
+
+const { cliente = CLIENTE_VIP } = Astro.props;
+---
+
+<div class="cliente-tab-panel active" id="tab_perfil">
+  <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 1.2rem; margin-bottom: 1.5rem;">
+    <div style="background: var(--bg-card); border: 1px solid var(--border-card); border-radius: 1rem; padding: 1.2rem;">
+      <label style="font-size: 0.72rem; color: var(--text-muted); text-transform: uppercase;">Nombre y Apellidos</label>
+      <p style="font-size: 1rem; font-weight: 800; color: var(--text-main); margin-top: 0.2rem;">{cliente.nombre}</p>
+    </div>
+    <div style="background: var(--bg-card); border: 1px solid var(--border-card); border-radius: 1rem; padding: 1.2rem;">
+      <label style="font-size: 0.72rem; color: var(--text-muted); text-transform: uppercase;">Correo Electrónico</label>
+      <p style="font-size: 1rem; font-weight: 800; color: var(--text-main); margin-top: 0.2rem;">{cliente.email}</p>
+    </div>
+    <div style="background: var(--bg-card); border: 1px solid var(--border-card); border-radius: 1rem; padding: 1.2rem;">
+      <label style="font-size: 0.72rem; color: var(--text-muted); text-transform: uppercase;">WhatsApp Oficial</label>
+      <p style="font-size: 1rem; font-weight: 800; color: var(--text-main); margin-top: 0.2rem;">{cliente.telefono}</p>
+    </div>
+  </div>
+
+  <h4 style="font-size: 0.95rem; font-weight: 800; margin-bottom: 0.8rem;">Historial de Salidas en Huacachina</h4>
+  <div style="background: var(--bg-card); border: 1px solid var(--border-card); border-radius: 1rem; overflow: hidden;">
+    {cliente.historial.map(h => (
+      <div style="display: flex; justify-content: space-between; align-items: center; padding: 1rem 1.2rem; border-bottom: 1px solid var(--border-card); font-size: 0.82rem;">
+        <div>
+          <strong style="color: var(--text-main); display: block;">{h.tour}</strong>
+          <span style="color: var(--text-muted); font-size: 0.75rem;">{h.fecha} · {h.pax} Pasajeros</span>
+        </div>
+        <div style="text-align: right;">
+          <strong style="color: var(--neon-yellow); display: block;">{h.total}</strong>
+          <span style="color: var(--wa-green); font-size: 0.72rem; font-weight: 700;">{h.estado}</span>
+        </div>
+      </div>
+    ))}
+  </div>
+</div>

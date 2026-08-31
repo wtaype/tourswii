@@ -1,0 +1,63 @@
+---
+// src/core/componentes/DrawerMobile.astro
+// 📱 Menú Lateral Off-Canvas con Backdrop Blur (<50 líneas)
+import { NEGOCIO } from '../config/constantes.js';
+import { NAV_LINKS } from '../rutas.js';
+
+interface Props {
+  idioma?: 'es' | 'en';
+  esVip?: boolean;
+  usuarioNombre?: string;
+  usuarioTalla?: number;
+}
+
+const { idioma = 'es', esVip = false, usuarioNombre = 'Carlos Mendoza', usuarioTalla = 42 } = Astro.props;
+---
+
+<!-- Backdrop -->
+<div id="drawer_backdrop" class="drawer-backdrop"></div>
+
+<!-- Drawer Panel -->
+<aside id="mobile_drawer" class="mobile-drawer">
+  <div>
+    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.5rem; padding-bottom: 1rem; border-bottom: 1px solid var(--border-card);">
+      <div style="display: flex; align-items: center; gap: 0.7rem;">
+        <div style="width: 2.3rem; height: 2.3rem; border-radius: 0.6rem; background: linear-gradient(135deg, #ffe600, #ff4500); display: flex; align-items: center; justify-content: center; color: #000; font-weight: 900;">
+          <i class="fa-solid fa-person-skiing"></i>
+        </div>
+        <div>
+          <strong style="font-size: 0.9rem; display: block; color: var(--text-main);">{NEGOCIO.nombre}</strong>
+          <span style="font-size: 0.68rem; color: var(--neon-yellow);">{NEGOCIO.slogan}</span>
+        </div>
+      </div>
+      <button type="button" id="btn_close_drawer" style="background: transparent; border: none; font-size: 1.6rem; color: var(--text-muted); cursor: pointer;">&times;</button>
+    </div>
+
+    <nav style="display: flex; flex-direction: column;">
+      {NAV_LINKS.map(link => (
+        <a href={link.href} class="drawer-link drawer-item" data-key={link.key}>
+          <i class={`fa-solid ${link.icon}`} style="color: var(--neon-yellow); width: 1.3rem;"></i>
+          {link.id === 'inicio' ? (idioma === 'en' ? 'Home' : 'Inicio') :
+           link.id === 'tours' ? (idioma === 'en' ? '4 Disciplines' : '4 Disciplinas') :
+           link.id === 'galeria' ? (idioma === 'en' ? 'Hawka Base & Photos' : 'Base Hawka & Fotos') :
+           link.id === 'ubicacion' ? (idioma === 'en' ? 'Base Location & Maps' : 'Punto de Encuentro Oficial') :
+           link.id === 'confianza' ? (idioma === 'en' ? 'Why Choose Us' : 'Por Qué Elegirnos') : 'FAQ'}
+        </a>
+      ))}
+    </nav>
+  </div>
+
+  <div style="padding-top: 1rem; border-top: 1px solid var(--border-card); display: flex; flex-direction: column; gap: 0.6rem;">
+    <a href={NEGOCIO.redes.whatsapp} target="_blank" rel="noopener noreferrer" style="display: flex; align-items: center; justify-content: center; gap: 0.5rem; background: var(--wa-green); color: #fff; padding: 0.75rem; border-radius: 0.8rem; font-size: 0.82rem; font-weight: 700; text-decoration: none;">
+      <i class="fa-brands fa-whatsapp" style="font-size: 1.1rem;"></i> {idioma === 'en' ? 'Chat with Guide' : 'Hablar por WhatsApp'}
+    </a>
+  </div>
+</aside>
+
+<style>
+  .drawer-backdrop { position: fixed; inset: 0; background: rgba(0,0,0,0.65); backdrop-filter: blur(6px); z-index: 9999; opacity: 0; pointer-events: none; transition: opacity 0.3s cubic-bezier(0.4, 0, 0.2, 1); }
+  .drawer-backdrop.open { opacity: 1; pointer-events: auto; }
+  .mobile-drawer { position: fixed; top: 0; right: -100%; width: 82%; max-width: 320px; height: 100vh; background: var(--bg-card); border-left: 1px solid var(--border-card); z-index: 10001; padding: 1.8rem 1.4rem; display: flex; flex-direction: column; justify-content: space-between; transition: right 0.3s cubic-bezier(0.4, 0, 0.2, 1); box-shadow: -10px 0 35px rgba(0,0,0,0.6); }
+  .mobile-drawer.open { right: 0; }
+  .drawer-link { padding: 0.8rem 0; font-size: 0.92rem; font-weight: 700; color: var(--text-main); text-decoration: none; border-bottom: 1px solid var(--border-card); display: flex; align-items: center; gap: 0.8rem; }
+</style>

@@ -1,0 +1,24 @@
+---
+// src/pages/[...lang]/hola.astro
+// 🌐 Ruta Bilingüe del Laboratorio: /hola (Español) y /en/hola (Inglés)
+
+import Cliente from '../../core/layouts/Cliente.astro';
+import HolaPage from '../../feature/hola/HolaPage.astro';
+import holaCss from '../../feature/hola/hola.css?raw';
+
+export function getStaticPaths() {
+  return [
+    { params: { lang: undefined } }, // Español: /hola
+    { params: { lang: 'en' } }       // Inglés: /en/hola
+  ];
+}
+
+const { lang = 'es' } = Astro.params;
+const idiomaActivo = lang === 'en' ? 'en' : 'es';
+const titulo = idiomaActivo === 'en' ? 'Testing Lab' : 'Laboratorio de Pruebas';
+const desc = idiomaActivo === 'en' ? 'Interactive environment to test themes, languages and Firebase' : 'Entorno interactivo para validar temas, idiomas y Firebase';
+---
+
+<Cliente lang={idiomaActivo} titulo={titulo} descripcion={desc} featureCss={holaCss}>
+  <HolaPage lang={idiomaActivo} />
+</Cliente>

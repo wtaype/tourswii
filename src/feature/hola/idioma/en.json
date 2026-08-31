@@ -1,0 +1,41 @@
+{
+  "titulo": "Testing and Validation Lab",
+  "subtitulo": "An interactive environment to test themes, languages, Firebase, and live layouts.",
+  "tabs": {
+    "temas": "Bimodal Themes",
+    "idioma": "Internationalization",
+    "firebase": "Firebase Connection",
+    "layouts": "Layout Modes"
+  },
+  "temas_test": {
+    "titulo": "Light / Dark Mode Test",
+    "desc": "Verify localStorage persistence and adaptation to your operating system's dark theme.",
+    "tema_activo": "Active Theme in DOM",
+    "btn_toggle": "Toggle Theme with Click",
+    "so_detectado": "Mode Detected in your Operating System",
+    "sin_fouc": "Zero Flickering on F5 Reload"
+  },
+  "idioma_test": {
+    "titulo": "Bilingual Routing Test",
+    "desc": "Validate instant switching between Spanish (/) and English (/en) without duplicating files.",
+    "idioma_actual": "Current Language",
+    "texto_prueba": "Text translated with useTranslations()",
+    "btn_ir_es": "View Spanish Version",
+    "btn_ir_en": "View English Version"
+  },
+  "firebase_test": {
+    "titulo": "Firebase SDK Connection Test",
+    "desc": "Verify credentials and initialization status of Auth and Firestore.",
+    "proyecto": "Project ID",
+    "estado": "Connection Status",
+    "conectado": "Connected and Ready",
+    "btn_test": "Execute Ping to Firestore"
+  },
+  "layouts_test": {
+    "titulo": "Layout Switching Test",
+    "desc": "Observe how the system adapts between the Client Layout (Web) and the Staff Layout (Panel).",
+    "modo_cliente": "Client Layout (Public)",
+    "modo_personal": "Staff Layout (Staff Panel)",
+    "btn_ver_personal": "Test Staff View"
+  }
+}

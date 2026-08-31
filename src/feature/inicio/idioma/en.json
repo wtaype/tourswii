@@ -1,0 +1,34 @@
+{
+  "hero": {
+    "badge": "Ica Dune Adventure",
+    "titulo_1": "Feel the Adrenaline at the",
+    "titulo_resaltado": "Huacachina Oasis",
+    "subtitulo": "Experience thrilling 4x4 dune buggy rides and professional sandboarding against South America's most stunning sunset.",
+    "btn_whatsapp": "Book via WhatsApp",
+    "btn_tours": "View Official Rates"
+  },
+  "stats": {
+    "turistas": "+15,000",
+    "turistas_label": "Satisfied Tourists",
+    "experiencia": "8 Years",
+    "experiencia_label": "Operating in Huacachina",
+    "rating": "4.9 / 5",
+    "rating_label": "5-Star Rating"
+  },
+  "ventajas": {
+    "titulo": "Why Choose Kevin Tours?",
+    "seguridad_tit": "100% Safety",
+    "seguridad_desc": "Our dune buggies feature reinforced roll cages, and all drivers hold official MTC licenses.",
+    "equipos_tit": "Professional Boards",
+    "equipos_desc": "Our boards come with foot bindings and special high-speed wax included.",
+    "fotos_tit": "Sunset Photos",
+    "fotos_desc": "Strategic stops at the highest dunes to capture the most breathtaking sunset photos."
+  },
+  "faq": {
+    "titulo": "Frequently Asked Questions",
+    "p1": "What is the best time for the dune buggy tour?",
+    "r1": "The 4:00 PM to 6:00 PM slot is the most popular for experiencing the stunning sunset over the dunes.",
+    "p2": "Does the tour include the municipal tourist fee?",
+    "r2": "The dune entrance fee (S/ 3.70) is paid directly at the gate before boarding."
+  }
+}

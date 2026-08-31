@@ -1,0 +1,129 @@
+---
+// src/feature/personal/PersonalPage.astro
+// 🛠️ Panel de Gestión del Dueño de Tours (Kevin) & Staff Base Hawka (<85 líneas)
+import { ClientRouter } from 'astro:transitions';
+import PersonalHeader from './componentes/PersonalHeader.astro';
+import PersonalNav from './componentes/PersonalNav.astro';
+
+import TabResumen from './seccion/TabResumen.astro';
+import TabRecepcion from './seccion/TabRecepcion.astro';
+import TabSalidas from './seccion/TabSalidas.astro';
+import TabInventario from './seccion/TabInventario.astro';
+import TabTarifas from './seccion/TabTarifas.astro';
+
+import { getMeta } from '../../core/seo.js';
+import estilosTema from '../../core/wicss/witema.css?raw';
+import fuentesCss from '../../../public/google/fonts.css?raw';
+import awesomeCss from '../../../public/fontawesome/css/all.min.css?raw';
+import inicioCss from '../inicio/inicio.css?raw';
+
+const globalCss = estilosTema + '\n' + fuentesCss + '\n' + awesomeCss + '\n' + inicioCss;
+const meta = getMeta('/personal');
+---
+
+<!DOCTYPE html>
+<html lang="es" data-theme="futuro" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>{meta.title}</title>
+  <meta name="description" content={meta.description} />
+  
+  <link rel="preload" href="/google/Poppins-400.woff2" as="font" type="font/woff2" crossorigin="anonymous" />
+  <link rel="preload" href="/google/Poppins-600.woff2" as="font" type="font/woff2" crossorigin="anonymous" />
+  <link rel="preload" href="/google/Poppins-700.woff2" as="font" type="font/woff2" crossorigin="anonymous" />
+
+  <ClientRouter />
+  <style is:global data-astro-transition-persist="global-css" set:html={globalCss}></style>
+
+  <!-- Anti-FOUC Inmediato -->
+  <script is:inline>
+    (() => {
+      const applyTheme = () => {
+        try {
+          const saved = localStorage.getItem('wiTema');
+          const system = window.matchMedia('(prefers-color-scheme: dark)').matches ? 'futuro' : 'luz';
+          const theme = (saved === 'luz' || saved === 'futuro') ? saved : system;
+          document.documentElement.dataset.theme = theme;
+        } catch (e) {}
+      };
+      applyTheme();
+      document.addEventListener('astro:after-swap', applyTheme);
+    })();
+  </script>
+</head>
+<body style="background-color: var(--bg-body); background-image: url('/wpuntos.svg'), radial-gradient(circle at 50% 0%, rgba(255, 69, 0, 0.08) 0%, transparent 60%); background-attachment: fixed; color: var(--text-main); font-family: 'Poppins', system-ui, sans-serif; overflow-x: hidden; padding-bottom: 70px; transition: background-color 0.3s, color 0.3s;">
+
+  <!-- Header Superior Sticky Fijo -->
+  <PersonalHeader />
+
+  <!-- Navegación de Pestañas Desktop -->
+  <div class="container-wide hide-mobile" style="margin-top: 1.5rem;">
+    <div style="display: flex; gap: 0.5rem; border-bottom: 1px solid var(--border-card); overflow-x: auto; padding-bottom: 0.2rem;">
+      <button type="button" class="staff-desktop-tab active" data-tab="tab_resumen"><i class="fa-solid fa-chart-pie"></i> Resumen</button>
+      <button type="button" class="staff-desktop-tab" data-tab="tab_recepcion"><i class="fa-solid fa-hotel"></i> Recepción Base</button>
+      <button type="button" class="staff-desktop-tab" data-tab="tab_salidas"><i class="fa-solid fa-car-on"></i> Despacho Salidas</button>
+      <button type="button" class="staff-desktop-tab" data-tab="tab_inventario"><i class="fa-solid fa-boxes-stacked"></i> Inventario Botas</button>
+      <button type="button" class="staff-desktop-tab" data-tab="tab_tarifas"><i class="fa-solid fa-tags"></i> Tarifario</button>
+    </div>
+  </div>
+
+  <!-- Contenedor de Contenidos -->
+  <main class="container-wide" style="margin-top: 1.5rem; margin-bottom: 2rem;">
+    <TabResumen />
+    <TabRecepcion />
+    <TabSalidas />
+    <TabInventario />
+    <TabTarifas />
+  </main>
+
+  <!-- Mobile Bottom Navigation 100% Fija -->
+  <PersonalNav />
+
+</body>
+</html>
+
+<style>
+  .staff-desktop-tab { padding: 0.65rem 1.2rem; border-radius: 0.7rem 0.7rem 0 0; background: transparent; border: none; border-bottom: 3px solid transparent; color: var(--text-muted); font-weight: 700; font-size: 0.85rem; cursor: pointer; display: flex; align-items: center; gap: 0.5rem; transition: 0.2s; }
+  .staff-desktop-tab.active { color: var(--neon-yellow); border-bottom-color: var(--neon-yellow); background: var(--bg-subtle); }
+  @media (max-width: 900px) { .hide-mobile { display: none !important; } }
+</style>
+
+<script>
+  import { witema, setTema } from '../../core/widev/tema.js';
+
+  function initPersonal() {
+    witema('futuro');
+
+    const btnTheme = document.getElementById('btn_toggle_theme');
+    btnTheme?.addEventListener('click', (e) => {
+      e.preventDefault();
+      const current = document.documentElement.dataset.theme || 'futuro';
+      const next = current === 'futuro' ? 'luz' : 'futuro';
+      setTema(next);
+    });
+
+    const allTabButtons = document.querySelectorAll('.staff-desktop-tab, .staff-bottom-btn');
+    const panels = document.querySelectorAll('.staff-panel-tab');
+
+    allTabButtons.forEach(btn => {
+      btn.addEventListener('click', () => {
+        const targetId = btn.getAttribute('data-tab');
+        allTabButtons.forEach(b => {
+          if (b.getAttribute('data-tab') === targetId) {
+            b.classList.add('active');
+          } else {
+            b.classList.remove('active');
+          }
+        });
+
+        panels.forEach(p => (p as HTMLElement).style.display = 'none');
+        const target = document.getElementById(targetId || '');
+        if (target) target.style.display = 'block';
+      });
+    });
+  }
+
+  document.addEventListener('DOMContentLoaded', initPersonal);
+  document.addEventListener('astro:page-load', initPersonal);
+</script>

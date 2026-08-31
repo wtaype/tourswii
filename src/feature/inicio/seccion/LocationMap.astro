@@ -1,0 +1,64 @@
+---
+// src/feature/inicio/seccion/LocationMap.astro
+// 📍 Punto de Encuentro Oficial & Google Maps (<65 líneas)
+import { NEGOCIO } from '../../../core/config/constantes.js';
+
+interface Props {
+  idioma?: 'es' | 'en';
+}
+
+const { idioma = 'es' } = Astro.props;
+---
+
+<section id="ubicacion" style="padding: 7vh 0; border-bottom: 1px solid var(--border-card);">
+  <div class="container-wide">
+    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 2.5rem; align-items: center;">
+      
+      <!-- Datos de la Base Física -->
+      <div style="background: var(--bg-card); border: 1px solid var(--border-card); border-radius: 1.4rem; padding: 2rem; box-shadow: var(--shadow-xl);">
+        <span style="color: var(--glow-cyan); font-size: 0.75rem; font-weight: 800; text-transform: uppercase;">
+          {idioma === 'en' ? 'Official Meeting Point' : 'Punto de Encuentro Oficial'}
+        </span>
+        <h3 style="font-size: 1.45rem; font-weight: 900; margin: 0.4rem 0 1.2rem 0; text-transform: uppercase; color: var(--text-main);">
+          {idioma === 'en' ? 'Visit Us in Huacachina' : 'Visítanos en Huacachina'}
+        </h3>
+
+        <div style="display: flex; flex-direction: column; gap: 1rem; margin-bottom: 1.6rem; font-size: 0.85rem;">
+          <p style="color: var(--text-main);">
+            <i class="fa-solid fa-map-pin" style="color: var(--neon-yellow); margin-right: 0.4rem;"></i>
+            <strong>{idioma === 'en' ? 'Address:' : 'Dirección:'}</strong> {NEGOCIO.ubicacion.direccion}
+          </p>
+          <p style="color: var(--neon-yellow); font-weight: 700;">
+            <i class="fa-solid fa-hotel" style="margin-right: 0.4rem;"></i>
+            <strong>{idioma === 'en' ? 'Base Reference:' : 'Referencia de Base:'}</strong> {NEGOCIO.ubicacion.referencia}
+          </p>
+          <p style="color: var(--text-main);">
+            <i class="fa-brands fa-whatsapp" style="color: var(--wa-green); margin-right: 0.4rem;"></i>
+            <strong>WhatsApp:</strong> {NEGOCIO.telefono}
+          </p>
+          <p style="color: var(--text-main);">
+            <i class="fa-solid fa-clock" style="color: var(--fire-orange); margin-right: 0.4rem;"></i>
+            <strong>{idioma === 'en' ? 'Hours:' : 'Horario de Base:'}</strong> {NEGOCIO.ubicacion.horario}
+          </p>
+        </div>
+
+        <a href={NEGOCIO.ubicacion.mapsUrl} target="_blank" rel="noopener noreferrer" style="display: flex; align-items: center; justify-content: center; gap: 0.5rem; background: linear-gradient(135deg, #ffe600, #ff4500); color: #000; font-weight: 800; padding: 0.8rem 1.4rem; border-radius: 0.8rem; font-size: 0.85rem; text-decoration: none; width: 100%;">
+          <i class="fa-solid fa-location-arrow"></i> {idioma === 'en' ? 'Open in Official Google Maps' : 'Abrir en Google Maps Oficial'}
+        </a>
+      </div>
+
+      <!-- Mapa Embebido de Google -->
+      <div style="height: 350px; border-radius: 1.4rem; overflow: hidden; border: 1px solid var(--border-card); box-shadow: var(--shadow-xl);">
+        <iframe 
+          src={NEGOCIO.ubicacion.embedMap} 
+          width="100%" 
+          height="100%" 
+          style="border:0;" 
+          allowfullscreen="" 
+          loading="lazy">
+        </iframe>
+      </div>
+
+    </div>
+  </div>
+</section>

@@ -1,0 +1,66 @@
+---
+// src/feature/hola/HolaPage.astro
+// 🧪 Orquestador del Laboratorio de Pruebas
+
+import Tabs from '../../core/componentes/Tabs.astro';
+import PruebaTemas from './tabs/PruebaTemas.astro';
+import PruebaIdioma from './tabs/PruebaIdioma.astro';
+import PruebaFirebase from './tabs/PruebaFirebase.astro';
+import PruebaLayouts from './tabs/PruebaLayouts.astro';
+import { useTranslations } from '../../core/idioma/idioma';
+import holaEs from './idioma/es.json';
+import holaEn from './idioma/en.json';
+
+interface Props {
+  lang?: string;
+}
+
+const { lang = 'es' } = Astro.props;
+const t = useTranslations(lang, { es: holaEs, en: holaEn });
+
+const TABS_CONFIG = [
+  { id: 'temas', label: t('tabs.temas'), icon: 'fa-palette', active: true },
+  { id: 'idioma', label: t('tabs.idioma'), icon: 'fa-language', active: false },
+  { id: 'firebase', label: t('tabs.firebase'), icon: 'fa-fire', active: false },
+  { id: 'layouts', label: t('tabs.layouts'), icon: 'fa-layer-group', active: false }
+];
+---
+
+<div class="hola_contenedor">
+  <!-- Banner de Bienvenida -->
+  <div class="hola_banner">
+    <div class="hola_banner_badge">
+      <i class="fa-solid fa-flask"></i> Laboratorio Activo
+    </div>
+    <h1 class="hola_titulo">{t('titulo')}</h1>
+    <p class="hola_subtitulo">{t('subtitulo')}</p>
+  </div>
+
+  <!-- Navegación por Pestañas -->
+  <Tabs tabs={TABS_CONFIG} idContenedor="hola_tabs_nav" />
+
+  <!-- Contenedor de Paneles de Prueba -->
+  <div class="hola_paneles_wrapper">
+    <div class="hola_panel_tab" data-tab-content="temas" style="display: block;">
+      <PruebaTemas lang={lang} />
+    </div>
+
+    <div class="hola_panel_tab" data-tab-content="idioma" style="display: none;">
+      <PruebaIdioma lang={lang} />
+    </div>
+
+    <div class="hola_panel_tab" data-tab-content="firebase" style="display: none;">
+      <PruebaFirebase lang={lang} />
+    </div>
+
+    <div class="hola_panel_tab" data-tab-content="layouts" style="display: none;">
+      <PruebaLayouts lang={lang} />
+    </div>
+  </div>
+</div>
+
+<script>
+  import { initHola } from './hola.js';
+  initHola();
+  document.addEventListener('astro:page-load', initHola);
+</script>

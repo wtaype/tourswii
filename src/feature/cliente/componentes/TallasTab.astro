@@ -1,0 +1,47 @@
+---
+// src/feature/cliente/componentes/TallasTab.astro
+// 🥾 Pestaña de Selección y Guardado de Tallas 35 a 45 (<45 líneas)
+import { CLIENTE_VIP } from '../data/cliente.data.js';
+
+interface Props {
+  cliente?: typeof CLIENTE_VIP;
+}
+
+const { cliente = CLIENTE_VIP } = Astro.props;
+---
+
+<div class="cliente-tab-panel" id="tab_tallas" style="display: none;">
+  <div style="background: var(--bg-card); border: 1px solid var(--border-card); border-radius: 1.2rem; padding: 1.6rem;">
+    <h4 style="font-size: 1.1rem; font-weight: 800; margin-bottom: 0.4rem; color: var(--text-main);">
+      Ajuste Personalizado de Botas en Base Hawka
+    </h4>
+    <p style="font-size: 0.82rem; color: var(--text-muted); margin-bottom: 1.4rem;">
+      Al llegar a la recepción, tus botas de esquí o snowboard estarán pre-calibradas a tu medida para salida inmediata.
+    </p>
+
+    <label style="font-size: 0.76rem; font-weight: 700; color: var(--text-muted); display: block; margin-bottom: 0.6rem; text-transform: uppercase;">
+      Selecciona tu Talla de Calzado (EU)
+    </label>
+    <div style="display: flex; gap: 0.6rem; flex-wrap: wrap; margin-bottom: 1.5rem;">
+      {[35, 36, 37, 38, 39, 40, 41, 42, 43, 44, 45].map(t => (
+        <button type="button" class={`size-box-btn ${t === cliente.tallaBota ? 'active' : ''}`}>{t}</button>
+      ))}
+    </div>
+
+    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem;">
+      <div>
+        <label style="font-size: 0.72rem; color: var(--text-muted); text-transform: uppercase;">Disciplina Preferida</label>
+        <p style="font-size: 0.9rem; font-weight: 700; color: var(--neon-yellow);">{cliente.disciplinaFavorita}</p>
+      </div>
+      <div>
+        <label style="font-size: 0.72rem; color: var(--text-muted); text-transform: uppercase;">Postura de Tabla</label>
+        <p style="font-size: 0.9rem; font-weight: 700; color: var(--glow-cyan);">{cliente.pieDominante}</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<style>
+  .size-box-btn { width: 2.6rem; height: 2.6rem; border-radius: 0.6rem; border: 1px solid var(--border-card); background: var(--bg-subtle); color: var(--text-main); font-weight: 800; font-size: 0.88rem; cursor: pointer; transition: 0.2s; }
+  .size-box-btn.active { background: var(--neon-yellow); color: #000; border-color: var(--neon-yellow); box-shadow: 0 0 15px rgba(255, 230, 0, 0.4); }
+</style>

@@ -1,0 +1,49 @@
+---
+// src/feature/inicio/componentes/WhatsAppFloat.astro
+// 🟢 Botón Flotante Pulsante de WhatsApp Oficial (<30 líneas)
+import { NEGOCIO } from '../../../core/config/constantes.js';
+
+interface Props {
+  mensaje?: string;
+}
+
+const { mensaje = '¡Hola! ¿Deseas reservar tu tour de SandSki o Sandboard?' } = Astro.props;
+---
+
+<a href={NEGOCIO.redes.whatsapp} target="_blank" rel="noopener noreferrer" class="whatsapp-float-btn" title={mensaje}>
+  <i class="fa-brands fa-whatsapp"></i>
+  <span class="whatsapp-pulse"></span>
+</a>
+
+<style>
+  .whatsapp-float-btn {
+    position: fixed;
+    bottom: 1.5rem;
+    right: 1.5rem;
+    width: 3.5rem;
+    height: 3.5rem;
+    border-radius: 50%;
+    background: #25d366;
+    color: #fff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.8rem;
+    box-shadow: 0 8px 25px rgba(37, 211, 102, 0.5);
+    z-index: 999;
+    text-decoration: none;
+    transition: transform 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+  .whatsapp-float-btn:hover { transform: scale(1.1); }
+  .whatsapp-pulse {
+    position: absolute;
+    inset: 0;
+    border-radius: 50%;
+    border: 2px solid #25d366;
+    animation: pulseWave 2s infinite;
+  }
+  @keyframes pulseWave {
+    0% { transform: scale(1); opacity: 0.8; }
+    100% { transform: scale(1.6); opacity: 0; }
+  }
+</style>

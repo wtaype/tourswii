@@ -1,0 +1,1022 @@
+---
+// src/pages/kevin14.astro
+// 🛠️ Panel de Administración y Recepción de Tours - Master Staff Oficial
+// Solo Español, 2 Monedas (PEN/USD), 2 Temas (Luz/Futuro), Ubicación Hawka,
+// Pestaña Dedicada de Resumen General & Ventas, Check-in de Pasajeros, Salidas en Dunas, Flota de Tubulares, Tarifas y Blog.
+// Mobile Responsive Ultra Pulido con Sidebar Off-canvas con Backdrop y Barra Inferior Android.
+// Abre en: http://localhost:4321/kevin14
+
+const personal = {
+  nombre: 'Kevin Mendoza',
+  rol: 'Jefe de Operaciones & Despacho',
+  base: 'Recepción Hospedaje Hawka',
+  direccion: 'Av. Ángela Perotti S/n, Huacachina',
+  telefono: '+51 985 496 463'
+};
+---
+
+<!DOCTYPE html>
+<html lang="es" data-theme="futuro">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="icon" type="image/x-icon" href="/favicon.ico" />
+  <title>Admin & Recepción | Kevin Tours Staff Huacachina</title>
+
+  <!-- Fuentes Locales y FontAwesome -->
+  <link rel="preload" href="/google/Poppins-400.woff2" as="font" type="font/woff2" crossorigin="anonymous" />
+  <link rel="preload" href="/google/Poppins-600.woff2" as="font" type="font/woff2" crossorigin="anonymous" />
+  <link rel="preload" href="/google/Poppins-700.woff2" as="font" type="font/woff2" crossorigin="anonymous" />
+  <link rel="stylesheet" href="/google/fonts.css" />
+  <link rel="stylesheet" href="/fontawesome/css/all.min.css" />
+
+  <script is:inline>
+    (function() {
+      try {
+        const guardado = localStorage.getItem('wiTema_kevin14');
+        const sistema = window.matchMedia('(prefers-color-scheme: dark)').matches ? 'futuro' : 'luz';
+        document.documentElement.dataset.theme = guardado || sistema || 'futuro';
+      } catch (e) {}
+    })();
+  </script>
+
+  <style is:global>
+    :root[data-theme="futuro"] {
+      --bg-body: #070b12;
+      --bg-sidebar: #0d131c;
+      --bg-card: rgba(16, 24, 38, 0.9);
+      --border-color: rgba(255, 255, 255, 0.1);
+      --border-accent: rgba(255, 230, 0, 0.5);
+      --neon-yellow: #ffe600;
+      --fire-orange: #ff4500;
+      --glow-cyan: #00f0ff;
+      --wa-green: #25d366;
+      --text-main: #f8fafc;
+      --text-muted: #94a3b8;
+      --input-bg: #090e17;
+      --shadow-card: 0 10px 30px rgba(0, 0, 0, 0.5);
+    }
+
+    :root[data-theme="luz"] {
+      --bg-body: #f1f5f9;
+      --bg-sidebar: #ffffff;
+      --bg-card: #ffffff;
+      --border-color: #e2e8f0;
+      --border-accent: rgba(234, 88, 12, 0.5);
+      --neon-yellow: #d97706;
+      --fire-orange: #ea580c;
+      --glow-cyan: #0284c7;
+      --wa-green: #16a34a;
+      --text-main: #0f172a;
+      --text-muted: #64748b;
+      --input-bg: #f8fafc;
+      --shadow-card: 0 4px 20px rgba(0, 0, 0, 0.05);
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Poppins', sans-serif; }
+    body {
+      background-color: var(--bg-body);
+      color: var(--text-main);
+      min-height: 100vh;
+      display: block;
+      margin: 0;
+      padding: 0;
+      transition: background-color 0.3s, color 0.3s;
+      overflow-x: hidden;
+    }
+
+    /* Layout Dashboard Desktop */
+    .admin-sidebar {
+      width: 280px;
+      background: var(--bg-sidebar);
+      border-right: 1px solid var(--border-color);
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      padding: 1.8rem 1.2rem;
+      position: fixed;
+      top: 0;
+      bottom: 0;
+      left: 0;
+      z-index: 1000;
+      transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    .admin-main {
+      margin-left: 280px;
+      padding: 2rem 2.5rem;
+      min-height: 100vh;
+      width: calc(100% - 280px);
+    }
+
+    .nav-tab-btn {
+      display: flex;
+      align-items: center;
+      gap: 0.8rem;
+      padding: 0.75rem 1rem;
+      border-radius: 0.7rem;
+      font-size: 0.85rem;
+      font-weight: 600;
+      color: var(--text-muted);
+      background: transparent;
+      border: none;
+      width: 100%;
+      text-align: left;
+      cursor: pointer;
+      transition: all 0.2s;
+      margin-bottom: 0.3rem;
+    }
+
+    .nav-tab-btn:hover, .nav-tab-btn.activo {
+      background: rgba(255, 230, 0, 0.12);
+      color: var(--neon-yellow);
+    }
+
+    .nav-tab-btn i { font-size: 1.1rem; width: 1.4rem; }
+
+    .card-panel {
+      background: var(--bg-card);
+      border: 1px solid var(--border-color);
+      border-radius: 1rem;
+      padding: 1.5rem;
+      box-shadow: var(--shadow-card);
+      margin-bottom: 1.5rem;
+    }
+
+    .pill-box {
+      display: inline-flex;
+      align-items: center;
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid var(--border-color);
+      border-radius: 999px;
+      padding: 0.2rem;
+      gap: 0.2rem;
+    }
+
+    .pill-item {
+      border: none;
+      background: transparent;
+      padding: 0.25rem 0.65rem;
+      border-radius: 999px;
+      font-size: 0.75rem;
+      font-weight: 700;
+      color: var(--text-muted);
+      cursor: pointer;
+    }
+
+    .pill-item.active { background: var(--neon-yellow); color: #000; }
+
+    .btn-action {
+      padding: 0.6rem 1.2rem;
+      border-radius: 0.6rem;
+      font-size: 0.82rem;
+      font-weight: 700;
+      border: none;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+      transition: all 0.2s;
+    }
+
+    .btn-speed {
+      background: linear-gradient(135deg, #ffe600, #ff4500);
+      color: #000;
+    }
+    .btn-speed:hover { transform: translateY(-2px); box-shadow: 0 4px 15px rgba(255, 230, 0, 0.3); }
+
+    .btn-outline {
+      background: transparent;
+      border: 1px solid var(--border-color);
+      color: var(--text-main);
+    }
+    .btn-outline:hover { border-color: var(--neon-yellow); color: var(--neon-yellow); }
+
+    .badge-status {
+      padding: 0.25rem 0.6rem;
+      border-radius: 999px;
+      font-size: 0.7rem;
+      font-weight: 800;
+      text-transform: uppercase;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.3rem;
+    }
+
+    .status-ok { background: rgba(37, 211, 102, 0.15); color: var(--wa-green); border: 1px solid var(--wa-green); }
+    .status-warn { background: rgba(255, 230, 0, 0.15); color: var(--neon-yellow); border: 1px solid var(--neon-yellow); }
+    .status-danger { background: rgba(255, 69, 0, 0.15); color: var(--fire-orange); border: 1px solid var(--fire-orange); }
+
+    table { width: 100%; border-collapse: collapse; font-size: 0.82rem; text-align: left; }
+    th { padding: 0.8rem 1rem; color: var(--text-muted); border-bottom: 1px solid var(--border-color); font-size: 0.72rem; text-transform: uppercase; }
+    td { padding: 0.9rem 1rem; border-bottom: 1px solid var(--border-color); }
+    tr:hover td { background: rgba(255, 255, 255, 0.02); }
+
+    /* Backdrop para cerrar sidebar en móvil */
+    .admin-backdrop {
+      position: fixed;
+      inset: 0;
+      background: rgba(0, 0, 0, 0.7);
+      backdrop-filter: blur(4px);
+      z-index: 10000;
+      opacity: 0;
+      visibility: hidden;
+      transition: opacity 0.3s ease, visibility 0.3s ease;
+    }
+    .admin-backdrop.active {
+      opacity: 1;
+      visibility: visible;
+    }
+
+    .mobile-header-bar {
+      display: none;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      background: var(--bg-sidebar);
+      border-bottom: 1px solid var(--border-color);
+      padding: 0.8rem 1rem;
+      justify-content: space-between;
+      align-items: center;
+      width: 100%;
+    }
+
+    .mobile-bottom-nav {
+      display: none;
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      background: var(--bg-sidebar);
+      border-top: 1px solid var(--border-color);
+      z-index: 100;
+      padding: 0.4rem 0.2rem;
+      justify-content: space-around;
+      align-items: center;
+    }
+
+    .mobile-bottom-btn {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      font-size: 0.62rem;
+      color: var(--text-muted);
+      background: transparent;
+      border: none;
+      gap: 0.15rem;
+      cursor: pointer;
+      padding: 0.3rem;
+    }
+    .mobile-bottom-btn.activo { color: var(--neon-yellow); font-weight: 700; }
+
+    .grid-resumen-reportes {
+      display: grid;
+      grid-template-columns: 1.15fr 0.85fr;
+      gap: 1.5rem;
+      margin-top: 1.5rem;
+    }
+
+    /* ==================== MEDIA QUERIES & MOBILE APP RESPONSIVE ==================== */
+    @media (max-width: 1024px) {
+      .grid-resumen-reportes {
+        grid-template-columns: 1fr !important;
+        gap: 1.2rem !important;
+      }
+      .admin-sidebar {
+        transform: translateX(-100%);
+        box-shadow: 10px 0 30px rgba(0,0,0,0.5);
+        z-index: 10001;
+      }
+      .admin-sidebar.open {
+        transform: translateX(0);
+      }
+      .admin-main {
+        margin-left: 0 !important;
+        width: 100% !important;
+        max-width: 100vw !important;
+        padding: 1rem !important;
+        padding-bottom: 5.5rem !important;
+      }
+      .mobile-header-bar {
+        display: flex !important;
+      }
+      .mobile-bottom-nav {
+        display: flex !important;
+      }
+      .stats-grid {
+        grid-template-columns: 1fr 1fr !important;
+        gap: 0.8rem !important;
+      }
+      .table-responsive-container {
+        overflow-x: auto;
+        -webkit-overflow-scrolling: touch;
+      }
+      .top-controls-bar {
+        display: none !important;
+      }
+      .btn-close-sidebar-mobile {
+        display: block !important;
+      }
+    }
+
+    @media (max-width: 640px) {
+      .stats-grid {
+        grid-template-columns: 1fr !important;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- 📱 CABECERA MÓVIL (VISIBLE EN CELULAR/TABLET) -->
+  <div class="mobile-header-bar">
+    <div style="display: flex; align-items: center; gap: 0.6rem;">
+      <button type="button" id="btn_toggle_mobile_sidebar" class="btn-outline" style="padding: 0.4rem 0.6rem; border-radius: 0.5rem;" title="Abrir Menú">
+        <i class="fa-solid fa-bars"></i>
+      </button>
+      <strong style="font-size: 0.95rem;">Kevin Tours <span style="color: var(--neon-yellow);">Staff</span></strong>
+    </div>
+    <div style="display: flex; align-items: center; gap: 0.5rem;">
+      <!-- Moneda Móvil -->
+      <div class="pill-box">
+        <button type="button" class="pill-item active btn-curr-pen">PEN</button>
+        <button type="button" class="pill-item btn-curr-usd">USD</button>
+      </div>
+      <button type="button" class="btn-outline btn-toggle-theme" style="padding: 0.4rem 0.6rem; border-radius: 0.5rem;">
+        <i class="fa-solid fa-moon"></i>
+      </button>
+    </div>
+  </div>
+
+  <!-- BACKDROP PARA CERRAR SIDEBAR AL CLICKEAR AFUERA -->
+  <div id="admin_backdrop" class="admin-backdrop"></div>
+
+  <!-- 📋 SIDEBAR DE NAVEGACIÓN ADMINISTRATIVA -->
+  <aside id="sidebar_admin" class="admin-sidebar">
+    <div>
+      <!-- Brand -->
+      <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 2rem; padding-bottom: 1.2rem; border-bottom: 1px solid var(--border-color);">
+        <div style="display: flex; align-items: center; gap: 0.7rem;">
+          <div style="width: 2.6rem; height: 2.6rem; border-radius: 0.7rem; background: linear-gradient(135deg, #ffe600, #ff4500); display: flex; align-items: center; justify-content: center; color: #000; font-size: 1.2rem;">
+            <i class="fa-solid fa-bolt"></i>
+          </div>
+          <div>
+            <h2 style="font-size: 1rem; font-weight: 900; line-height: 1;">KEVIN TOURS</h2>
+            <span style="font-size: 0.65rem; color: var(--neon-yellow); font-weight: 800; text-transform: uppercase;">Portal de Personal</span>
+          </div>
+        </div>
+        <button type="button" id="btn_close_admin_sidebar" style="display: none; background: transparent; border: none; font-size: 1.6rem; color: var(--text-muted); cursor: pointer;" class="btn-close-sidebar-mobile">&times;</button>
+      </div>
+
+      <!-- Menú de Pestañas Operativas -->
+      <nav>
+        <button class="nav-tab-btn activo" data-tab="tab_resumen">
+          <i class="fa-solid fa-chart-line" style="color: var(--neon-yellow);"></i> Resumen & Ventas
+        </button>
+        <button class="nav-tab-btn" data-tab="tab_recepcion">
+          <i class="fa-solid fa-bell-concierge" style="color: var(--wa-green);"></i> Recepción & Check-in
+        </button>
+        <button class="nav-tab-btn" data-tab="tab_salidas">
+          <i class="fa-solid fa-truck-monster" style="color: var(--fire-orange);"></i> Salidas de Tubulares
+        </button>
+        <button class="nav-tab-btn" data-tab="tab_flota">
+          <i class="fa-solid fa-wrench" style="color: var(--glow-cyan);"></i> Flota & Choferes
+        </button>
+        <button class="nav-tab-btn" data-tab="tab_tarifas">
+          <i class="fa-solid fa-tags" style="color: #eab308;"></i> Tarifas & Precios
+        </button>
+        <button class="nav-tab-btn" data-tab="tab_blog">
+          <i class="fa-solid fa-newspaper" style="color: #a855f7;"></i> Blog & Anuncios
+        </button>
+      </nav>
+    </div>
+
+    <!-- Info del Operador & Enlace de Retorno -->
+    <div style="padding-top: 1.5rem; border-top: 1px solid var(--border-color);">
+      <div style="display: flex; align-items: center; gap: 0.8rem; margin-bottom: 1rem;">
+        <div style="width: 2.4rem; height: 2.4rem; border-radius: 50%; background: #334155; display: flex; align-items: center; justify-content: center; font-weight: 800; font-size: 0.9rem; color: var(--neon-yellow);">
+          KM
+        </div>
+        <div>
+          <strong style="font-size: 0.82rem; display: block; line-height: 1.1;">{personal.nombre}</strong>
+          <span style="font-size: 0.65rem; color: var(--text-muted);">{personal.rol}</span>
+        </div>
+      </div>
+
+      <div style="display: flex; flex-direction: column; gap: 0.4rem;">
+        <a href="/kevin12" class="btn-action btn-outline" style="width: 100%; justify-content: center; font-size: 0.75rem;">
+          <i class="fa-solid fa-globe"></i> Vista Pública (kevin12)
+        </a>
+        <a href="/kevin13" class="btn-action btn-outline" style="width: 100%; justify-content: center; font-size: 0.75rem; color: var(--glow-cyan);">
+          <i class="fa-solid fa-user-check"></i> Vista Cliente VIP (kevin13)
+        </a>
+      </div>
+    </div>
+  </aside>
+
+  <!-- 📱 NAVEGACIÓN INFERIOR MÓVIL TIPO APP -->
+  <div class="mobile-bottom-nav">
+    <button class="mobile-bottom-btn activo" data-tab="tab_resumen">
+      <i class="fa-solid fa-chart-line" style="font-size: 1.1rem;"></i>
+      <span>Resumen</span>
+    </button>
+    <button class="mobile-bottom-btn" data-tab="tab_recepcion">
+      <i class="fa-solid fa-bell-concierge" style="font-size: 1.1rem;"></i>
+      <span>Recepción</span>
+    </button>
+    <button class="mobile-bottom-btn" data-tab="tab_salidas">
+      <i class="fa-solid fa-truck-monster" style="font-size: 1.1rem;"></i>
+      <span>Salidas</span>
+    </button>
+    <button class="mobile-bottom-btn" data-tab="tab_flota">
+      <i class="fa-solid fa-wrench" style="font-size: 1.1rem;"></i>
+      <span>Flota</span>
+    </button>
+    <button class="mobile-bottom-btn" data-tab="tab_tarifas">
+      <i class="fa-solid fa-tags" style="font-size: 1.1rem;"></i>
+      <span>Precios</span>
+    </button>
+  </div>
+
+  <!-- 💻 CONTENIDO PRINCIPAL DEL DASHBOARD -->
+  <main class="admin-main">
+    
+    <!-- Topbar con selector de moneda PEN/USD y tema -->
+    <div class="top-controls-bar" style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 2rem;">
+      <div>
+        <h1 style="font-size: 1.5rem; font-weight: 900; letter-spacing: -0.5px;" id="lbl_seccion_actual">
+          Resumen General de Operaciones & Ventas
+        </h1>
+        <p style="font-size: 0.82rem; color: var(--text-muted);">
+          <i class="fa-solid fa-hotel" style="color: var(--neon-yellow); margin-right: 0.3rem;"></i> Base: {personal.base} · {personal.direccion}
+        </p>
+      </div>
+
+      <div style="display: flex; align-items: center; gap: 0.8rem;">
+        <!-- Selector de Moneda PEN / USD -->
+        <div class="pill-box">
+          <button type="button" class="pill-item active btn-curr-pen">S/ PEN</button>
+          <button type="button" class="pill-item btn-curr-usd">$ USD</button>
+        </div>
+
+        <!-- Conmutador de Tema -->
+        <button type="button" class="btn-action btn-outline btn-toggle-theme" style="padding: 0.5rem 0.8rem;" title="Cambiar Tema">
+          <i class="fa-solid fa-moon"></i>
+        </button>
+
+        <button type="button" onclick="alert('Sistema sincronizado con la base de datos de Huacachina.')" class="btn-action btn-speed">
+          <i class="fa-solid fa-rotate"></i> Sincronizar
+        </button>
+      </div>
+    </div>
+
+    <!-- ==================== PESTAÑA 0: RESUMEN GENERAL & VENTAS (DEDICADA) ==================== -->
+    <div id="tab_resumen" class="tab-content-panel">
+      <!-- 📊 TARJETAS DE MÉTRICAS RÁPIDAS (EXCLUSIVAS DE ESTA PESTAÑA) -->
+      <div class="stats-grid" style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 1.2rem; margin-bottom: 1.8rem;">
+        <div class="card-panel" style="border-left: 4px solid var(--neon-yellow); margin-bottom: 0;">
+          <span style="font-size: 0.72rem; font-weight: 700; color: var(--text-muted); text-transform: uppercase;">Pasajeros Hoy</span>
+          <h3 style="font-size: 1.8rem; font-weight: 900; margin: 0.2rem 0; color: var(--neon-yellow);">84 Pax</h3>
+          <span style="font-size: 0.7rem; color: var(--wa-green); font-weight: 600;"><i class="fa-solid fa-arrow-up"></i> +18% vs ayer</span>
+        </div>
+
+        <div class="card-panel" style="border-left: 4px solid var(--fire-orange); margin-bottom: 0;">
+          <span style="font-size: 0.72rem; font-weight: 700; color: var(--text-muted); text-transform: uppercase;">Tubulares en Dunas</span>
+          <h3 style="font-size: 1.8rem; font-weight: 900; margin: 0.2rem 0; color: var(--fire-orange);">5 Activos</h3>
+          <span style="font-size: 0.7rem; color: var(--text-muted);">2 en Base listos para 4:00 PM</span>
+        </div>
+
+        <div class="card-panel" style="border-left: 4px solid var(--glow-cyan); margin-bottom: 0;">
+          <span style="font-size: 0.72rem; font-weight: 700; color: var(--text-muted); text-transform: uppercase;">Ingresos Estimados Hoy</span>
+          <h3 id="stat_ingresos_hoy" style="font-size: 1.8rem; font-weight: 900; margin: 0.2rem 0; color: var(--glow-cyan);" data-pen="3820" data-usd="1032">S/ 3,820</h3>
+          <span style="font-size: 0.7rem; color: var(--wa-green); font-weight: 600;">Check-in 92% cobrado</span>
+        </div>
+
+        <div class="card-panel" style="border-left: 4px solid var(--wa-green); margin-bottom: 0;">
+          <span style="font-size: 0.72rem; font-weight: 700; color: var(--text-muted); text-transform: uppercase;">Próxima Salida Sunset</span>
+          <h3 style="font-size: 1.8rem; font-weight: 900; margin: 0.2rem 0; color: var(--wa-green);">4:00 PM</h3>
+          <span style="font-size: 0.7rem; color: var(--fire-orange); font-weight: 700;">¡Cupos Llenos (32 Pax)!</span>
+        </div>
+      </div>
+
+      <!-- Detalle de Balance y Ventas por Canal -->
+      <div class="grid-resumen-reportes">
+        <div class="card-panel" style="margin-bottom: 0;">
+          <h3 style="font-size: 1.05rem; font-weight: 800; margin-bottom: 1.2rem; display: flex; align-items: center; gap: 0.5rem;">
+            <i class="fa-solid fa-cash-register" style="color: var(--neon-yellow);"></i> Balance de Caja Diario (Hoy)
+          </h3>
+          <div style="display: flex; flex-direction: column; gap: 0.75rem;">
+            <div style="display: flex; justify-content: space-between; align-items: center; padding: 0.8rem 1rem; background: var(--bg-body); border-radius: 0.7rem; border: 1px solid var(--border-color);">
+              <span style="font-size: 0.82rem; font-weight: 600;"><i class="fa-solid fa-money-bill-wave" style="color: var(--wa-green); margin-right: 0.5rem;"></i> Efectivo Recaudado</span>
+              <strong class="precio_staff" data-pen="1580" data-usd="427" style="color: var(--neon-yellow); font-size: 0.95rem;">S/ 1,580</strong>
+            </div>
+            <div style="display: flex; justify-content: space-between; align-items: center; padding: 0.8rem 1rem; background: var(--bg-body); border-radius: 0.7rem; border: 1px solid var(--border-color);">
+              <span style="font-size: 0.82rem; font-weight: 600;"><i class="fa-solid fa-mobile-screen-button" style="color: #742774; margin-right: 0.5rem;"></i> Transferencias Yape / Plin</span>
+              <strong class="precio_staff" data-pen="1420" data-usd="384" style="color: var(--neon-yellow); font-size: 0.95rem;">S/ 1,420</strong>
+            </div>
+            <div style="display: flex; justify-content: space-between; align-items: center; padding: 0.8rem 1rem; background: var(--bg-body); border-radius: 0.7rem; border: 1px solid var(--border-color);">
+              <span style="font-size: 0.82rem; font-weight: 600;"><i class="fa-regular fa-credit-card" style="color: var(--glow-cyan); margin-right: 0.5rem;"></i> Tarjeta POS Visa / Mastercard</span>
+              <strong class="precio_staff" data-pen="520" data-usd="140" style="color: var(--neon-yellow); font-size: 0.95rem;">S/ 520</strong>
+            </div>
+            <div style="display: flex; justify-content: space-between; align-items: center; padding: 0.8rem 1rem; background: rgba(255,69,0,0.08); border-radius: 0.7rem; border: 1px dashed var(--fire-orange);">
+              <span style="color: var(--fire-orange); font-weight: 700; font-size: 0.82rem;"><i class="fa-solid fa-clock-rotate-left" style="margin-right: 0.5rem;"></i> Pendiente por Cobrar en Base</span>
+              <strong class="precio_staff" data-pen="300" data-usd="81" style="color: var(--fire-orange); font-size: 0.95rem;">S/ 300</strong>
+            </div>
+          </div>
+        </div>
+
+        <div class="card-panel" style="margin-bottom: 0;">
+          <h3 style="font-size: 1.05rem; font-weight: 800; margin-bottom: 1.2rem; display: flex; align-items: center; gap: 0.5rem;">
+            <i class="fa-solid fa-chart-pie" style="color: var(--fire-orange);"></i> Ventas por Experiencia
+          </h3>
+          <div style="display: flex; flex-direction: column; gap: 0.7rem;">
+            <div>
+              <div style="display: flex; justify-content: space-between; font-size: 0.8rem; margin-bottom: 0.2rem;">
+                <span>Tubulares + Sandboard Sunset (4:00 PM)</span>
+                <strong>52 Pax (62%)</strong>
+              </div>
+              <div style="height: 6px; background: rgba(255,255,255,0.1); border-radius: 999px; overflow: hidden;">
+                <div style="width: 62%; height: 100%; background: var(--fire-orange);"></div>
+              </div>
+            </div>
+            <div>
+              <div style="display: flex; justify-content: space-between; font-size: 0.8rem; margin-bottom: 0.2rem;">
+                <span>Sandboard Pro con Botas e Instructor</span>
+                <strong>18 Pax (21%)</strong>
+              </div>
+              <div style="height: 6px; background: rgba(255,255,255,0.1); border-radius: 999px; overflow: hidden;">
+                <div style="width: 21%; height: 100%; background: var(--neon-yellow);"></div>
+              </div>
+            </div>
+            <div>
+              <div style="display: flex; justify-content: space-between; font-size: 0.8rem; margin-bottom: 0.2rem;">
+                <span>Tubular Privado VIP Sunset</span>
+                <strong>8 Pax (10%)</strong>
+              </div>
+              <div style="height: 6px; background: rgba(255,255,255,0.1); border-radius: 999px; overflow: hidden;">
+                <div style="width: 10%; height: 100%; background: var(--glow-cyan);"></div>
+              </div>
+            </div>
+            <div>
+              <div style="display: flex; justify-content: space-between; font-size: 0.8rem; margin-bottom: 0.2rem;">
+                <span>Full Day Paracas + Huacachina</span>
+                <strong>6 Pax (7%)</strong>
+              </div>
+              <div style="height: 6px; background: rgba(255,255,255,0.1); border-radius: 999px; overflow: hidden;">
+                <div style="width: 7%; height: 100%; background: var(--wa-green);"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ==================== PESTAÑA 1: RECEPCIÓN & CHECK-IN EN VIVO ==================== -->
+    <div id="tab_recepcion" class="tab-content-panel" style="display: none;">
+      <div class="card-panel">
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.2rem; flex-wrap: wrap; gap: 1rem;">
+          <div>
+            <h3 style="font-size: 1.1rem; font-weight: 800;">Registro Rápido & Check-in de Pasajeros</h3>
+            <p style="font-size: 0.78rem; color: var(--text-muted);">Asignación de casilleros, pago en ventanilla y entrega de boletos turísticos.</p>
+          </div>
+          <button type="button" onclick="alert('Abriendo ventana de nuevo registro de pasajero...')" class="btn-action btn-speed">
+            <i class="fa-solid fa-user-plus"></i> + Registrar Pasajero
+          </button>
+        </div>
+
+        <div class="table-responsive-container">
+          <table>
+            <thead>
+              <tr>
+                <th>Código</th>
+                <th>Titular / WhatsApp</th>
+                <th>Tour Seleccionado</th>
+                <th>Pax</th>
+                <th>Horario</th>
+                <th>Importe</th>
+                <th>Lockers</th>
+                <th>Estado</th>
+                <th>Acción</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><strong>#KT-9041</strong></td>
+                <td>
+                  <strong>Carlos Mendoza</strong>
+                  <span style="display: block; font-size: 0.7rem; color: var(--text-muted);">+51 987 654 321 (VIP)</span>
+                </td>
+                <td>Tubulares + Sandboard Sunset</td>
+                <td>2 Pax</td>
+                <td><strong style="color: var(--neon-yellow);">4:00 PM</strong></td>
+                <td><strong class="precio_staff" data-pen="90" data-usd="24">S/ 90</strong></td>
+                <td><span class="badge-status status-ok">Locker #04</span></td>
+                <td><span class="badge-status status-ok"><i class="fa-solid fa-check"></i> Pagado / Listo</span></td>
+                <td>
+                  <button type="button" onclick="alert('Ticket #KT-9041 impreso')" class="btn-action btn-outline" style="padding: 0.3rem 0.6rem; font-size: 0.75rem;">
+                    <i class="fa-solid fa-print"></i>
+                  </button>
+                </td>
+              </tr>
+              <tr>
+                <td><strong>#KT-9042</strong></td>
+                <td>
+                  <strong>Sarah Jenkins</strong>
+                  <span style="display: block; font-size: 0.7rem; color: var(--text-muted);">+1 415 890 231 (EE.UU)</span>
+                </td>
+                <td>Clase Sandboard Pro con Botas</td>
+                <td>3 Pax</td>
+                <td><strong style="color: var(--neon-yellow);">4:00 PM</strong></td>
+                <td><strong class="precio_staff" data-pen="225" data-usd="60">S/ 225</strong></td>
+                <td><span class="badge-status status-ok">Locker #12</span></td>
+                <td><span class="badge-status status-ok"><i class="fa-solid fa-check"></i> Pagado / Listo</span></td>
+                <td>
+                  <button type="button" onclick="alert('Ticket #KT-9042 impreso')" class="btn-action btn-outline" style="padding: 0.3rem 0.6rem; font-size: 0.75rem;">
+                    <i class="fa-solid fa-print"></i>
+                  </button>
+                </td>
+              </tr>
+              <tr>
+                <td><strong>#KT-9043</strong></td>
+                <td>
+                  <strong>Martín Gómez</strong>
+                  <span style="display: block; font-size: 0.7rem; color: var(--text-muted);">+54 911 543 998 (Argentina)</span>
+                </td>
+                <td>Tubular Privado VIP Sunset</td>
+                <td>4 Pax</td>
+                <td><strong style="color: var(--neon-yellow);">4:00 PM</strong></td>
+                <td><strong class="precio_staff" data-pen="250" data-usd="68">S/ 250</strong></td>
+                <td><span class="badge-status status-warn">Sin Asignar</span></td>
+                <td><span class="badge-status status-warn"><i class="fa-solid fa-clock"></i> Pendiente Pago</span></td>
+                <td>
+                  <button type="button" onclick="alert('Cobro registrado con éxito')" class="btn-action btn-speed" style="padding: 0.3rem 0.6rem; font-size: 0.75rem;">
+                    Cobrar
+                  </button>
+                </td>
+              </tr>
+              <tr>
+                <td><strong>#KT-9044</strong></td>
+                <td>
+                  <strong>Lucía Valdivia</strong>
+                  <span style="display: block; font-size: 0.7rem; color: var(--text-muted);">+51 976 123 456 (Lima)</span>
+                </td>
+                <td>Full Day Paracas + Huacachina</td>
+                <td>2 Pax</td>
+                <td><strong style="color: var(--glow-cyan);">Mañana 8:00 AM</strong></td>
+                <td><strong class="precio_staff" data-pen="260" data-usd="70">S/ 260</strong></td>
+                <td><span class="badge-status status-ok">Locker #18</span></td>
+                <td><span class="badge-status status-ok"><i class="fa-solid fa-check"></i> Pagado / Listo</span></td>
+                <td>
+                  <button type="button" onclick="alert('Ticket #KT-9044 impreso')" class="btn-action btn-outline" style="padding: 0.3rem 0.6rem; font-size: 0.75rem;">
+                    <i class="fa-solid fa-print"></i>
+                  </button>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+
+    <!-- ==================== PESTAÑA 2: SALIDAS DE TUBULARES ==================== -->
+    <div id="tab_salidas" class="tab-content-panel" style="display: none;">
+      <div class="card-panel">
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.5rem; flex-wrap: wrap; gap: 1rem;">
+          <div>
+            <h3 style="font-size: 1.1rem; font-weight: 800;">Turnos & Despacho de Tubulares</h3>
+            <p style="font-size: 0.78rem; color: var(--text-muted);">Control de horarios de partida y retorno al Oasis de Huacachina.</p>
+          </div>
+          <div style="display: flex; gap: 0.5rem;">
+            <button type="button" class="btn-action btn-outline" style="font-size: 0.75rem;">10:00 AM (Mañana)</button>
+            <button type="button" class="btn-action btn-outline" style="font-size: 0.75rem;">2:00 PM (Tarde)</button>
+            <button type="button" class="btn-action btn-speed" style="font-size: 0.75rem;">4:00 PM (Sunset)</button>
+          </div>
+        </div>
+
+        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 1.2rem;">
+          <div class="card-panel" style="border: 1px solid var(--border-accent); margin-bottom: 0;">
+            <div style="display: flex; justify-content: space-between; margin-bottom: 0.8rem;">
+              <span class="badge-status status-ok">En Ruta (Duna Grande)</span>
+              <strong style="color: var(--neon-yellow);">Tubular #01 (El Rayo)</strong>
+            </div>
+            <p style="font-size: 0.8rem; margin-bottom: 0.4rem;"><strong>Piloto:</strong> Lucho 'Dunas' Huamán</p>
+            <p style="font-size: 0.8rem; margin-bottom: 0.8rem;"><strong>Pasajeros:</strong> 10/10 Pax (Lleno)</p>
+            <div style="background: rgba(255,255,255,0.03); padding: 0.6rem; border-radius: 0.5rem; font-size: 0.75rem; margin-bottom: 0.8rem;">
+              <span>Retorno estimado: <strong>5:45 PM</strong></span>
+            </div>
+            <button type="button" onclick="alert('Confirmado retorno a base')" class="btn-action btn-outline" style="width: 100%; justify-content: center; font-size: 0.75rem;">
+              Confirmar Retorno a Base
+            </button>
+          </div>
+
+          <div class="card-panel" style="border: 1px solid var(--border-color); margin-bottom: 0;">
+            <div style="display: flex; justify-content: space-between; margin-bottom: 0.8rem;">
+              <span class="badge-status status-warn">Embarcando en Base</span>
+              <strong style="color: var(--neon-yellow);">Tubular #03 (El Halcón)</strong>
+            </div>
+            <p style="font-size: 0.8rem; margin-bottom: 0.4rem;"><strong>Piloto:</strong> Beto Quispe</p>
+            <p style="font-size: 0.8rem; margin-bottom: 0.8rem;"><strong>Pasajeros:</strong> 8/10 Pax (2 Cupos)</p>
+            <div style="background: rgba(255,255,255,0.03); padding: 0.6rem; border-radius: 0.5rem; font-size: 0.75rem; margin-bottom: 0.8rem;">
+              <span>Salida programada: <strong>4:00 PM</strong></span>
+            </div>
+            <button type="button" onclick="alert('Tubular despachado')" class="btn-action btn-speed" style="width: 100%; justify-content: center; font-size: 0.75rem;">
+              Despachar Tubular
+            </button>
+          </div>
+
+          <div class="card-panel" style="border: 1px solid var(--glow-cyan); margin-bottom: 0;">
+            <div style="display: flex; justify-content: space-between; margin-bottom: 0.8rem;">
+              <span class="badge-status status-ok">VIP Reservado</span>
+              <strong style="color: var(--glow-cyan);">Tubular #05 (Black Dune)</strong>
+            </div>
+            <p style="font-size: 0.8rem; margin-bottom: 0.4rem;"><strong>Piloto:</strong> Kevin Mendoza</p>
+            <p style="font-size: 0.8rem; margin-bottom: 0.8rem;"><strong>Pasajeros:</strong> Grupo VIP (Martín G.)</p>
+            <div style="background: rgba(255,255,255,0.03); padding: 0.6rem; border-radius: 0.5rem; font-size: 0.75rem; margin-bottom: 0.8rem;">
+              <span>Incluye: Brindis + Tablas Pro</span>
+            </div>
+            <button type="button" onclick="alert('Servicio VIP listo')" class="btn-action btn-speed" style="width: 100%; justify-content: center; font-size: 0.75rem;">
+              Iniciar Tour VIP
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ==================== PESTAÑA 3: FLOTA & CHOFERES ==================== -->
+    <div id="tab_flota" class="tab-content-panel" style="display: none;">
+      <div class="card-panel">
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.5rem; flex-wrap: wrap; gap: 1rem;">
+          <div>
+            <h3 style="font-size: 1.1rem; font-weight: 800;">Mantenimiento de Unidades & Choferes Acreditados MTC</h3>
+            <p style="font-size: 0.78rem; color: var(--text-muted);">Inspección técnica diaria de amortiguadores, frenos, jaulas antivuelco y SOAT.</p>
+          </div>
+          <button type="button" onclick="alert('Nueva inspección registrada')" class="btn-action btn-speed">
+            <i class="fa-solid fa-clipboard-check"></i> + Registrar Chequeo Mecánico
+          </button>
+        </div>
+
+        <div class="table-responsive-container">
+          <table>
+            <thead>
+              <tr>
+                <th>Unidad</th>
+                <th>Modelo / Motor</th>
+                <th>Capacidad</th>
+                <th>Chofer Asignado</th>
+                <th>SOAT Turístico</th>
+                <th>Último Mantenimiento</th>
+                <th>Estado</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><strong>Tubular #01 (El Rayo)</strong></td>
+                <td>V8 Tubular Pro 350HP</td>
+                <td>10 Pasajeros</td>
+                <td>Lucho Huamán (Cat. AIIB)</td>
+                <td><span class="badge-status status-ok">Vence Nov 2026</span></td>
+                <td>Ayer 8:00 PM (Aceite & Frenos)</td>
+                <td><span class="badge-status status-ok">100% Operativo</span></td>
+              </tr>
+              <tr>
+                <td><strong>Tubular #02 (El Puma)</strong></td>
+                <td>V6 Tubular Sand 280HP</td>
+                <td>10 Pasajeros</td>
+                <td>Carlos Ramos (Cat. AIIB)</td>
+                <td><span class="badge-status status-ok">Vence Dic 2026</span></td>
+                <td>Hace 3 días (Suspensión)</td>
+                <td><span class="badge-status status-ok">100% Operativo</span></td>
+              </tr>
+              <tr>
+                <td><strong>Tubular #03 (El Halcón)</strong></td>
+                <td>V8 Especial Huacachina</td>
+                <td>10 Pasajeros</td>
+                <td>Beto Quispe (Cat. AIIB)</td>
+                <td><span class="badge-status status-ok">Vence Oct 2026</span></td>
+                <td>Hoy 7:30 AM (Revisión Diaria)</td>
+                <td><span class="badge-status status-ok">100% Operativo</span></td>
+              </tr>
+              <tr>
+                <td><strong>Tubular #04 (La Bestia)</strong></td>
+                <td>V8 Big Dune 400HP</td>
+                <td>12 Pasajeros</td>
+                <td>Jorge Morales (Cat. AIIB)</td>
+                <td><span class="badge-status status-ok">Vence Ene 2027</span></td>
+                <td>En taller (Cambio de Corona)</td>
+                <td><span class="badge-status status-danger">Mantenimiento</span></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+
+    <!-- ==================== PESTAÑA 4: TARIFAS & PRECIOS ==================== -->
+    <div id="tab_tarifas" class="tab-content-panel" style="display: none;">
+      <div class="card-panel">
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.5rem; flex-wrap: wrap; gap: 1rem;">
+          <div>
+            <h3 style="font-size: 1.1rem; font-weight: 800;">Tarifario Oficial & Modificador de Precios</h3>
+            <p style="font-size: 0.78rem; color: var(--text-muted);">Los cambios se reflejan inmediatamente en la web pública (kevin12) y cotizador.</p>
+          </div>
+          <button type="button" onclick="alert('Precios actualizados en tiempo real.')" class="btn-action btn-speed">
+            <i class="fa-solid fa-floppy-disk"></i> Guardar Tarifas
+          </button>
+        </div>
+
+        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 1.2rem;">
+          <div class="card-panel" style="background: var(--bg-body); margin-bottom: 0;">
+            <strong style="font-size: 0.95rem; display: block; margin-bottom: 0.8rem;">Tubulares + Sandboard Sunset</strong>
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 0.6rem;">
+              <div>
+                <label style="font-size: 0.7rem; color: var(--text-muted); font-weight: 700;">Precio Soles (PEN)</label>
+                <input type="number" value="45" style="width: 100%; padding: 0.6rem; background: var(--input-bg); border: 1px solid var(--border-color); color: var(--text-main); border-radius: 0.5rem; font-weight: 700;" />
+              </div>
+              <div>
+                <label style="font-size: 0.7rem; color: var(--text-muted); font-weight: 700;">Precio Dólares (USD)</label>
+                <input type="number" value="12" style="width: 100%; padding: 0.6rem; background: var(--input-bg); border: 1px solid var(--border-color); color: var(--text-main); border-radius: 0.5rem; font-weight: 700;" />
+              </div>
+            </div>
+          </div>
+
+          <div class="card-panel" style="background: var(--bg-body); margin-bottom: 0;">
+            <strong style="font-size: 0.95rem; display: block; margin-bottom: 0.8rem;">Clase Sandboard Pro con Botas</strong>
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 0.6rem;">
+              <div>
+                <label style="font-size: 0.7rem; color: var(--text-muted); font-weight: 700;">Precio Soles (PEN)</label>
+                <input type="number" value="75" style="width: 100%; padding: 0.6rem; background: var(--input-bg); border: 1px solid var(--border-color); color: var(--text-main); border-radius: 0.5rem; font-weight: 700;" />
+              </div>
+              <div>
+                <label style="font-size: 0.7rem; color: var(--text-muted); font-weight: 700;">Precio Dólares (USD)</label>
+                <input type="number" value="20" style="width: 100%; padding: 0.6rem; background: var(--input-bg); border: 1px solid var(--border-color); color: var(--text-main); border-radius: 0.5rem; font-weight: 700;" />
+              </div>
+            </div>
+          </div>
+
+          <div class="card-panel" style="background: var(--bg-body); margin-bottom: 0;">
+            <strong style="font-size: 0.95rem; display: block; margin-bottom: 0.8rem;">Tubular Privado VIP Sunset</strong>
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 0.6rem;">
+              <div>
+                <label style="font-size: 0.7rem; color: var(--text-muted); font-weight: 700;">Precio Soles (PEN)</label>
+                <input type="number" value="250" style="width: 100%; padding: 0.6rem; background: var(--input-bg); border: 1px solid var(--border-color); color: var(--text-main); border-radius: 0.5rem; font-weight: 700;" />
+              </div>
+              <div>
+                <label style="font-size: 0.7rem; color: var(--text-muted); font-weight: 700;">Precio Dólares (USD)</label>
+                <input type="number" value="68" style="width: 100%; padding: 0.6rem; background: var(--input-bg); border: 1px solid var(--border-color); color: var(--text-main); border-radius: 0.5rem; font-weight: 700;" />
+              </div>
+            </div>
+          </div>
+
+          <div class="card-panel" style="background: var(--bg-body); margin-bottom: 0;">
+            <strong style="font-size: 0.95rem; display: block; margin-bottom: 0.8rem;">Full Day Paracas + Huacachina</strong>
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 0.6rem;">
+              <div>
+                <label style="font-size: 0.7rem; color: var(--text-muted); font-weight: 700;">Precio Soles (PEN)</label>
+                <input type="number" value="130" style="width: 100%; padding: 0.6rem; background: var(--input-bg); border: 1px solid var(--border-color); color: var(--text-main); border-radius: 0.5rem; font-weight: 700;" />
+              </div>
+              <div>
+                <label style="font-size: 0.7rem; color: var(--text-muted); font-weight: 700;">Precio Dólares (USD)</label>
+                <input type="number" value="35" style="width: 100%; padding: 0.6rem; background: var(--input-bg); border: 1px solid var(--border-color); color: var(--text-main); border-radius: 0.5rem; font-weight: 700;" />
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ==================== PESTAÑA 5: BLOG & ANUNCIOS ==================== -->
+    <div id="tab_blog" class="tab-content-panel" style="display: none;">
+      <div class="card-panel">
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.5rem; flex-wrap: wrap; gap: 1rem;">
+          <div>
+            <h3 style="font-size: 1.1rem; font-weight: 800;">Publicación de Artículos & Guías para Turistas</h3>
+            <p style="font-size: 0.78rem; color: var(--text-muted);">Redacta consejos y tips de sandboard visibles en la web oficial.</p>
+          </div>
+          <button type="button" onclick="alert('Abriendo editor de nuevo post...')" class="btn-action btn-speed">
+            <i class="fa-solid fa-pen-nib"></i> + Nuevo Artículo
+          </button>
+        </div>
+
+        <div style="display: flex; flex-direction: column; gap: 0.9rem;">
+          <div style="display: flex; justify-content: space-between; align-items: center; padding: 1rem; background: var(--bg-body); border-radius: 0.8rem; border: 1px solid var(--border-color); flex-wrap: wrap; gap: 0.8rem;">
+            <div>
+              <strong style="font-size: 0.92rem; display: block;">Guía Definitiva de Sandboard: Cómo Bajar de Pie</strong>
+              <span style="font-size: 0.72rem; color: var(--neon-yellow);">Publicado · 1,420 Lecturas · Categoría: Consejos</span>
+            </div>
+            <div style="display: flex; gap: 0.4rem;">
+              <button type="button" class="btn-action btn-outline" style="padding: 0.35rem 0.7rem; font-size: 0.75rem;">Editar</button>
+              <button type="button" class="btn-action btn-outline" style="padding: 0.35rem 0.7rem; font-size: 0.75rem; color: var(--fire-orange);">Despublicar</button>
+            </div>
+          </div>
+
+          <div style="display: flex; justify-content: space-between; align-items: center; padding: 1rem; background: var(--bg-body); border-radius: 0.8rem; border: 1px solid var(--border-color); flex-wrap: wrap; gap: 0.8rem;">
+            <div>
+              <strong style="font-size: 0.92rem; display: block;">Los 3 Mejores Puntos para Fotografiar el Sunset en Huacachina</strong>
+              <span style="font-size: 0.72rem; color: var(--neon-yellow);">Publicado · 980 Lecturas · Categoría: Fotografía</span>
+            </div>
+            <div style="display: flex; gap: 0.4rem;">
+              <button type="button" class="btn-action btn-outline" style="padding: 0.35rem 0.7rem; font-size: 0.75rem;">Editar</button>
+              <button type="button" class="btn-action btn-outline" style="padding: 0.35rem 0.7rem; font-size: 0.75rem; color: var(--fire-orange);">Despublicar</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </main>
+
+  <!-- ⚡ LÓGICA DE INTERACTIVIDAD & MONEDAS -->
+  <script is:inline>
+    (function() {
+      // 1. Conmutador de Pestañas
+      const tabBtns = document.querySelectorAll('.nav-tab-btn, .mobile-bottom-btn');
+      const tabPanels = document.querySelectorAll('.tab-content-panel');
+      const lblSeccion = document.getElementById('lbl_seccion_actual');
+
+      const titulos = {
+        tab_resumen: 'Resumen General de Operaciones & Ventas',
+        tab_recepcion: 'Panel de Recepción & Check-in en Vivo',
+        tab_salidas: 'Control y Despacho de Salidas en Dunas',
+        tab_flota: 'Mantenimiento de Flota & Choferes MTC',
+        tab_tarifas: 'Tarifario Oficial & Precios 2026',
+        tab_blog: 'Publicación de Blog & Consejos'
+      };
+
+      tabBtns.forEach(btn => {
+        btn.addEventListener('click', () => {
+          const target = btn.getAttribute('data-tab');
+          tabBtns.forEach(b => {
+            b.classList.toggle('activo', b.getAttribute('data-tab') === target);
+          });
+          tabPanels.forEach(p => p.style.display = 'none');
+
+          const activePanel = document.getElementById(target);
+          if (activePanel) activePanel.style.display = 'block';
+          if (lblSeccion && titulos[target]) lblSeccion.textContent = titulos[target];
+
+          // Cerrar sidebar en móvil al seleccionar
+          cerrarSidebarAdmin();
+        });
+      });
+
+      // 2. Conmutador de Moneda PEN / USD
+      let monedaActual = 'PEN';
+      const btnsPen = document.querySelectorAll('.btn-curr-pen');
+      const btnsUsd = document.querySelectorAll('.btn-curr-usd');
+
+      function setMoneda(cur) {
+        monedaActual = cur;
+        btnsPen.forEach(b => b.classList.toggle('active', cur === 'PEN'));
+        btnsUsd.forEach(b => b.classList.toggle('active', cur === 'USD'));
+
+        document.querySelectorAll('.precio_staff').forEach(el => {
+          const pen = el.getAttribute('data-pen');
+          const usd = el.getAttribute('data-usd');
+          el.textContent = cur === 'PEN' ? `S/ ${pen}` : `$ ${usd} USD`;
+        });
+
+        const elStat = document.getElementById('stat_ingresos_hoy');
+        if (elStat) {
+          const p = elStat.getAttribute('data-pen');
+          const u = elStat.getAttribute('data-usd');
+          elStat.textContent = cur === 'PEN' ? `S/ ${p}` : `$ ${u} USD`;
+        }
+      }
+
+      btnsPen.forEach(b => b.addEventListener('click', () => setMoneda('PEN')));
+      btnsUsd.forEach(b => b.addEventListener('click', () => setMoneda('USD')));
+
+      // 3. Conmutador de Tema
+      const btnsTheme = document.querySelectorAll('.btn-toggle-theme');
+      btnsTheme.forEach(btn => {
+        btn.addEventListener('click', () => {
+          const actual = document.documentElement.dataset.theme || 'futuro';
+          const nuevo = actual === 'futuro' ? 'luz' : 'futuro';
+          document.documentElement.dataset.theme = nuevo;
+          localStorage.setItem('wiTema_kevin14', nuevo);
+        });
+      });
+
+      // 4. Toggle Sidebar Móvil con Backdrop
+      const btnMobileMenu = document.getElementById('btn_toggle_mobile_sidebar');
+      const btnCloseSidebar = document.getElementById('btn_close_admin_sidebar');
+      const sidebar = document.getElementById('sidebar_admin');
+      const backdrop = document.getElementById('admin_backdrop');
+
+      function abrirSidebarAdmin() {
+        sidebar?.classList.add('open');
+        backdrop?.classList.add('active');
+      }
+
+      function cerrarSidebarAdmin() {
+        sidebar?.classList.remove('open');
+        backdrop?.classList.remove('active');
+      }
+
+      btnMobileMenu?.addEventListener('click', abrirSidebarAdmin);
+      btnCloseSidebar?.addEventListener('click', cerrarSidebarAdmin);
+      backdrop?.addEventListener('click', cerrarSidebarAdmin);
+    })();
+  </script>
+</body>
+</html>

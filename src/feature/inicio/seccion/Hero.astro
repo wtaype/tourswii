@@ -1,0 +1,81 @@
+---
+// src/feature/inicio/seccion/Hero.astro
+// 🏁 Hero Banner Principal con Animaciones Suaves Escalonadas y Cotizador Flotante (<90 líneas)
+import Calculator from './Calculator.astro';
+import { NEGOCIO } from '../../../core/config/constantes.js';
+
+interface Props {
+  idioma?: 'es' | 'en';
+}
+
+const { idioma = 'es' } = Astro.props;
+---
+
+<section id="inicio" class="section-88vh" style="border-bottom: 1px solid var(--border-card);">
+  <div class="container-wide grid-hero">
+    
+    <!-- Columna Izquierda: Títulos, Acciones y Métricas con Animaciones Suaves -->
+    <div>
+      <div class="hero-anim-badge" style="display: inline-flex; align-items: center; gap: 0.5rem; background: rgba(255, 230, 0, 0.12); border: 1px solid rgba(255, 230, 0, 0.35); color: var(--neon-yellow); font-size: 0.74rem; font-weight: 800; text-transform: uppercase; padding: 0.35rem 0.85rem; border-radius: 999px; margin-bottom: 1rem;">
+        <i class="fa-solid fa-medal"></i>
+        <span>{idioma === 'en' ? 'ONLY SCHOOL WITH SNOW SKIS & REAL BOOTS IN HUACACHINA' : 'ÚNICA ESCUELA DE SANDSKI & SANDBOARD PRO EN HUACACHINA'}</span>
+      </div>
+
+      <h1 class="hero-anim-title" style="font-size: clamp(1.8rem, 3.4vw, 3.2rem); font-weight: 900; line-height: 1.15; margin-bottom: 1rem; text-transform: uppercase; letter-spacing: -0.5px;">
+        {idioma === 'en' ? 'SURF THE DUNES WITH' : 'SURFEA LAS DUNAS CON'}{' '}
+        <span class="text-gradient">SANDSKI & SANDBOARD PRO</span>
+      </h1>
+
+      <p class="hero-anim-desc" style="font-size: clamp(0.88rem, 1vw, 1.02rem); color: var(--text-muted); line-height: 1.6; margin-bottom: 1.8rem; max-width: 540px;">
+        {idioma === 'en' 
+          ? 'Real alpine snow skis with poles, pro snowboard bindings, fitted boots (sizes 35 to 45) and 4x4 dune buggy ride to the giant dunes of Ica.'
+          : 'Esquís alpinos con bastones, tablas de snowboard con fijaciones profesionales, botas a tu medida y transporte en buggies 4x4 hacia las dunas gigantes del desierto de Ica.'}
+      </p>
+
+      <div class="hero-anim-ctas" style="display: flex; gap: 0.8rem; flex-wrap: wrap; margin-bottom: 2rem;">
+        <a href={`https://wa.me/${NEGOCIO.telefonoLimpio}?text=Hola%20Kevin%20Tours!%20Quiero%20reservar%20la%20Clase%20de%20SandSki%20y%20Sandboard%20Pro`} target="_blank" rel="noopener noreferrer" class="btn-speed" style="padding: 0.9rem 1.6rem; font-size: 0.9rem;">
+          <i class="fa-solid fa-person-skiing"></i>
+          <span>{idioma === 'en' ? 'Book SandSki Pro ($23 / S/ 85)' : 'Reservar SandSki Pro (S/ 85 / $23)'}</span>
+        </a>
+        <a href="#tours" class="btn-glass" style="padding: 0.9rem 1.4rem; font-size: 0.9rem;">
+          <i class="fa-solid fa-compass" style="color: var(--neon-yellow);"></i>
+          <span>{idioma === 'en' ? 'View 4 Disciplines' : 'Ver las 4 Disciplinas'}</span>
+        </a>
+      </div>
+
+      <!-- 4 Métricas Oficiales -->
+      <div class="metrics-grid hero-anim-metrics">
+        <div>
+          <p style="font-size: 1.5rem; font-weight: 900; color: var(--neon-yellow); line-height: 1;">35 - 45</p>
+          <p style="font-size: 0.68rem; font-weight: 700; color: var(--text-muted); text-transform: uppercase; margin-top: 0.3rem;">
+            {idioma === 'en' ? 'Boot Sizes' : 'Tallas de Botas'}
+          </p>
+        </div>
+        <div>
+          <p style="font-size: 1.5rem; font-weight: 900; color: var(--fire-orange); line-height: 1;">100%</p>
+          <p style="font-size: 0.68rem; font-weight: 700; color: var(--text-muted); text-transform: uppercase; margin-top: 0.3rem;">
+            {idioma === 'en' ? 'Snow Gear' : 'Equipo de Nieve'}
+          </p>
+        </div>
+        <div>
+          <p style="font-size: 1.5rem; font-weight: 900; color: var(--glow-cyan); line-height: 1;">4:00 PM</p>
+          <p style="font-size: 0.68rem; font-weight: 700; color: var(--text-muted); text-transform: uppercase; margin-top: 0.3rem;">
+            {idioma === 'en' ? 'Sunset Dunes' : 'Sunset Dunas'}
+          </p>
+        </div>
+        <div>
+          <p style="font-size: 1.5rem; font-weight: 900; color: var(--wa-green); line-height: 1;">FREE</p>
+          <p style="font-size: 0.68rem; font-weight: 700; color: var(--text-muted); text-transform: uppercase; margin-top: 0.3rem;">
+            {idioma === 'en' ? 'Base Lockers' : 'Lockers Base'}
+          </p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Columna Derecha: Cotizador Oficial Flotante con Micro-Animación -->
+    <div id="calculadora" class="hero-anim-calc">
+      <Calculator idioma={idioma} />
+    </div>
+
+  </div>
+</section>

@@ -1,0 +1,134 @@
+---
+// src/core/layouts/Principal.astro
+// 🌟 Layout Maestro Unificado para Web Pública y Cliente VIP (<95 líneas)
+import { ClientRouter } from 'astro:transitions';
+import Topbar from '../componentes/Topbar.astro';
+import Header from '../componentes/Header.astro';
+import DrawerMobile from '../componentes/DrawerMobile.astro';
+import Footer from '../componentes/Footer.astro';
+import WhatsAppFloat from '../../feature/inicio/componentes/WhatsAppFloat.astro';
+import UserModal from '../../feature/auth/componentes/UserModal.astro';
+
+import { getMeta, getJsonLd } from '../seo.js';
+import { CLIENTE_VIP } from '../../feature/cliente/data/cliente.data.js';
+
+import estilosTema from '../wicss/witema.css?raw';
+import fuentesCss from '../../../public/google/fonts.css?raw';
+import awesomeCss from '../../../public/fontawesome/css/all.min.css?raw';
+import inicioCss from '../../feature/inicio/inicio.css?raw';
+
+const globalCss = estilosTema + '\n' + fuentesCss + '\n' + awesomeCss + '\n' + inicioCss;
+
+interface Props {
+  idioma?: 'es' | 'en';
+  esVip?: boolean;
+  ruta?: string;
+}
+
+const { idioma = 'es', esVip = false, ruta = '/' } = Astro.props;
+const meta = getMeta(ruta);
+const jsonLd = getJsonLd(ruta);
+---
+
+<!DOCTYPE html>
+<html lang={idioma} data-theme="futuro" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0" />
+  <link rel="icon" type="image/x-icon" href="/favicon.ico" />
+  <title>{meta.title}</title>
+  <meta name="description" content={meta.description} />
+  <link rel="canonical" href={meta.canonical} />
+  
+  <!-- OpenGraph & Twitter -->
+  <meta property="og:title" content={meta.title} />
+  <meta property="og:description" content={meta.description} />
+  <meta property="og:image" content={meta.image} />
+  <meta property="og:url" content={meta.canonical} />
+  
+  <!-- Schema.org JSON-LD -->
+  <script type="application/ld+json" set:html={JSON.stringify(jsonLd)} />
+
+  <!-- Precarga de Fuentes -->
+  <link rel="preload" href="/google/Poppins-400.woff2" as="font" type="font/woff2" crossorigin="anonymous" />
+  <link rel="preload" href="/google/Poppins-600.woff2" as="font" type="font/woff2" crossorigin="anonymous" />
+  <link rel="preload" href="/google/Poppins-700.woff2" as="font" type="font/woff2" crossorigin="anonymous" />
+
+  <!-- Habilitar ClientRouter para navegación instantánea sin F5 (Workwii Style) -->
+  <ClientRouter />
+
+  <!-- Estilos Inlined Globales Unificados (0 peticiones HTTP bloqueantes) -->
+  <style is:global data-astro-transition-persist="global-css" set:html={globalCss}></style>
+
+  <!-- Anti-FOUC Inmediato y Sincronización en astro:after-swap -->
+  <script is:inline>
+    (() => {
+      const applyTheme = () => {
+        try {
+          const saved = localStorage.getItem('wiTema');
+          const system = window.matchMedia('(prefers-color-scheme: dark)').matches ? 'futuro' : 'luz';
+          const theme = (saved === 'luz' || saved === 'futuro') ? saved : system;
+          document.documentElement.dataset.theme = theme;
+        } catch (e) {}
+      };
+      applyTheme();
+      document.addEventListener('astro:after-swap', applyTheme);
+    })();
+  </script>
+</head>
+<body style="background-color: var(--bg-body); background-image: url('/wpuntos.svg'), radial-gradient(circle at 50% 0%, rgba(255, 69, 0, 0.08) 0%, transparent 60%); background-attachment: fixed; color: var(--text-main); font-family: 'Poppins', system-ui, sans-serif; overflow-x: hidden; line-height: 1.55; transition: background-color 0.3s, color 0.3s;">
+
+  <!-- Barra Superior y Cabecera -->
+  <Topbar />
+  <Header idioma={idioma} esVip={esVip} usuarioNombre={CLIENTE_VIP.nombre} usuarioAvatar={CLIENTE_VIP.avatar} />
+  <DrawerMobile idioma={idioma} esVip={esVip} usuarioNombre={CLIENTE_VIP.nombre} usuarioTalla={CLIENTE_VIP.tallaBota} />
+
+  <!-- Contenido Dinámico de la Página -->
+  <slot />
+
+  <!-- Pie de Página y Flotantes -->
+  <Footer idioma={idioma} />
+  <WhatsAppFloat />
+  <UserModal idioma={idioma} />
+
+</body>
+</html>
+
+<script>
+  import { witema, setTema } from '../widev/tema.js';
+
+  function initInteractions() {
+    witema('futuro');
+
+    // Botón de alternar tema
+    const btnTheme = document.getElementById('btn_toggle_theme');
+    btnTheme?.addEventListener('click', (e) => {
+      e.preventDefault();
+      const current = document.documentElement.dataset.theme || 'futuro';
+      const next = current === 'futuro' ? 'luz' : 'futuro';
+      setTema(next);
+    });
+
+    // Control de Drawer Móvil
+    const drawer = document.getElementById('mobile_drawer');
+    const backdrop = document.getElementById('drawer_backdrop');
+    const openBtn = document.getElementById('btn_open_drawer');
+    const closeBtn = document.getElementById('btn_close_drawer');
+
+    const toggleDrawer = (open: boolean) => {
+      drawer?.classList.toggle('open', open);
+      backdrop?.classList.toggle('open', open);
+      document.body.style.overflow = open ? 'hidden' : '';
+    };
+
+    openBtn?.addEventListener('click', () => toggleDrawer(true));
+    closeBtn?.addEventListener('click', () => toggleDrawer(false));
+    backdrop?.addEventListener('click', () => toggleDrawer(false));
+    document.querySelectorAll('.drawer-item').forEach(item => {
+      item.addEventListener('click', () => toggleDrawer(false));
+    });
+  }
+
+  document.addEventListener('DOMContentLoaded', initInteractions);
+  document.addEventListener('astro:page-load', initInteractions);
+</script>

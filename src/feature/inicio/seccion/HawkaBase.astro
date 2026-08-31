@@ -1,0 +1,47 @@
+---
+// src/feature/inicio/seccion/HawkaBase.astro
+// 🏨 Galería de Nuestra Base Física en Hospedaje Hawka (<65 líneas)
+import { GALERIA } from '../data/galeria.data.js';
+
+interface Props {
+  idioma?: 'es' | 'en';
+}
+
+const { idioma = 'es' } = Astro.props;
+---
+
+<section id="galeria" style="padding: 7vh 0; border-bottom: 1px solid var(--border-card); background: var(--bg-subtle);">
+  <div class="container-wide">
+    
+    <!-- Encabezado -->
+    <div style="text-align: center; margin-bottom: 3rem;">
+      <span style="color: var(--glow-cyan); font-size: 0.75rem; font-weight: 800; text-transform: uppercase;">
+        {idioma === 'en' ? 'Authentic Gear & Base Reception' : 'Instalaciones Reales & Equipamiento'}
+      </span>
+      <h2 style="font-size: clamp(1.6rem, 2.8vw, 2.5rem); font-weight: 900; text-transform: uppercase; margin-top: 0.4rem;">
+        {idioma === 'en' ? 'Our Base at' : 'Nuestra Base en'} <span style="background: linear-gradient(90deg, #ffe600, #ff4500); -webkit-background-clip: text; -webkit-text-fill-color: transparent;">Hospedaje Hawka</span>
+      </h2>
+      <p style="font-size: 0.88rem; color: var(--text-muted); max-width: 580px; margin: 0.4rem auto 0 auto;">
+        {idioma === 'en' ? 'More than 50 pairs of real snow boots (sizes 35 to 45), alpine skis and pro gear with free lockers.' : 'Más de 50 pares de botas de nieve (35 al 45), esquís alpinos reales y casilleros gratuitos para tu equipaje.'}
+      </p>
+    </div>
+
+    <!-- Grid de Fotos Reales -->
+    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 1.5rem;">
+      {GALERIA.map(img => (
+        <div style="position: relative; height: 260px; border-radius: 1.2rem; overflow: hidden; border: 1px solid var(--border-card); box-shadow: var(--shadow-xl);">
+          <img src={img.src} alt={img.alt} style="width: 100%; height: 100%; object-fit: cover;" />
+          <div style="position: absolute; bottom: 0; inset-inline: 0; background: linear-gradient(to top, rgba(0,0,0,0.88) 0%, transparent 80%); padding: 1.2rem;">
+            <strong style="color: var(--neon-yellow); font-size: 0.95rem; display: block;">
+              {idioma === 'en' ? img.titulo_en : img.titulo_es}
+            </strong>
+            <span style="font-size: 0.72rem; color: #fff;">
+              {idioma === 'en' ? img.sub_en : img.sub_es}
+            </span>
+          </div>
+        </div>
+      ))}
+    </div>
+
+  </div>
+</section>

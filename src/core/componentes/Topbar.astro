@@ -1,0 +1,32 @@
+---
+// src/core/componentes/Topbar.astro
+// 🏁 Barra Superior de Certificación MTC y WhatsApp Oficial (<30 líneas)
+import { NEGOCIO } from '../config/constantes.js';
+
+interface Props {
+  certTexto?: string;
+}
+
+const { certTexto = NEGOCIO.certificacion } = Astro.props;
+---
+
+<div style="background: var(--topbar-bg); color: var(--topbar-text); padding: 0.4rem 0; font-size: 0.73rem; font-weight: 800; text-transform: uppercase; letter-spacing: 0.03em;">
+  <div class="container-wide" style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 0.4rem;">
+    <div style="display: flex; align-items: center; gap: 0.5rem; margin: 0 auto 0 0;">
+      <i class="fa-solid fa-shield-halved"></i>
+      <span id="txt_topbar_cert">{certTexto}</span>
+    </div>
+    <div style="display: flex; align-items: center; gap: 0.8rem;" class="topbar-hide-mobile">
+      <span><i class="fa-solid fa-location-dot"></i> {NEGOCIO.ubicacion.referencia}</span>
+      <a href={NEGOCIO.redes.whatsapp} target="_blank" rel="noopener noreferrer" style="background: #000; color: #fff; padding: 0.2rem 0.75rem; border-radius: 999px; font-size: 0.7rem; display: inline-flex; align-items: center; gap: 0.35rem; text-decoration: none;">
+        <i class="fa-brands fa-whatsapp" style="color: var(--wa-green);"></i> {NEGOCIO.telefono}
+      </a>
+    </div>
+  </div>
+</div>
+
+<style>
+  @media (max-width: 768px) {
+    .topbar-hide-mobile { display: none !important; }
+  }
+</style>

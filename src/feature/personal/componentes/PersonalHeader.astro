@@ -1,0 +1,32 @@
+---
+// src/feature/personal/componentes/PersonalHeader.astro
+// 🛠️ Barra Superior Fija Sticky para Personal & Recepción Base Hawka (<45 líneas)
+import { NEGOCIO } from '../../../core/config/constantes.js';
+---
+
+<header style="position: sticky; top: 0; z-index: 100; background: var(--header-bg); backdrop-filter: blur(16px); border-bottom: 1px solid var(--border-card); padding: 0.75rem 0;">
+  <div style="max-width: 1280px; margin: 0 auto; padding: 0 1rem; display: flex; justify-content: space-between; align-items: center; gap: 1rem;">
+    
+    <!-- Logo Staff -->
+    <div style="display: flex; align-items: center; gap: 0.6rem;">
+      <div style="width: 2.3rem; height: 2.3rem; border-radius: 0.6rem; background: linear-gradient(135deg, #ffe600, #ff4500); display: flex; align-items: center; justify-content: center; color: #000; font-weight: 900; font-size: 1rem;">
+        <i class="fa-solid fa-gear"></i>
+      </div>
+      <div>
+        <strong style="font-size: 0.95rem; display: block; color: var(--text-main); line-height: 1;">PANEL DE OPERACIONES</strong>
+        <span style="font-size: 0.65rem; color: var(--neon-yellow); font-weight: 700;">Base Hospedaje Hawka · Kevin, Anthony & Michael</span>
+      </div>
+    </div>
+
+    <!-- Acciones -->
+    <div style="display: flex; align-items: center; gap: 0.6rem;">
+      <button type="button" id="btn_toggle_theme" style="width: 2rem; height: 2rem; border-radius: 50%; background: var(--bg-subtle); border: 1px solid var(--border-card); color: var(--neon-yellow); cursor: pointer; display: flex; align-items: center; justify-content: center; font-size: 0.8rem;">
+        <i class="fa-solid fa-moon" id="icon_theme"></i>
+      </button>
+      <a href="/" style="background: var(--bg-subtle); color: var(--text-main); border: 1px solid var(--border-card); padding: 0.35rem 0.8rem; border-radius: 999px; font-size: 0.72rem; font-weight: 700; text-decoration: none;">
+        <i class="fa-solid fa-arrow-left"></i> Web Pública
+      </a>
+    </div>
+
+  </div>
+</header>

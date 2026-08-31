@@ -1,0 +1,52 @@
+---
+// src/feature/hola/tabs/PruebaFirebase.astro
+import { useTranslations } from '../../../core/idioma/idioma';
+import holaEs from '../idioma/es.json';
+import holaEn from '../idioma/en.json';
+
+interface Props {
+  lang?: string;
+}
+
+const { lang = 'es' } = Astro.props;
+const t = useTranslations(lang, { es: holaEs, en: holaEn });
+const projectId = import.meta.env.PUBLIC_FIREBASE_PROJECT_ID || 'tourswii';
+const authDomain = import.meta.env.PUBLIC_FIREBASE_AUTH_DOMAIN || 'tourswii.firebaseapp.com';
+---
+
+<div class="hola_tab_card">
+  <div class="hola_tab_header">
+    <div class="hola_tab_icon"><i class="fa-solid fa-fire"></i></div>
+    <div>
+      <h3>{t('firebase_test.titulo')}</h3>
+      <p>{t('firebase_test.desc')}</p>
+    </div>
+  </div>
+
+  <div class="hola_grid_tests">
+    <!-- ID de Proyecto -->
+    <div class="hola_caja_test">
+      <span class="hola_label">{t('firebase_test.proyecto')}</span>
+      <div class="hola_valor_firebase">
+        <i class="fa-solid fa-cloud"></i> <strong>{projectId}</strong>
+      </div>
+      <span class="hola_subdato">{authDomain}</span>
+    </div>
+
+    <!-- Estado en Vivo -->
+    <div class="hola_caja_test">
+      <span class="hola_label">{t('firebase_test.estado')}</span>
+      <div class="hola_estado_badge" id="firebase_status_badge">
+        <span class="punto_verde"></span> {t('firebase_test.conectado')}
+      </div>
+    </div>
+  </div>
+
+  <!-- Botón de Ping interactivo -->
+  <div class="hola_acciones_test">
+    <button class="hola_btn_accion" type="button" id="btn_ping_firebase">
+      <i class="fa-solid fa-bolt"></i> {t('firebase_test.btn_test')}
+    </button>
+    <span class="hola_tip" id="firebase_ping_resultado">Listo para probar.</span>
+  </div>
+</div>
