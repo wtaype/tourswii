@@ -1,0 +1,36 @@
+{
+  "topbar": {
+    "certificacion": "Official School MTC N° 11000",
+    "base": "Hospedaje Hawka Reception"
+  },
+  "nav": {
+    "inicio": "Home",
+    "disciplinas": "4 Disciplines",
+    "galeria": "Hawka Base",
+    "ubicacion": "Location",
+    "confianza": "Why Us",
+    "faq": "FAQ",
+    "ingresar": "Sign In",
+    "reservar": "Book Now",
+    "perfil_vip": "VIP CLIENT",
+    "panel_staff": "Staff Operations"
+  },
+  "footer": {
+    "descripcion": "Official Alpine SandSkiing and Pro Sandboarding school in the giant dunes of Huacachina Oasis, Ica. Physical base at Hospedaje Hawka.",
+    "col_disciplinas": "4 Disciplines",
+    "col_navegacion": "Navigation",
+    "col_base": "Physical Base Hawka",
+    "portal_vip": "VIP Client Portal",
+    "panel_staff": "Staff Operations",
+    "btn_maps": "Open in Google Maps",
+    "derechos": "All rights reserved."
+  },
+  "comun": {
+    "whatsapp_btn": "Official WhatsApp",
+    "cerrar": "Close",
+    "guardar": "Save",
+    "total": "Total",
+    "moneda_pen": "S/ PEN",
+    "moneda_usd": "$ USD"
+  }
+}

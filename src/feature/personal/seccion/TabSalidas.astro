@@ -1,25 +1,27 @@
 ---
 // src/feature/personal/seccion/TabSalidas.astro
-// 🚙 Pestaña 3: Despacho de Tubulares y Salidas de Anthony y Michael (<50 líneas)
+// 🚙 Pestaña 3: Despacho de Tubulares de Anthony y Michael (Cero CSS Inline)
 import { SALIDAS_HOY } from '../data/salidas.data.js';
 ---
 
 <div class="staff-panel-tab" id="tab_salidas" style="display: none;">
-  <div style="background: var(--bg-card); border: 1px solid var(--border-card); border-radius: 1.4rem; padding: 1.6rem; box-shadow: var(--shadow-xl);">
-    <h3 style="font-size: 1.15rem; font-weight: 800; margin-bottom: 1.2rem; color: var(--text-main);">
-      Programación de Salidas & Conductores
-    </h3>
+  <div class="personal-table-card">
+    <div class="personal-table-header">
+      <h3 class="font-heading" style="font-size: 1.15rem; font-weight: 800; color: var(--text-main);">
+        Programación de Salidas & Conductores
+      </h3>
+    </div>
 
-    <div style="display: flex; flex-direction: column; gap: 1rem;">
+    <div class="personal-rows-list">
       {SALIDAS_HOY.map(salida => (
-        <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 0.8rem; padding: 1.1rem; background: var(--bg-subtle); border-radius: 1rem; border: 1px solid var(--border-card);">
+        <div class="personal-row-item">
           <div>
-            <span style="font-size: 0.75rem; color: var(--neon-yellow); font-weight: 800; display: block;">{salida.hora}</span>
-            <strong style="font-size: 0.95rem; color: var(--text-main); display: block;">{salida.conductor}</strong>
-            <span style="font-size: 0.78rem; color: var(--text-muted);">{salida.disciplina}</span>
+            <span class="user-badge-tag" style="color: var(--neon-yellow); display: block;">{salida.hora}</span>
+            <strong class="user-badge-name">{salida.conductor}</strong>
+            <span class="drawer-contact-info" style="text-align: left;">{salida.disciplina}</span>
           </div>
 
-          <div style="display: flex; align-items: center; gap: 0.8rem;">
+          <div class="topbar-right">
             <span style="font-size: 0.82rem; font-weight: 700; color: var(--text-main);">
               <i class="fa-solid fa-users" style="color: var(--glow-cyan);"></i> {salida.pax} PAX
             </span>

@@ -1,72 +1,51 @@
 // src/core/seo.js
-// 🔍 Central SEO & Schema.org JSON-LD Generator para Google Search & Maps
+// 🔍 Generador Puro de Metadatos SEO y Schema.org JSON-LD (Consume app.js y wii.js)
+import app from '../app.js';
 
-import { NEGOCIO } from './config/constantes.js';
-
-export const SEO = {
-  '/': {
-    title: 'Kevin Tours | SandSki & Sandboard Pro Huacachina Evolution 2026',
-    description: 'Única Escuela Oficial de SandSki Alpino con Bastones, Sandboard Pro con Botas, Snowboard en Dunas y Bodyboard en Huacachina, Ica. Base en Hospedaje Hawka.',
-    keywords: 'sandski huacachina, sandboard huacachina, kevin tours, clases sandboard pro, esquí en arena ica, hospedaje hawka tours',
-    canonical: `${NEGOCIO.dominio}/`,
-    image: `${NEGOCIO.dominio}/tours/sandski_laguna.png`
-  },
-  '/en': {
-    title: 'Kevin Tours | SandSki & Pro Sandboard Huacachina Evolution 2026',
-    description: 'Official Alpine SandSki & Pro Sandboard with fitted snow boots in the Huacachina Desert Oasis, Ica Peru. Base at Hospedaje Hawka.',
-    keywords: 'sand skiing huacachina, pro sandboarding peru, kevin tours huacachina, dune buggy sunset ica',
-    canonical: `${NEGOCIO.dominio}/en`,
-    image: `${NEGOCIO.dominio}/tours/sandski_laguna.png`
-  },
-  '/cliente': {
-    title: 'Portal Cliente VIP | Kevin Tours Evolution',
-    description: 'Acceso a tu cuenta VIP, selección de tallas de botas de nieve y cupones de descuento exclusivos para SandSki y Sandboard.',
-    canonical: `${NEGOCIO.dominio}/cliente`,
-    image: `${NEGOCIO.dominio}/tours/sandboard_pro.png`
-  },
-  '/personal': {
-    title: 'Panel Staff & Despacho Base Hawka | Kevin Tours',
-    description: 'Gestión operativa interna de recepción, control de caja, asignación de botas y despacho de tubulares.',
-    canonical: `${NEGOCIO.dominio}/personal`,
-    image: `${NEGOCIO.dominio}/tours/hawka_fachada.png`
-  }
-};
-
-export const getMeta = (path = '/') => SEO[path] || SEO['/'];
-
-/**
- * Genera el Schema.org JSON-LD para Google (TouristAttraction y LocalBusiness)
- */
-export const getJsonLd = (path = '/') => {
-  const meta = getMeta(path);
+export function getMeta(ruta = '/') {
+  const isEn = ruta.startsWith('/en');
   return {
-    "@context": "https://schema.org",
-    "@type": ["TouristAttraction", "SportsActivityLocation", "LocalBusiness"],
-    "name": NEGOCIO.nombre,
-    "alternateName": NEGOCIO.nombreComercial,
-    "description": meta.description,
-    "url": meta.canonical,
-    "image": meta.image,
-    "telephone": NEGOCIO.telefono,
-    "priceRange": "$$",
-    "address": {
-      "@type": "PostalAddress",
-      "streetAddress": NEGOCIO.ubicacion.direccion,
-      "addressLocality": "Huacachina",
-      "addressRegion": "Ica",
-      "postalCode": "11000",
-      "addressCountry": "PE"
+    title: isEn
+      ? `${app.app} | SandSki & Sandboard Pro Huacachina`
+      : `${app.app} | Escuela Oficial de SandSki y Sandboard en Huacachina`,
+    description: isEn
+      ? `Official operator of SandSkiing, Pro Sandboarding and Snowboard in Huacachina. Base at ${app.base.referencia}.`
+      : `Operador Oficial de SandSki Alpino, Sandboard Pro con Botas y Snowboard en Huacachina. Base física en ${app.base.referencia}.`,
+    canonical: `${app.linkweb}${ruta}`,
+    image: `${app.linkweb}/tours/sandski_laguna.png`,
+    siteName: app.app,
+    telefono: app.telefono
+  };
+}
+
+export function getJsonLd(ruta = '/') {
+  return {
+    '@context': 'https://schema.org',
+    '@type': ['TouristAttraction', 'SportsActivityLocation', 'LocalBusiness'],
+    name: app.nombreComercial,
+    description: app.slogan,
+    url: `${app.linkweb}${ruta}`,
+    telephone: app.telefono,
+    image: `${app.linkweb}/tours/sandski_laguna.png`,
+    priceRange: '$$',
+    address: {
+      '@type': 'PostalAddress',
+      streetAddress: app.base.direccion,
+      addressLocality: 'Huacachina, Ica',
+      addressRegion: 'Ica',
+      postalCode: '11000',
+      addressCountry: 'PE'
     },
-    "geo": {
-      "@type": "GeoCoordinates",
-      "latitude": "-14.088365",
-      "longitude": "-75.765691"
+    geo: {
+      '@type': 'GeoCoordinates',
+      latitude: app.base.coordenadas.lat,
+      longitude: app.base.coordenadas.lng
     },
-    "openingHoursSpecification": {
-      "@type": "OpeningHoursSpecification",
-      "dayOfWeek": ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"],
-      "opens": "08:00",
-      "closes": "19:00"
+    openingHoursSpecification: {
+      '@type': 'OpeningHoursSpecification',
+      dayOfWeek: ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'],
+      opens: '08:00',
+      closes: '19:00'
     }
   };
-};
+}

@@ -1,0 +1,34 @@
+{
+  "sidebar": {
+    "titulo": "Hawka Operations",
+    "resumen": "Cash Summary",
+    "recepcion": "Base Reception",
+    "salidas": "Buggy Dispatch",
+    "inventario": "Boot Stock",
+    "tarifas": "Live Rates"
+  },
+  "caja": {
+    "total_pen": "Total Collected (PEN)",
+    "total_usd": "Total Dollars (USD)",
+    "pasajeros": "Passengers Served",
+    "canales_titulo": "Payments by Channel"
+  },
+  "recepcion": {
+    "titulo": "Fast Check-in at Base Hawka",
+    "badge_vivo": "LIVE",
+    "btn_listo": "Done"
+  },
+  "salidas": {
+    "titulo": "Buggy Departure & Drivers Schedule"
+  },
+  "inventario": {
+    "esquis": "Alpine Skis",
+    "sandboard": "Pro Sandboards",
+    "snowboard": "Dune Snowboards",
+    "bodyboard": "Bodyboard Boards",
+    "botas_titulo": "Snow Boot Availability (36 - 45)"
+  },
+  "tarifas": {
+    "titulo": "Official Live Rates & Pricing"
+  }
+}

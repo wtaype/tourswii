@@ -1,43 +1,43 @@
 ---
 // src/feature/personal/seccion/TabInventario.astro
-// 🎿 Pestaña 4: Control de Stock de Equipos y Botas 35-45 en Base (<55 líneas)
+// 🎿 Pestaña 4: Control de Stock de Equipos y Botas 35-45 en Base (Cero CSS Inline)
 import { INVENTARIO } from '../data/inventario.data.js';
 ---
 
 <div class="staff-panel-tab" id="tab_inventario" style="display: none;">
   <!-- Equipos Principales -->
-  <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 1rem; margin-bottom: 1.5rem;">
-    <div style="background: var(--bg-card); border: 1px solid var(--border-card); border-radius: 1rem; padding: 1.1rem;">
-      <span style="font-size: 0.72rem; color: var(--text-muted);">Esquís Alpinos</span>
-      <strong style="font-size: 1.4rem; color: var(--neon-yellow); display: block;">{INVENTARIO.esquisAlpinos.disponibles} Disp.</strong>
-      <span style="font-size: 0.7rem; color: var(--text-muted);">de {INVENTARIO.esquisAlpinos.total} pares</span>
+  <div class="personal-kpi-grid">
+    <div class="personal-kpi-card">
+      <span class="personal-kpi-label">Esquís Alpinos</span>
+      <strong class="personal-kpi-val personal-kpi-val-pen">{INVENTARIO.esquisAlpinos.disponibles} Disp.</strong>
+      <span class="drawer-contact-info" style="text-align: left;">de {INVENTARIO.esquisAlpinos.total} pares</span>
     </div>
 
-    <div style="background: var(--bg-card); border: 1px solid var(--border-card); border-radius: 1rem; padding: 1.1rem;">
-      <span style="font-size: 0.72rem; color: var(--text-muted);">Tablas Sandboard Pro</span>
-      <strong style="font-size: 1.4rem; color: var(--fire-orange); display: block;">{INVENTARIO.tablasSandboardPro.disponibles} Disp.</strong>
-      <span style="font-size: 0.7rem; color: var(--text-muted);">de {INVENTARIO.tablasSandboardPro.total} unidades</span>
+    <div class="personal-kpi-card">
+      <span class="personal-kpi-label">Tablas Sandboard Pro</span>
+      <strong class="personal-kpi-val personal-kpi-val-pax">{INVENTARIO.tablasSandboardPro.disponibles} Disp.</strong>
+      <span class="drawer-contact-info" style="text-align: left;">de {INVENTARIO.tablasSandboardPro.total} unidades</span>
     </div>
 
-    <div style="background: var(--bg-card); border: 1px solid var(--border-card); border-radius: 1rem; padding: 1.1rem;">
-      <span style="font-size: 0.72rem; color: var(--text-muted);">Snowboard Dunas</span>
-      <strong style="font-size: 1.4rem; color: var(--glow-cyan); display: block;">{INVENTARIO.tablasSnowboard.disponibles} Disp.</strong>
-      <span style="font-size: 0.7rem; color: var(--text-muted);">de {INVENTARIO.tablasSnowboard.total} unidades</span>
+    <div class="personal-kpi-card">
+      <span class="personal-kpi-label">Snowboard Dunas</span>
+      <strong class="personal-kpi-val personal-kpi-val-usd">{INVENTARIO.tablasSnowboard.disponibles} Disp.</strong>
+      <span class="drawer-contact-info" style="text-align: left;">de {INVENTARIO.tablasSnowboard.total} unidades</span>
     </div>
 
-    <div style="background: var(--bg-card); border: 1px solid var(--border-card); border-radius: 1rem; padding: 1.1rem;">
-      <span style="font-size: 0.72rem; color: var(--text-muted);">Tablas Bodyboard</span>
-      <strong style="font-size: 1.4rem; color: var(--wa-green); display: block;">{INVENTARIO.tablasBodyboard.disponibles} Disp.</strong>
-      <span style="font-size: 0.7rem; color: var(--text-muted);">de {INVENTARIO.tablasBodyboard.total} unidades</span>
+    <div class="personal-kpi-card">
+      <span class="personal-kpi-label">Tablas Bodyboard</span>
+      <strong class="personal-kpi-val" style="color: var(--wa-green);">{INVENTARIO.tablasBodyboard.disponibles} Disp.</strong>
+      <span class="drawer-contact-info" style="text-align: left;">de {INVENTARIO.tablasBodyboard.total} unidades</span>
     </div>
   </div>
 
   <!-- Stock de Botas por Talla -->
-  <div style="background: var(--bg-card); border: 1px solid var(--border-card); border-radius: 1.2rem; padding: 1.4rem;">
-    <h4 style="font-size: 0.95rem; font-weight: 800; margin-bottom: 1rem; color: var(--text-main);">Disponibilidad de Botas de Nieve (36 - 45)</h4>
-    <div style="display: grid; grid-template-columns: repeat(auto-fill, minmax(80px, 1fr)); gap: 0.6rem;">
+  <div class="personal-table-card">
+    <h4 class="footer-col-title">Disponibilidad de Botas de Nieve (36 - 45)</h4>
+    <div class="personal-boot-grid">
       {INVENTARIO.botasNievePorTalla.map(b => (
-        <div style="background: var(--bg-subtle); border: 1px solid var(--border-card); border-radius: 0.7rem; padding: 0.6rem; text-align: center;">
+        <div class="personal-boot-box">
           <strong style="font-size: 1rem; color: var(--neon-yellow); display: block;">#{b.talla}</strong>
           <span style="font-size: 0.72rem; font-weight: 700; color: var(--wa-green);">{b.disponibles} Libres</span>
         </div>

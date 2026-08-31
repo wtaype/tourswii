@@ -1,25 +1,29 @@
 ---
 // src/feature/personal/seccion/TabTarifas.astro
-// 🏷️ Pestaña 5: Editor en Vivo de Tarifas PEN / USD (<50 líneas)
-import { DISCIPLINAS } from '../../inicio/data/disciplinas.data.js';
+// 🏷️ Pestaña 5: Editor en Vivo de Tarifas PEN / USD (Cero CSS Inline)
+import inicioEs from '../../inicio/idioma/es.json';
+
+const disciplinas = inicioEs.disciplinas;
 ---
 
 <div class="staff-panel-tab" id="tab_tarifas" style="display: none;">
-  <div style="background: var(--bg-card); border: 1px solid var(--border-card); border-radius: 1.4rem; padding: 1.6rem; box-shadow: var(--shadow-xl);">
-    <h3 style="font-size: 1.15rem; font-weight: 800; margin-bottom: 1.2rem; color: var(--text-main);">
-      Tarifario Oficial & Precios en Vivo
-    </h3>
+  <div class="personal-table-card">
+    <div class="personal-table-header">
+      <h3 class="font-heading" style="font-size: 1.15rem; font-weight: 800; color: var(--text-main);">
+        Tarifario Oficial & Precios en Vivo
+      </h3>
+    </div>
 
-    <div style="display: flex; flex-direction: column; gap: 1rem;">
-      {DISCIPLINAS.map(d => (
-        <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 0.8rem; padding: 1rem; background: var(--bg-subtle); border-radius: 0.9rem; border: 1px solid var(--border-card);">
+    <div class="personal-rows-list">
+      {disciplinas.map(d => (
+        <div class="personal-row-item">
           <div>
-            <strong style="font-size: 0.92rem; color: var(--text-main); display: block;">{d.nombre_es}</strong>
-            <span style="font-size: 0.75rem; color: var(--text-muted);">{d.badge} · Equipos y Guía Incluido</span>
+            <strong class="user-badge-name">{d.nombre}</strong>
+            <span class="drawer-contact-info" style="text-align: left;">{d.badge} · Equipos y Guía Incluido</span>
           </div>
-          <div style="display: flex; align-items: center; gap: 0.8rem;">
-            <span style="font-size: 1.1rem; font-weight: 900; color: var(--neon-yellow);">S/ {d.precio_pen}</span>
-            <span style="font-size: 0.85rem; font-weight: 700; color: var(--glow-cyan);">${d.precio_usd} USD</span>
+          <div class="topbar-right">
+            <span class="calc-total-amount" style="font-size: 1.1rem;">S/ {d.precio_pen}</span>
+            <span class="personal-kpi-val-usd" style="font-size: 0.85rem; font-weight: 700;">${d.precio_usd} USD</span>
           </div>
         </div>
       ))}

@@ -1,43 +1,42 @@
 ---
 // src/feature/inicio/seccion/HawkaBase.astro
-// 🏨 Galería de Nuestra Base Física en Hospedaje Hawka (<65 líneas)
-import { GALERIA } from '../data/galeria.data.js';
+// 📸 Galería de Fotos Reales en Base Hospedaje Hawka (Consume idioma/es.json | en.json)
+import esJson from '../idioma/es.json';
+import enJson from '../idioma/en.json';
 
 interface Props {
   idioma?: 'es' | 'en';
 }
 
 const { idioma = 'es' } = Astro.props;
+const t = idioma === 'en' ? enJson.galeria_seccion : esJson.galeria_seccion;
+const galeria = idioma === 'en' ? enJson.galeria : esJson.galeria;
 ---
 
-<section id="galeria" style="padding: 7vh 0; border-bottom: 1px solid var(--border-card); background: var(--bg-subtle);">
+<section id="galeria" class="section-pad section-bg-subtle">
   <div class="container-wide">
     
-    <!-- Encabezado -->
-    <div style="text-align: center; margin-bottom: 3rem;">
-      <span style="color: var(--glow-cyan); font-size: 0.75rem; font-weight: 800; text-transform: uppercase;">
-        {idioma === 'en' ? 'Authentic Gear & Base Reception' : 'Instalaciones Reales & Equipamiento'}
+    <!-- Encabezado Centrado -->
+    <div class="section-header-center">
+      <span class="section-badge-center">
+        {t.badge}
       </span>
-      <h2 style="font-size: clamp(1.6rem, 2.8vw, 2.5rem); font-weight: 900; text-transform: uppercase; margin-top: 0.4rem;">
-        {idioma === 'en' ? 'Our Base at' : 'Nuestra Base en'} <span style="background: linear-gradient(90deg, #ffe600, #ff4500); -webkit-background-clip: text; -webkit-text-fill-color: transparent;">Hospedaje Hawka</span>
+      <h2 class="section-title-center">
+        {t.titulo} <span class="text-gradient">{t.titulo_gradiente}</span>
       </h2>
-      <p style="font-size: 0.88rem; color: var(--text-muted); max-width: 580px; margin: 0.4rem auto 0 auto;">
-        {idioma === 'en' ? 'More than 50 pairs of real snow boots (sizes 35 to 45), alpine skis and pro gear with free lockers.' : 'Más de 50 pares de botas de nieve (35 al 45), esquís alpinos reales y casilleros gratuitos para tu equipaje.'}
+      <p class="section-desc-center">
+        {t.descripcion}
       </p>
     </div>
 
-    <!-- Grid de Fotos Reales -->
-    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 1.5rem;">
-      {GALERIA.map(img => (
-        <div style="position: relative; height: 260px; border-radius: 1.2rem; overflow: hidden; border: 1px solid var(--border-card); box-shadow: var(--shadow-xl);">
-          <img src={img.src} alt={img.alt} style="width: 100%; height: 100%; object-fit: cover;" />
-          <div style="position: absolute; bottom: 0; inset-inline: 0; background: linear-gradient(to top, rgba(0,0,0,0.88) 0%, transparent 80%); padding: 1.2rem;">
-            <strong style="color: var(--neon-yellow); font-size: 0.95rem; display: block;">
-              {idioma === 'en' ? img.titulo_en : img.titulo_es}
-            </strong>
-            <span style="font-size: 0.72rem; color: #fff;">
-              {idioma === 'en' ? img.sub_en : img.sub_es}
-            </span>
+    <!-- Grid de Galería -->
+    <div class="gallery-grid">
+      {galeria.map(foto => (
+        <div class="gallery-card glass-card">
+          <img src={foto.src} alt={foto.alt} loading="lazy" />
+          <div class="gallery-card-caption">
+            <strong class="gallery-caption-title">{foto.titulo}</strong>
+            <span class="gallery-caption-sub">{foto.sub}</span>
           </div>
         </div>
       ))}

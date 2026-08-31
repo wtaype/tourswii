@@ -1,34 +1,248 @@
 {
   "hero": {
-    "badge": "Ica Dune Adventure",
-    "titulo_1": "Feel the Adrenaline at the",
-    "titulo_resaltado": "Huacachina Oasis",
-    "subtitulo": "Experience thrilling 4x4 dune buggy rides and professional sandboarding against South America's most stunning sunset.",
-    "btn_whatsapp": "Book via WhatsApp",
-    "btn_tours": "View Official Rates"
+    "badge": "ONLY SCHOOL WITH SNOW SKIS & REAL BOOTS IN HUACACHINA",
+    "titulo1": "SURF THE DUNES WITH",
+    "titulo_gradiente": "SANDSKI & SANDBOARD PRO",
+    "descripcion": "Real alpine snow skis with poles, pro snowboard bindings, fitted boots (sizes 35 to 45) and 4x4 dune buggy ride to the giant dunes of Ica.",
+    "btn_reservar": "Book SandSki Pro ($23 / S/ 85)",
+    "btn_disciplinas": "View 4 Disciplines",
+    "metricas": [
+      { "valor": "35 - 45", "label": "Boot Sizes" },
+      { "valor": "100%", "label": "Snow Gear" },
+      { "valor": "4:00 PM", "label": "Sunset Dunes" },
+      { "valor": "FREE", "label": "Base Lockers" }
+    ]
   },
-  "stats": {
-    "turistas": "+15,000",
-    "turistas_label": "Satisfied Tourists",
-    "experiencia": "8 Years",
-    "experiencia_label": "Operating in Huacachina",
-    "rating": "4.9 / 5",
-    "rating_label": "5-Star Rating"
+  "cotizador": {
+    "titulo": "Official Calculator",
+    "subtitulo": "Gear Available at Base Hawka",
+    "label_disciplina": "1. Select Dune Discipline",
+    "label_pax": "2. Passengers",
+    "label_horario": "3. Schedule",
+    "horarios": [
+      { "valor": "4:00 PM Sunset (Recommended)", "label": "🌅 4:00 PM (Sunset)" },
+      { "valor": "10:00 AM Morning", "label": "☀️ 10:00 AM (Morning)" },
+      { "valor": "2:00 PM Afternoon", "label": "🌤️ 2:00 PM (Afternoon)" }
+    ],
+    "total_label": "Estimated Total:",
+    "punto_encuentro": "Point: Hospedaje Hawka",
+    "metodos_pago": "Yape · Plin · Card · Cash",
+    "btn_whatsapp": "Confirm Booking via WhatsApp"
   },
-  "ventajas": {
-    "titulo": "Why Choose Kevin Tours?",
-    "seguridad_tit": "100% Safety",
-    "seguridad_desc": "Our dune buggies feature reinforced roll cages, and all drivers hold official MTC licenses.",
-    "equipos_tit": "Professional Boards",
-    "equipos_desc": "Our boards come with foot bindings and special high-speed wax included.",
-    "fotos_tit": "Sunset Photos",
-    "fotos_desc": "Strategic stops at the highest dunes to capture the most breathtaking sunset photos."
+  "disciplinas_seccion": {
+    "badge": "Exclusive Experiences in Huacachina",
+    "titulo": "Our",
+    "titulo_gradiente": "4 Disciplines",
+    "descripcion": "Real snow skis with rigid boots, pro snowboard bindings, fitted gear, and 4x4 dune buggy ride in the dunes of Ica.",
+    "btn_cotizar": "Calculate Tour"
   },
-  "faq": {
-    "titulo": "Frequently Asked Questions",
-    "p1": "What is the best time for the dune buggy tour?",
-    "r1": "The 4:00 PM to 6:00 PM slot is the most popular for experiencing the stunning sunset over the dunes.",
-    "p2": "Does the tour include the municipal tourist fee?",
-    "r2": "The dune entrance fee (S/ 3.70) is paid directly at the gate before boarding."
-  }
+  "disciplinas": [
+    {
+      "id": "sandski_pro",
+      "nombre": "Professional SandSki",
+      "descripcion": "Ski giant sand dunes with real alpine skis, poles and fitted snow boots with a certified instructor.",
+      "precio_pen": 85,
+      "precio_usd": 23,
+      "imagen": "/tours/sandski_laguna.png",
+      "badge": "EXCLUSIVE",
+      "beneficios": [
+        "Pair of alpine skis + poles",
+        "Fitted snow boots in your exact size",
+        "4x4 dune buggy transport",
+        "Instructor guide on each slope"
+      ]
+    },
+    {
+      "id": "sandboard_pro",
+      "nombre": "Pro Sandboard with Boots",
+      "descripcion": "Learn to carve sand dunes standing up on pro sandboards equipped with snowboard ratchet bindings.",
+      "precio_pen": 75,
+      "precio_usd": 20,
+      "imagen": "/tours/sandboard_pro.png",
+      "badge": "TOP #1",
+      "beneficios": [
+        "Board with ergonomic bindings",
+        "Thermal snowboard boots",
+        "High-speed speed wax",
+        "Beginner guided lessons"
+      ]
+    },
+    {
+      "id": "snowboard_pro",
+      "nombre": "Dunes Pro Snowboard",
+      "descripcion": "High-end mountain snowboards adapted for fast descents on loose desert sand with high-speed wax.",
+      "precio_pen": 80,
+      "precio_usd": 22,
+      "imagen": "/tours/sandboard3.webp",
+      "badge": "HIGH MOUNTAIN",
+      "beneficios": [
+        "High-end snowboard deck",
+        "Special sand wax for steep dunes",
+        "Rigid snowboard boots",
+        "Sunset viewing stop"
+      ]
+    },
+    {
+      "id": "bodyboard_arena",
+      "nombre": "Sand Bodyboard",
+      "descripcion": "Slide lying down on smooth waxed bodyboards. Ideal for beginners, children, and pure thrill.",
+      "precio_pen": 45,
+      "precio_usd": 12,
+      "imagen": "/tours/sandboard1.webp",
+      "badge": "FAMILY",
+      "beneficios": [
+        "Bodyboard + speed wax",
+        "4x4 dune buggy ride",
+        "100% safe for kids & families",
+        "Sunset photo stops"
+      ]
+    }
+  ],
+  "galeria_seccion": {
+    "badge": "Authentic Desert Base",
+    "titulo": "Our Base at",
+    "titulo_gradiente": "Hospedaje Hawka",
+    "descripcion": "Real photos of our reception, fitted ski equipment, private lockers, and tourists gearing up in Huacachina."
+  },
+  "galeria": [
+    {
+      "src": "/tours/hawka_fachada.png",
+      "alt": "Hospedaje Hawka Huacachina Facade",
+      "titulo": "Official Base · Hospedaje Hawka",
+      "sub": "Reception, lockers & boot fitting"
+    },
+    {
+      "src": "/tours/sandski_laguna.png",
+      "alt": "Alpine SandSki at Lagoon",
+      "titulo": "Real Alpine Snow Skis",
+      "sub": "Pro equipment with balance poles"
+    },
+    {
+      "src": "/tours/sandski_dunas.png",
+      "alt": "Skiing on the Dunes",
+      "titulo": "High Dune Summit Descent",
+      "sub": "Instructors guiding every run"
+    },
+    {
+      "src": "/tours/sandboard_pro.png",
+      "alt": "Pro Sandboard with Boots",
+      "titulo": "Pro Snowboard Gear",
+      "sub": "Thermal boots & ratchet bindings"
+    }
+  ],
+  "ubicacion_seccion": {
+    "badge": "OFFICIAL MEETING POINT",
+    "titulo": "Visit Us in",
+    "titulo_gradiente": "Hospedaje Hawka",
+    "descripcion": "Meet us directly at our physical operations desk inside Hospedaje Hawka in Huacachina Lagoon. Try on your ski boots, store your backpack in private lockers, and board the 4x4 buggy.",
+    "btn_maps": "Open in Official Google Maps"
+  },
+  "pilares_seccion": {
+    "badge": "TOTAL SAFETY & TRUST",
+    "titulo": "WHY CHOOSE",
+    "titulo_gradiente": "KEVIN TOURS",
+    "descripcion": "6 solid guarantees that make our desert adventure the safest and most exhilarating in Peru."
+  },
+  "pilares": [
+    {
+      "icono": "fa-person-skiing",
+      "color": "var(--neon-yellow)",
+      "bg": "rgba(255, 230, 0, 0.15)",
+      "titulo": "1. Real Alpine Skis & Snow Boots",
+      "descripcion": "Top brand gear with safety release bindings and rigid boots that firmly protect your ankles on every turn."
+    },
+    {
+      "icono": "fa-person-snowboarding",
+      "color": "var(--fire-orange)",
+      "bg": "rgba(255, 69, 0, 0.15)",
+      "titulo": "2. Step-by-Step Guided Lessons",
+      "descripcion": "Local instructors teach you the exact balance and posture to carve standing up from your very first dune."
+    },
+    {
+      "icono": "fa-car-on",
+      "color": "var(--glow-cyan)",
+      "bg": "rgba(0, 240, 255, 0.15)",
+      "titulo": "3. Certified 4x4 Dune Buggies",
+      "descripcion": "Heavy-duty roll cage buggies, 4-point racing harness belts, and official MTC certified drivers."
+    },
+    {
+      "icono": "fa-shield-heart",
+      "color": "var(--wa-green)",
+      "bg": "rgba(37, 211, 102, 0.15)",
+      "titulo": "4. Full Tourist SOAT Insurance",
+      "descripcion": "Comprehensive vehicular medical insurance and tourist protection covering all passengers."
+    },
+    {
+      "icono": "fa-vault",
+      "color": "#a855f7",
+      "bg": "rgba(168, 85, 247, 0.15)",
+      "titulo": "5. Free Lockers at Base",
+      "descripcion": "Store your valuables safely in individual keyed lockers inside Hospedaje Hawka Reception at no extra cost."
+    },
+    {
+      "icono": "fa-rotate-left",
+      "color": "var(--neon-yellow)",
+      "bg": "rgba(255, 230, 0, 0.15)",
+      "titulo": "6. 24h Flexible Cancellation",
+      "descripcion": "Reschedule or cancel penalty-free by notifying us at least 24 hours prior via WhatsApp."
+    }
+  ],
+  "reputacion": [
+    {
+      "plataforma": "TripAdvisor",
+      "insignia": "Travelers’ Choice 2026",
+      "score": "5.0 / 5.0",
+      "color": "#00af87",
+      "icono": "fa-certificate"
+    },
+    {
+      "plataforma": "Google Maps",
+      "insignia": "4.9 Stars (+1,200 Reviews)",
+      "score": "4.9 / 5.0",
+      "color": "#4285f4",
+      "icono": "fa-star"
+    },
+    {
+      "plataforma": "GetYourGuide",
+      "insignia": "Top Rated Adventure Partner",
+      "score": "4.8 / 5.0",
+      "color": "#ff5533",
+      "icono": "fa-award"
+    },
+    {
+      "plataforma": "MTC Perú",
+      "insignia": "Authorized Tour Operator",
+      "score": "License N° 11000",
+      "color": "#16a34a",
+      "icono": "fa-shield-halved"
+    }
+  ],
+  "faq_seccion": {
+    "badge": "CLEAR ANSWERS",
+    "titulo": "FREQUENTLY ASKED",
+    "titulo_gradiente": "QUESTIONS",
+    "descripcion": "Everything you need to know before skiing the giant sand dunes of Huacachina.",
+    "visual_tag": "DIRECT ASSISTANCE",
+    "visual_titulo": "First time trying SandSki or Sandboard?",
+    "visual_desc": "Our certified local instructors guide you on every single slope.",
+    "visual_btn": "Chat with an Official Guide"
+  },
+  "faqs": [
+    {
+      "pregunta": "1. Is prior experience required for SandSki or Pro Sandboard?",
+      "respuesta": "No. 80% of our guests have never skied or snowboarded before. We start on gentle dunes and our certified guides teach you balance step by step."
+    },
+    {
+      "pregunta": "2. Do you have boots in my shoe size?",
+      "respuesta": "Yes, at our Hospedaje Hawka base we stock over 50 pairs of real snow boots from size EU 35 to 45 for kids and adults."
+    },
+    {
+      "pregunta": "3. Does the tour include 4x4 dune buggy transport to the top?",
+      "respuesta": "Yes, all our packages include 4x4 buggy transport to the highest dunes and strategic stops for sunset photography."
+    },
+    {
+      "pregunta": "4. Where can I store my luggage during the tour?",
+      "respuesta": "At our main office at Av. Ángela Perotti S/n (Hospedaje Hawka Reception) we provide free individual lockers with keys."
+    }
+  ]
 }

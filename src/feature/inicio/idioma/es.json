@@ -1,34 +1,248 @@
 {
   "hero": {
-    "badge": "Aventura en las Dunas de Ica",
-    "titulo_1": "Siente la Adrenalina en el",
-    "titulo_resaltado": "Oasis de Huacachina",
-    "subtitulo": "Experimenta el SandSki alpino real y Sandboard profesional con fijaciones en el mejor atardecer de Sudamérica.",
-    "btn_whatsapp": "Reservar por WhatsApp",
-    "btn_tours": "Ver 4 Disciplinas"
+    "badge": "ÚNICA ESCUELA DE SANDSKI & SANDBOARD PRO EN HUACACHINA",
+    "titulo1": "SURFEA LAS DUNAS CON",
+    "titulo_gradiente": "SANDSKI & SANDBOARD PRO",
+    "descripcion": "Esquís alpinos con bastones, tablas de snowboard con fijaciones profesionales, botas a tu medida y transporte en buggies 4x4 hacia las dunas gigantes del desierto de Ica.",
+    "btn_reservar": "Reservar SandSki Pro (S/ 85 / $23)",
+    "btn_disciplinas": "Ver las 4 Disciplinas",
+    "metricas": [
+      { "valor": "35 - 45", "label": "Tallas de Botas" },
+      { "valor": "100%", "label": "Equipo de Nieve" },
+      { "valor": "4:00 PM", "label": "Sunset Dunas" },
+      { "valor": "GRATIS", "label": "Lockers Base" }
+    ]
   },
-  "stats": {
-    "turistas": "+15,000",
-    "turistas_label": "Turistas Satisfechos",
-    "experiencia": "8 Años",
-    "experiencia_label": "Operando en Huacachina",
-    "rating": "4.9 / 5",
-    "rating_label": "Calificación 5 Estrellas"
+  "cotizador": {
+    "titulo": "Cotizador Oficial",
+    "subtitulo": "Equipos Disponibles en Base Hawka",
+    "label_disciplina": "1. Elige tu Disciplina en Dunas",
+    "label_pax": "2. Pasajeros",
+    "label_horario": "3. Horario",
+    "horarios": [
+      { "valor": "4:00 PM Sunset (Recomendado)", "label": "🌅 4:00 PM (Sunset)" },
+      { "valor": "10:00 AM Mañana", "label": "☀️ 10:00 AM (Mañana)" },
+      { "valor": "2:00 PM Tarde", "label": "🌤️ 2:00 PM (Tarde)" }
+    ],
+    "total_label": "Total Estimado:",
+    "punto_encuentro": "Punto: Hospedaje Hawka",
+    "metodos_pago": "Yape · Plin · Tarjeta · Cash",
+    "btn_whatsapp": "Confirmar Reserva por WhatsApp"
   },
-  "ventajas": {
-    "titulo": "¿Por Qué Elegir Kevin Tours?",
-    "seguridad_tit": "100% Seguridad",
-    "seguridad_desc": "Nuestros tubulares cuentan con jaula antivuelco homologada y choferes con brevete MTC.",
-    "equipos_tit": "Equipos Profesionales",
-    "equipos_desc": "Esquís alpinos reales, bastones y tablas con fijaciones y botas de nieve incluidas.",
-    "fotos_tit": "Fotos en Atardecer",
-    "fotos_desc": "Paradas estratégicas en las cimas más altas para capturar las mejores fotos del sunset."
+  "disciplinas_seccion": {
+    "badge": "Experiencias Exclusivas en Huacachina",
+    "titulo": "Nuestras",
+    "titulo_gradiente": "4 Disciplinas",
+    "descripcion": "Equipamiento profesional de nieve real, botas rígidas a tu medida, transporte en tubulares 4x4 e instrucción guiada paso a paso.",
+    "btn_cotizar": "Cotizar Esta Disciplina"
   },
-  "faq": {
-    "titulo": "Preguntas Frecuentes",
-    "p1": "¿Cuál es el mejor horario para el tour de dunas?",
-    "r1": "El turno de 4:00 PM a 6:00 PM es el más solicitado para disfrutar del atardecer dorado en el desierto.",
-    "p2": "¿Se necesita experiencia previa?",
-    "r2": "No, nuestros instructores te enseñan paso a paso desde dunas bajas con total seguridad."
-  }
+  "disciplinas": [
+    {
+      "id": "sandski_pro",
+      "nombre": "SandSki Profesional",
+      "descripcion": "Esquía sobre las dunas gigantes con esquís alpinos reales, bastones y botas rígidas con instructor especializado.",
+      "precio_pen": 85,
+      "precio_usd": 23,
+      "imagen": "/tours/sandski_laguna.png",
+      "badge": "EXCLUSIVO",
+      "beneficios": [
+        "Par de esquís alpinos + bastones",
+        "Botas de nieve a tu medida exacta",
+        "Transporte tubular 4x4",
+        "Guía instructor en cada bajada"
+      ]
+    },
+    {
+      "id": "sandboard_pro",
+      "nombre": "Sandboard Pro con Botas",
+      "descripcion": "Aprende la técnica para deslizarte de pie en tablas de arena equipadas con fijaciones profesionales de carraca.",
+      "precio_pen": 75,
+      "precio_usd": 20,
+      "imagen": "/tours/sandboard_pro.png",
+      "badge": "TOP #1",
+      "beneficios": [
+        "Tabla con fijaciones ergonómicas",
+        "Botas de snowboard térmicas",
+        "Cera de alta velocidad",
+        "Clases para principiantes"
+      ]
+    },
+    {
+      "id": "snowboard_pro",
+      "nombre": "Snowboard Pro en Dunas",
+      "descripcion": "Tablas de snowboard adaptadas para descensos rápidos en arena suelta con cera de alta velocidad.",
+      "precio_pen": 80,
+      "precio_usd": 22,
+      "imagen": "/tours/sandboard3.webp",
+      "badge": "ALTA MONTAÑA",
+      "beneficios": [
+        "Tabla de snowboard de alta gama",
+        "Cera especial para dunas empinadas",
+        "Botas de snowboard rígidas",
+        "Parada para atardecer"
+      ]
+    },
+    {
+      "id": "bodyboard_arena",
+      "nombre": "Bodyboard en Arena",
+      "descripcion": "Deslízate acostado sobre tablas suaves de bodyboard enceradas. Ideal para principiantes, niños y pura diversión.",
+      "precio_pen": 45,
+      "precio_usd": 12,
+      "imagen": "/tours/sandboard1.webp",
+      "badge": "FAMILIAR",
+      "beneficios": [
+        "Tabla de bodyboard + cera",
+        "Transporte en tubular 4x4",
+        "Seguridad total para niños",
+        "Fotos en las dunas"
+      ]
+    }
+  ],
+  "galeria_seccion": {
+    "badge": "Base de Operaciones Auténtica",
+    "titulo": "Nuestra Base en",
+    "titulo_gradiente": "Hospedaje Hawka",
+    "descripcion": "Fotos reales de nuestra base física en Huacachina: equipamiento alpino de nieve, lockers seguros y turistas listos para las dunas."
+  },
+  "galeria": [
+    {
+      "src": "/tours/hawka_fachada.png",
+      "alt": "Fachada Base Hawka Huacachina",
+      "titulo": "Base Oficial · Hospedaje Hawka",
+      "sub": "Recepción, lockers y ajuste de botas"
+    },
+    {
+      "src": "/tours/sandski_laguna.png",
+      "alt": "SandSki Alpino en Laguna",
+      "titulo": "Esquís Alpinos de Nieve",
+      "sub": "Equipos profesionales con bastones"
+    },
+    {
+      "src": "/tours/sandski_dunas.png",
+      "alt": "Esquiando en las Dunas",
+      "titulo": "Descenso en Cumbre de Duna",
+      "sub": "Instructores en cada bajada"
+    },
+    {
+      "src": "/tours/sandboard_pro.png",
+      "alt": "Sandboard Pro con Botas",
+      "titulo": "Equipos Snowboard Pro",
+      "sub": "Botas térmicas y fijaciones de seguridad"
+    }
+  ],
+  "ubicacion_seccion": {
+    "badge": "PUNTO DE ENCUENTRO OFICIAL",
+    "titulo": "Visítanos en",
+    "titulo_gradiente": "Hospedaje Hawka",
+    "descripcion": "Encuéntranos directamente en nuestro mostrador físico oficial dentro del Hospedaje Hawka en la Laguna de Huacachina. Aquí te pruebas las botas, guardas tus cosas en lockers con llave y abordas el tubular.",
+    "btn_maps": "Abrir en Google Maps Oficial"
+  },
+  "pilares_seccion": {
+    "badge": "SEGURIDAD Y CONFIANZA TOTAL",
+    "titulo": "POR QUÉ ELEGIR",
+    "titulo_gradiente": "KEVIN TOURS",
+    "descripcion": "6 pilares que garantizan la mejor experiencia deportiva y segura en las dunas de Huacachina."
+  },
+  "pilares": [
+    {
+      "icono": "fa-person-skiing",
+      "color": "var(--neon-yellow)",
+      "bg": "rgba(255, 230, 0, 0.15)",
+      "titulo": "1. Esquís y Botas de Nieve Reales",
+      "descripcion": "Equipos de primeras marcas con fijaciones de seguridad y botas rígidas que protegen tus tobillos en cada curva."
+    },
+    {
+      "icono": "fa-person-snowboarding",
+      "color": "var(--fire-orange)",
+      "bg": "rgba(255, 69, 0, 0.15)",
+      "titulo": "2. Clases Guiadas Paso a Paso",
+      "descripcion": "Instructores locales que te enseñan la postura correcta para bajar de pie con total confianza desde la primera duna."
+    },
+    {
+      "icono": "fa-car-on",
+      "color": "var(--glow-cyan)",
+      "bg": "rgba(0, 240, 255, 0.15)",
+      "titulo": "3. Tubulares 4x4 Homologados",
+      "descripcion": "Vehículos con jaula antivuelco de acero estructural, cinturones de 4 puntos y pilotos certificados por el MTC."
+    },
+    {
+      "icono": "fa-shield-heart",
+      "color": "var(--wa-green)",
+      "bg": "rgba(37, 211, 102, 0.15)",
+      "titulo": "4. SOAT Turístico Completo",
+      "descripcion": "Cobertura médica vehicular y póliza de turismo para todos nuestros pasajeros durante toda la actividad."
+    },
+    {
+      "icono": "fa-vault",
+      "color": "#a855f7",
+      "bg": "rgba(168, 85, 247, 0.15)",
+      "titulo": "5. Lockers Gratuitos en Base",
+      "descripcion": "Guarda tus pertenencias de valor en casilleros con llave en nuestra recepción de Hospedaje Hawka sin costo extra."
+    },
+    {
+      "icono": "fa-rotate-left",
+      "color": "var(--neon-yellow)",
+      "bg": "rgba(255, 230, 0, 0.15)",
+      "titulo": "6. Cancelación Flexible 24h",
+      "descripcion": "Reprograma o cancela sin penalidades notificándonos con hasta 24 horas de anticipación por WhatsApp."
+    }
+  ],
+  "reputacion": [
+    {
+      "plataforma": "TripAdvisor",
+      "insignia": "Travelers’ Choice 2026",
+      "score": "5.0 / 5.0",
+      "color": "#00af87",
+      "icono": "fa-certificate"
+    },
+    {
+      "plataforma": "Google Maps",
+      "insignia": "4.9 Estrellas (+1,200 Reseñas)",
+      "score": "4.9 / 5.0",
+      "color": "#4285f4",
+      "icono": "fa-star"
+    },
+    {
+      "plataforma": "GetYourGuide",
+      "insignia": "Top Rated Adventure Partner",
+      "score": "4.8 / 5.0",
+      "color": "#ff5533",
+      "icono": "fa-award"
+    },
+    {
+      "plataforma": "MTC Perú",
+      "insignia": "Operador Turístico Autorizado",
+      "score": "Licencia N° 11000",
+      "color": "#16a34a",
+      "icono": "fa-shield-halved"
+    }
+  ],
+  "faq_seccion": {
+    "badge": "RESPUESTAS CLARAS",
+    "titulo": "PREGUNTAS",
+    "titulo_gradiente": "FRECUENTES",
+    "descripcion": "Todo lo que necesitas saber antes de subir a las dunas de arena en Huacachina.",
+    "visual_tag": "ATENCIÓN DIRECTA",
+    "visual_titulo": "¿Primera vez en SandSki o Sandboard?",
+    "visual_desc": "Nuestros instructores te acompañan en cada bajada paso a paso.",
+    "visual_btn": "Hablar con un Guía Oficial"
+  },
+  "faqs": [
+    {
+      "pregunta": "1. ¿Se necesita experiencia previa para hacer SandSki o Sandboard Pro?",
+      "respuesta": "No. El 80% de nuestros turistas nunca ha esquiado ni hecho snowboard. Empezamos en dunas de baja inclinación y nuestros instructores te enseñan el balance correcto paso a paso."
+    },
+    {
+      "pregunta": "2. ¿Tienen botas para mi talla de calzado?",
+      "respuesta": "Sí, en nuestra base de Hospedaje Hawka disponemos de más de 50 pares de botas de nieve en tallas desde la 35 hasta la 45 para niños y adultos."
+    },
+    {
+      "pregunta": "3. ¿El tour incluye el transporte en tubular hasta la cima?",
+      "respuesta": "Sí, todos nuestros paquetes incluyen el traslado en tubular 4x4 hacia las dunas más altas del desierto y la parada para ver el atardecer en Huacachina."
+    },
+    {
+      "pregunta": "4. ¿Dónde guardo mi equipaje durante el tour?",
+      "respuesta": "En nuestra oficina principal en Av. Ángela Perotti S/n (Recepción Hospedaje Hawka) disponemos de lockers individuales con llave 100% gratuitos."
+    }
+  ]
 }

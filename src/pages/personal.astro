@@ -1,7 +1,18 @@
 ---
 // src/pages/personal.astro
-// 🛠️ Ruta Oficial del Dashboard de Personal & Base Hawka
-import PersonalPage from '../feature/personal/PersonalPage.astro';
+// 🛠️ Ruta Oficial del Panel de Gestión del Dueño de Tours (Kevin) & Staff
+import Personal from '../core/layouts/Personal.astro';
+import TabResumen from '../feature/personal/seccion/TabResumen.astro';
+import TabRecepcion from '../feature/personal/seccion/TabRecepcion.astro';
+import TabSalidas from '../feature/personal/seccion/TabSalidas.astro';
+import TabInventario from '../feature/personal/seccion/TabInventario.astro';
+import TabTarifas from '../feature/personal/seccion/TabTarifas.astro';
 ---
 
-<PersonalPage />
+<Personal>
+  <TabResumen />
+  <TabRecepcion />
+  <TabSalidas />
+  <TabInventario />
+  <TabTarifas />
+</Personal>

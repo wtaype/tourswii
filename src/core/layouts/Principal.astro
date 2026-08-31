@@ -1,6 +1,6 @@
 ---
 // src/core/layouts/Principal.astro
-// 🌟 Layout Maestro Unificado para Web Pública y Cliente VIP (<95 líneas)
+// 🌟 Layout Maestro Unificado para Web Pública y Cliente VIP (<85 líneas)
 import { ClientRouter } from 'astro:transitions';
 import Topbar from '../componentes/Topbar.astro';
 import Header from '../componentes/Header.astro';
@@ -10,14 +10,14 @@ import WhatsAppFloat from '../../feature/inicio/componentes/WhatsAppFloat.astro'
 import UserModal from '../../feature/auth/componentes/UserModal.astro';
 
 import { getMeta, getJsonLd } from '../seo.js';
-import { CLIENTE_VIP } from '../../feature/cliente/data/cliente.data.js';
+import { USUARIO_VIP } from '../../feature/auth/data/usuario.data.js';
 
 import estilosTema from '../wicss/witema.css?raw';
-import fuentesCss from '../../../public/google/fonts.css?raw';
-import awesomeCss from '../../../public/fontawesome/css/all.min.css?raw';
+import appCss from '../wicss/app.css?raw';
 import inicioCss from '../../feature/inicio/inicio.css?raw';
+import authCss from '../../feature/auth/auth.css?raw';
 
-const globalCss = estilosTema + '\n' + fuentesCss + '\n' + awesomeCss + '\n' + inicioCss;
+const globalCss = estilosTema + '\n' + appCss + '\n' + inicioCss + '\n' + authCss;
 
 interface Props {
   idioma?: 'es' | 'en';
@@ -49,12 +49,11 @@ const jsonLd = getJsonLd(ruta);
   <!-- Schema.org JSON-LD -->
   <script type="application/ld+json" set:html={JSON.stringify(jsonLd)} />
 
-  <!-- Precarga de Fuentes -->
-  <link rel="preload" href="/google/Poppins-400.woff2" as="font" type="font/woff2" crossorigin="anonymous" />
-  <link rel="preload" href="/google/Poppins-600.woff2" as="font" type="font/woff2" crossorigin="anonymous" />
-  <link rel="preload" href="/google/Poppins-700.woff2" as="font" type="font/woff2" crossorigin="anonymous" />
+  <!-- Fuentes e Iconos FontAwesome Oficiales Locales -->
+  <link rel="stylesheet" href="/google/fonts.css" />
+  <link rel="stylesheet" href="/fontawesome/css/all.min.css" />
 
-  <!-- Habilitar ClientRouter para navegación instantánea sin F5 (Workwii Style) -->
+  <!-- ClientRouter para navegación instantánea SPA (Workwii Style) -->
   <ClientRouter />
 
   <!-- Estilos Inlined Globales Unificados (0 peticiones HTTP bloqueantes) -->
@@ -76,12 +75,12 @@ const jsonLd = getJsonLd(ruta);
     })();
   </script>
 </head>
-<body style="background-color: var(--bg-body); background-image: url('/wpuntos.svg'), radial-gradient(circle at 50% 0%, rgba(255, 69, 0, 0.08) 0%, transparent 60%); background-attachment: fixed; color: var(--text-main); font-family: 'Poppins', system-ui, sans-serif; overflow-x: hidden; line-height: 1.55; transition: background-color 0.3s, color 0.3s;">
+<body>
 
   <!-- Barra Superior y Cabecera -->
   <Topbar />
-  <Header idioma={idioma} esVip={esVip} usuarioNombre={CLIENTE_VIP.nombre} usuarioAvatar={CLIENTE_VIP.avatar} />
-  <DrawerMobile idioma={idioma} esVip={esVip} usuarioNombre={CLIENTE_VIP.nombre} usuarioTalla={CLIENTE_VIP.tallaBota} />
+  <Header idioma={idioma} esVip={esVip} usuarioNombre={USUARIO_VIP.nombre} usuarioAvatar={USUARIO_VIP.avatar} />
+  <DrawerMobile idioma={idioma} esVip={esVip} usuarioNombre={USUARIO_VIP.nombre} usuarioTalla={USUARIO_VIP.tallaBota} />
 
   <!-- Contenido Dinámico de la Página -->
   <slot />

@@ -1,0 +1,184 @@
+/* src/feature/auth/auth.css */
+/* 🔐 Estilos del Modal VIP & Preferencias de Cliente (Cero CSS Inline) */
+
+.wiModal {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.78);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  z-index: 10002;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+  padding: 1rem;
+}
+
+.wiModal.active {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.wiModal-card {
+  background: var(--bg-card);
+  border: 1px solid var(--border-card);
+  border-radius: 1.4rem;
+  width: 100%;
+  max-width: 490px;
+  box-shadow: var(--shadow-xl);
+  overflow: hidden;
+  transform: scale(0.94) translateY(12px);
+  transition: transform 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.wiModal.active .wiModal-card {
+  transform: scale(1) translateY(0);
+}
+
+.modal-header-box {
+  padding: 1.4rem 1.6rem;
+  border-bottom: 1px solid var(--border-card);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: var(--bg-subtle);
+}
+
+.modal-user-info {
+  display: flex;
+  align-items: center;
+  gap: 0.9rem;
+}
+
+.modal-user-avatar {
+  width: 3.2rem;
+  height: 3.2rem;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 2px solid var(--neon-yellow);
+}
+
+.modal-close-btn {
+  background: var(--bg-body);
+  border: 1px solid var(--border-card);
+  color: var(--text-muted);
+  width: 2rem;
+  height: 2rem;
+  border-radius: 50%;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: 0.2s;
+}
+
+.modal-close-btn:hover {
+  color: #fff;
+  background: #ff4500;
+  border-color: #ff4500;
+}
+
+.modal-nav-tabs {
+  display: flex;
+  border-bottom: 1px solid var(--border-card);
+  background: var(--bg-card);
+}
+
+.modal-tab-btn {
+  flex: 1;
+  padding: 0.8rem 0.4rem;
+  background: transparent;
+  border: none;
+  border-bottom: 2px solid transparent;
+  font-size: 0.75rem;
+  font-weight: 700;
+  color: var(--text-muted);
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.35rem;
+  transition: 0.2s;
+}
+
+.modal-tab-btn.active {
+  color: var(--neon-yellow);
+  border-bottom-color: var(--neon-yellow);
+  background: rgba(255, 230, 0, 0.06);
+}
+
+.modal-body-content {
+  padding: 1.5rem;
+  max-height: 60vh;
+  overflow-y: auto;
+}
+
+.modal-tab-content {
+  display: none;
+}
+
+.modal-tab-content.active {
+  display: block;
+  animation: modalTabFade 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+@keyframes modalTabFade {
+  from {
+    opacity: 0;
+    transform: translateY(6px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.modal-data-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0.7rem 0.9rem;
+  background: var(--bg-subtle);
+  border-radius: 0.7rem;
+  border: 1px solid var(--border-card);
+  font-size: 0.82rem;
+  margin-bottom: 0.6rem;
+}
+
+.size-selector-grid {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 0.5rem;
+  margin: 0.8rem 0;
+}
+
+.size-btn {
+  padding: 0.6rem 0;
+  border-radius: 0.6rem;
+  border: 1px solid var(--border-card);
+  background: var(--bg-subtle);
+  color: var(--text-main);
+  font-weight: 800;
+  font-size: 0.85rem;
+  cursor: pointer;
+  transition: 0.2s;
+}
+
+.size-btn.active {
+  background: var(--neon-yellow);
+  color: #000;
+  border-color: var(--neon-yellow);
+  box-shadow: 0 0 10px rgba(255, 230, 0, 0.4);
+}
+
+.coupon-box {
+  text-align: center;
+  padding: 1.2rem;
+  border: 2px dashed var(--neon-yellow);
+  border-radius: 1rem;
+  background: rgba(255, 230, 0, 0.08);
+  margin-bottom: 1rem;
+}

@@ -1,112 +1,112 @@
 ---
 // src/feature/auth/componentes/UserModal.astro
-// 👤 Modal Universal de Usuario VIP con 4 Pestañas (<95 líneas)
-import { USUARIO_VIP } from '../data/usuarioMock.data.js';
+// 🔐 Modal Universal de Autenticación & Perfil VIP (Consume auth/idioma/)
+import { USUARIO_VIP } from '../data/usuario.data.js';
+import esJson from '../idioma/es.json';
+import enJson from '../idioma/en.json';
 
 interface Props {
-  usuario?: typeof USUARIO_VIP;
   idioma?: 'es' | 'en';
 }
 
-const { usuario = USUARIO_VIP, idioma = 'es' } = Astro.props;
+const { idioma = 'es' } = Astro.props;
+const usuario = USUARIO_VIP;
+const t = idioma === 'en' ? enJson.modal : esJson.modal;
 ---
 
-<!-- MODAL DE USUARIO -->
-<div id="modal_perfil_usuario" class="wiModal">
+<div id="modal_perfil_usuario" class="wiModal" role="dialog" aria-modal="true">
   <div class="wiModal-card">
     
-    <!-- Cabecera del Modal -->
-    <div style="display: flex; justify-content: space-between; align-items: center; padding: 1.2rem 1.4rem; border-bottom: 1px solid var(--border-card);">
-      <div style="display: flex; align-items: center; gap: 0.8rem;">
-        <img src={usuario.avatar} alt={usuario.nombre} style="width: 2.5rem; height: 2.5rem; border-radius: 50%; object-fit: cover; border: 2px solid var(--neon-yellow);" />
+    <!-- Encabezado del Modal con Avatar y Estado VIP -->
+    <div class="modal-header-box">
+      <div class="modal-user-info">
+        <img src={usuario.avatar} alt={usuario.nombre} class="modal-user-avatar" />
         <div>
-          <strong style="font-size: 0.95rem; display: block; color: var(--text-main);">{usuario.nombre}</strong>
-          <span style="font-size: 0.7rem; color: var(--neon-yellow); font-weight: 700;">{usuario.tipo} · {usuario.descuento}% OFF</span>
+          <div class="topbar-left">
+            <h3 class="user-badge-name">{usuario.nombre}</h3>
+            <span class="user-badge-tag">{t.subtitulo}</span>
+          </div>
+          <span class="drawer-contact-info">{usuario.email} · {usuario.telefono}</span>
         </div>
       </div>
-      <button type="button" class="modalX" data-wimodal-close style="background: transparent; border: none; font-size: 1.5rem; color: var(--text-muted); cursor: pointer;">&times;</button>
+      <button type="button" class="modal-close-btn" data-wimodal-close aria-label="Cerrar modal">
+        <i class="fa-solid fa-xmark"></i>
+      </button>
     </div>
 
-    <!-- Barra de Pestañas -->
-    <div style="display: flex; border-bottom: 1px solid var(--border-card); background: var(--bg-subtle);">
+    <!-- Navegación de Pestañas del Modal -->
+    <div class="modal-nav-tabs">
       <button type="button" class="modal-tab-btn active" data-tab="tab_perfil">
-        <i class="fa-solid fa-user"></i> {idioma === 'en' ? 'Profile' : 'Perfil'}
+        <i class="fa-solid fa-user"></i> <span>{t.tabs.perfil}</span>
       </button>
       <button type="button" class="modal-tab-btn" data-tab="tab_tallas">
-        <i class="fa-solid fa-shoe-prints"></i> {idioma === 'en' ? 'My Sizes' : 'Mis Tallas'}
+        <i class="fa-solid fa-shoe-prints"></i> <span>{t.tabs.tallas}</span>
       </button>
       <button type="button" class="modal-tab-btn" data-tab="tab_cupon">
-        <i class="fa-solid fa-tag"></i> {idioma === 'en' ? 'VIP Coupon' : 'Cupón VIP'}
+        <i class="fa-solid fa-tag"></i> <span>{t.tabs.cupon}</span>
       </button>
       <button type="button" class="modal-tab-btn" data-tab="tab_ajustes">
-        <i class="fa-solid fa-gear"></i> {idioma === 'en' ? 'Settings' : 'Ajustes'}
+        <i class="fa-solid fa-gear"></i> <span>{t.tabs.ajustes}</span>
       </button>
     </div>
 
-    <!-- Contenido de Pestañas -->
-    <div style="padding: 1.4rem; max-height: 60vh; overflow-y: auto;">
+    <!-- Contenido de las Pestañas -->
+    <div class="modal-body-content">
       <!-- Tab 1: Perfil -->
       <div id="tab_perfil" class="modal-tab-content active">
-        <div style="display: flex; flex-direction: column; gap: 0.8rem;">
-          <div>
-            <label style="font-size: 0.72rem; color: var(--text-muted); text-transform: uppercase;">Nombre Completo</label>
-            <p style="font-size: 0.88rem; font-weight: 700; color: var(--text-main);">{usuario.nombre}</p>
+        <h4 class="footer-col-title">{t.historial_titulo}</h4>
+        {usuario.historialTours.map(tour => (
+          <div class="modal-data-row">
+            <div>
+              <strong class="user-badge-name">{tour.disciplina}</strong>
+              <span class="drawer-contact-info">{tour.fecha} · {tour.pax} PAX</span>
+            </div>
+            <div style="text-align: right;">
+              <strong style="color: var(--neon-yellow);">S/ {tour.totalPen.toFixed(2)}</strong>
+              <span style="color: var(--wa-green); font-size: 0.65rem; font-weight: 800; display: block;">{tour.estado}</span>
+            </div>
           </div>
-          <div>
-            <label style="font-size: 0.72rem; color: var(--text-muted); text-transform: uppercase;">Correo Electrónico</label>
-            <p style="font-size: 0.88rem; font-weight: 700; color: var(--text-main);">{usuario.email}</p>
-          </div>
-          <div>
-            <label style="font-size: 0.72rem; color: var(--text-muted); text-transform: uppercase;">WhatsApp Registrado</label>
-            <p style="font-size: 0.88rem; font-weight: 700; color: var(--text-main);">{usuario.telefono}</p>
-          </div>
-          <div style="padding: 0.8rem; border-radius: 0.8rem; background: var(--bg-subtle); border: 1px solid var(--border-card); margin-top: 0.4rem;">
-            <span style="font-size: 0.75rem; color: var(--glow-cyan); font-weight: 700;">Tours Realizados: {usuario.toursRealizados}</span>
-          </div>
-        </div>
+        ))}
       </div>
 
-      <!-- Tab 2: Tallas -->
+      <!-- Tab 2: Tallas & Botas -->
       <div id="tab_tallas" class="modal-tab-content">
-        <span style="font-size: 0.78rem; color: var(--text-muted); display: block; margin-bottom: 0.8rem;">
-          {idioma === 'en' ? 'Selected boot size for fast check-in at Base Hawka:' : 'Talla de bota seleccionada para check-in rápido en Base Hawka:'}
-        </span>
-        <div style="display: flex; gap: 0.5rem; flex-wrap: wrap; margin-bottom: 1.2rem;">
-          {[36, 37, 38, 39, 40, 41, 42, 43, 44, 45].map(t => (
-            <button type="button" class={`size-btn ${t === usuario.tallaBota ? 'active' : ''}`}>{t}</button>
+        <h4 class="footer-col-title">{t.tallas_titulo}</h4>
+        <div class="size-selector-grid">
+          {[36, 37, 38, 39, 40, 41, 42, 43, 44, 45].map(talla => (
+            <button type="button" class={`size-btn ${talla.toString() === usuario.tallaBota ? 'active' : ''}`} data-talla={talla}>
+              #{talla}
+            </button>
           ))}
         </div>
-        <div style="font-size: 0.82rem; color: var(--text-muted);">
-          <strong>Disciplina Favorita:</strong> <span style="color: var(--neon-yellow);">{usuario.disciplinaFavorita}</span>
+        <div class="modal-data-row">
+          <span>{t.disciplina_favorita}</span>
+          <strong style="color: var(--neon-yellow);">{usuario.disciplinaFavorita}</strong>
         </div>
       </div>
 
       <!-- Tab 3: Cupón VIP -->
       <div id="tab_cupon" class="modal-tab-content">
-        <div style="text-align: center; padding: 1rem 0;">
-          <div style="display: inline-block; padding: 0.6rem 1.4rem; border: 2px dashed var(--neon-yellow); border-radius: 0.8rem; background: rgba(255, 230, 0, 0.08); margin-bottom: 0.8rem;">
-            <strong style="font-size: 1.3rem; letter-spacing: 2px; color: var(--neon-yellow);">{usuario.cupon}</strong>
-          </div>
-          <p style="font-size: 0.82rem; color: var(--text-muted);">
-            {idioma === 'en' ? 'Get 15% OFF on SandSki and Sandboard tours by showing this code at Hawka Reception.' : 'Obtén 15% OFF en tours de SandSki y Sandboard mostrando este código en Recepción Hawka.'}
+        <div class="coupon-box">
+          <strong style="font-size: 1.4rem; letter-spacing: 2px; color: var(--neon-yellow);">{usuario.cupon}</strong>
+          <p style="font-size: 0.8rem; color: var(--text-muted); margin-top: 0.5rem;">
+            {t.cupon_texto}
           </p>
         </div>
       </div>
 
       <!-- Tab 4: Ajustes -->
       <div id="tab_ajustes" class="modal-tab-content">
-        <div style="display: flex; flex-direction: column; gap: 1rem;">
-          <div style="display: flex; justify-content: space-between; align-items: center;">
-            <span style="font-size: 0.82rem;">Notificaciones por WhatsApp</span>
-            <input type="checkbox" checked style="accent-color: var(--neon-yellow); transform: scale(1.2);" />
-          </div>
-          <div style="display: flex; justify-content: space-between; align-items: center;">
-            <span style="font-size: 0.82rem;">Moneda preferida</span>
-            <select style="background: var(--bg-subtle); border: 1px solid var(--border-card); color: var(--text-main); padding: 0.3rem 0.6rem; border-radius: 0.5rem; font-size: 0.8rem;">
-              <option value="PEN">Soles (PEN S/)</option>
-              <option value="USD">Dólares (USD $)</option>
-            </select>
-          </div>
+        <div class="modal-data-row">
+          <span>{t.notificaciones}</span>
+          <input type="checkbox" checked style="accent-color: var(--neon-yellow); transform: scale(1.2);" />
+        </div>
+        <div class="modal-data-row">
+          <span>{t.moneda}</span>
+          <select style="background: var(--bg-body); border: 1px solid var(--border-card); color: var(--text-main); padding: 0.3rem 0.6rem; border-radius: 0.5rem; font-size: 0.8rem;">
+            <option value="PEN">Soles (PEN S/)</option>
+            <option value="USD">Dólares (USD $)</option>
+          </select>
         </div>
       </div>
     </div>
@@ -114,30 +114,14 @@ const { usuario = USUARIO_VIP, idioma = 'es' } = Astro.props;
   </div>
 </div>
 
-<style>
-  .wiModal { position: fixed; inset: 0; background: rgba(0,0,0,0.75); backdrop-filter: blur(8px); z-index: 10002; display: flex; align-items: center; justify-content: center; opacity: 0; pointer-events: none; transition: opacity 0.25s ease; padding: 1rem; }
-  .wiModal.active { opacity: 1; pointer-events: auto; }
-  .wiModal-card { background: var(--bg-card); border: 1px solid var(--border-card); border-radius: 1.2rem; width: 100%; max-width: 480px; box-shadow: var(--shadow-xl); overflow: hidden; transform: scale(0.95); transition: transform 0.25s ease; }
-  .wiModal.active .wiModal-card { transform: scale(1); }
-  .modal-tab-btn { flex: 1; padding: 0.75rem 0.4rem; background: transparent; border: none; border-bottom: 2px solid transparent; font-size: 0.75rem; font-weight: 700; color: var(--text-muted); cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 0.35rem; transition: 0.2s; }
-  .modal-tab-btn.active { color: var(--neon-yellow); border-bottom-color: var(--neon-yellow); background: rgba(255, 230, 0, 0.05); }
-  .modal-tab-content { display: none; }
-  .modal-tab-content.active { display: block; animation: fadeIn 0.2s ease; }
-  .size-btn { width: 2.2rem; height: 2.2rem; border-radius: 0.5rem; border: 1px solid var(--border-card); background: var(--bg-subtle); color: var(--text-main); font-weight: 700; font-size: 0.8rem; cursor: pointer; }
-  .size-btn.active { background: var(--neon-yellow); color: #000; border-color: var(--neon-yellow); }
-  @keyframes fadeIn { from { opacity: 0; transform: translateY(4px); } to { opacity: 1; transform: translateY(0); } }
-</style>
-
 <script>
-  import { abrirModal, cerrarTodos } from '../../../core/widev/modales.js';
+  import { abrirModal } from '../../../core/widev/modales.js';
 
-  document.addEventListener('DOMContentLoaded', () => {
-    // Abrir modal al hacer clic en botón de usuario
+  function initUserModal() {
     document.querySelectorAll('#btn_abrir_perfil_modal').forEach(btn => {
       btn.addEventListener('click', () => abrirModal('modal_perfil_usuario'));
     });
 
-    // Pestañas internas del modal
     const tabs = document.querySelectorAll('.modal-tab-btn');
     const contents = document.querySelectorAll('.modal-tab-content');
 
@@ -152,12 +136,14 @@ const { usuario = USUARIO_VIP, idioma = 'es' } = Astro.props;
       });
     });
 
-    // Selección de tallas
     document.querySelectorAll('.size-btn').forEach(btn => {
       btn.addEventListener('click', () => {
         document.querySelectorAll('.size-btn').forEach(b => b.classList.remove('active'));
         btn.classList.add('active');
       });
     });
-  });
+  }
+
+  document.addEventListener('DOMContentLoaded', initUserModal);
+  document.addEventListener('astro:page-load', initUserModal);
 </script>

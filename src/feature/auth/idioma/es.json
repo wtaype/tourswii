@@ -1,0 +1,17 @@
+{
+  "modal": {
+    "subtitulo": "CLIENTE VIP",
+    "tabs": {
+      "perfil": "Perfil",
+      "tallas": "Mis Tallas",
+      "cupon": "Cupón",
+      "ajustes": "Ajustes"
+    },
+    "historial_titulo": "Historial de Salidas",
+    "tallas_titulo": "Tu Talla de Bota de Nieve",
+    "disciplina_favorita": "Disciplina Favorita:",
+    "cupon_texto": "Obtén 15% OFF en tours de SandSki y Sandboard mostrando este código en Recepción Hawka.",
+    "notificaciones": "Notificaciones por WhatsApp",
+    "moneda": "Moneda preferida"
+  }
+}

@@ -1,0 +1,17 @@
+{
+  "modal": {
+    "subtitulo": "VIP CLIENT",
+    "tabs": {
+      "perfil": "Profile",
+      "tallas": "My Gear",
+      "cupon": "Promo",
+      "ajustes": "Settings"
+    },
+    "historial_titulo": "Recent Adventures",
+    "tallas_titulo": "Your Snow Boot Size",
+    "disciplina_favorita": "Favorite Discipline:",
+    "cupon_texto": "Get 15% OFF on SandSki and Sandboard tours by showing this code at Hawka Reception.",
+    "notificaciones": "WhatsApp Notifications",
+    "moneda": "Preferred Currency"
+  }
+}

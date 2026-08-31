@@ -1,27 +1,31 @@
 ---
 // src/feature/inicio/seccion/Reputation.astro
-// ⭐ Insignias y Sellos de Reputación Internacional (<55 líneas)
-import { REPUTACION } from '../data/reputacion.data.js';
+// ⭐ Sellos Oficiales de Reputación y Reseñas (Consume idioma/es.json | en.json)
+import esJson from '../idioma/es.json';
+import enJson from '../idioma/en.json';
 
 interface Props {
   idioma?: 'es' | 'en';
 }
 
 const { idioma = 'es' } = Astro.props;
+const reputacion = idioma === 'en' ? enJson.reputacion : esJson.reputacion;
 ---
 
-<section style="padding: 4vh 0; border-bottom: 1px solid var(--border-card);">
+<section class="section-pad reputation-section">
   <div class="container-wide">
-    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 1rem;">
-      {REPUTACION.map(rep => (
-        <div style="background: var(--bg-card); border: 1px solid var(--border-card); border-radius: 1rem; padding: 1.1rem; display: flex; align-items: center; gap: 0.9rem; box-shadow: var(--shadow-xl);">
-          <div style={`width: 2.6rem; height: 2.6rem; border-radius: 0.6rem; background: ${rep.color}22; color: ${rep.color}; display: flex; align-items: center; justify-content: center; font-size: 1.1rem; flex-shrink: 0;`}>
+    <div class="grid-reputacion">
+      {reputacion.map(rep => (
+        <div class="reputation-card glass-card">
+          <div class="reputation-icon-box" style={`color: ${rep.color};`}>
             <i class={`fa-solid ${rep.icono}`}></i>
           </div>
-          <div>
-            <strong style="font-size: 0.88rem; display: block; color: var(--text-main); line-height: 1.2;">{rep.plataforma}</strong>
-            <span style="font-size: 0.72rem; color: var(--neon-yellow); font-weight: 700; display: block;">{rep.insignia}</span>
-            <span style="font-size: 0.68rem; color: var(--text-muted);">{rep.score}</span>
+          <div class="reputation-info">
+            <strong class="reputation-title">{rep.plataforma}</strong>
+            <span class="reputation-score" style={`color: ${rep.color};`}>
+              <i class="fa-solid fa-star"></i> {rep.score}
+            </span>
+            <span class="reputation-badge-text">{rep.insignia}</span>
           </div>
         </div>
       ))}

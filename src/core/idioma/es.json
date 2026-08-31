@@ -1,0 +1,36 @@
+{
+  "topbar": {
+    "certificacion": "Escuela Oficial MTC N° 11000",
+    "base": "Recepción Hospedaje Hawka"
+  },
+  "nav": {
+    "inicio": "Inicio",
+    "disciplinas": "4 Disciplinas",
+    "galeria": "Base Hawka",
+    "ubicacion": "Ubicación",
+    "confianza": "Por Qué Elegirnos",
+    "faq": "FAQ",
+    "ingresar": "Ingresar",
+    "reservar": "Reservar",
+    "perfil_vip": "CLIENTE VIP",
+    "panel_staff": "Panel de Operaciones"
+  },
+  "footer": {
+    "descripcion": "Escuela oficial de SandSki alpino y Sandboard profesional en las dunas gigantes de Huacachina, Ica. Base física en Hospedaje Hawka.",
+    "col_disciplinas": "4 Disciplinas",
+    "col_navegacion": "Navegación",
+    "col_base": "Base Física Hawka",
+    "portal_vip": "Portal Cliente VIP",
+    "panel_staff": "Panel de Operaciones",
+    "btn_maps": "Ver en Google Maps",
+    "derechos": "Todos los derechos reservados."
+  },
+  "comun": {
+    "whatsapp_btn": "WhatsApp Oficial",
+    "cerrar": "Cerrar",
+    "guardar": "Guardar",
+    "total": "Total",
+    "moneda_pen": "S/ PEN",
+    "moneda_usd": "$ USD"
+  }
+}

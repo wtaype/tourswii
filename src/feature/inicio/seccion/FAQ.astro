@@ -1,58 +1,68 @@
 ---
 // src/feature/inicio/seccion/FAQ.astro
-// ❓ Preguntas Frecuentes al Final Antes del Footer (<70 líneas)
-import { FAQS } from '../data/faqs.data.js';
-import { NEGOCIO } from '../../../core/config/constantes.js';
+// ❓ Sección 6: Preguntas Frecuentes (Consume idioma/es.json | en.json)
+import app from '../../../app.js';
+import esJson from '../idioma/es.json';
+import enJson from '../idioma/en.json';
 
 interface Props {
   idioma?: 'es' | 'en';
 }
 
 const { idioma = 'es' } = Astro.props;
+const t = idioma === 'en' ? enJson.faq_seccion : esJson.faq_seccion;
+const faqs = idioma === 'en' ? enJson.faqs : esJson.faqs;
 ---
 
-<section id="faq" style="padding: 7vh 0; border-bottom: 1px solid var(--border-card); background: var(--bg-subtle);">
+<section id="faq" class="section-pad section-bg-subtle">
   <div class="container-wide">
     
-    <!-- Encabezado -->
-    <div style="text-align: center; margin-bottom: 3rem;">
-      <span style="color: var(--neon-yellow); font-size: 0.75rem; font-weight: 800; text-transform: uppercase;">
-        {idioma === 'en' ? 'Clear Answers' : 'Respuestas Claras'}
+    <!-- Encabezado Centrado -->
+    <div class="section-header-center">
+      <span class="section-badge-center">
+        {t.badge}
       </span>
-      <h2 style="font-size: clamp(1.6rem, 2.6vw, 2.3rem); font-weight: 900; text-transform: uppercase; margin-top: 0.4rem; color: var(--text-main);">
-        {idioma === 'en' ? 'Frequently Asked Questions' : 'Preguntas Frecuentes'}
+      <h2 class="section-title-center">
+        {t.titulo} <span class="text-gradient">{t.titulo_gradiente}</span>
       </h2>
+      <p class="section-desc-center">
+        {t.descripcion}
+      </p>
     </div>
 
-    <!-- Grid: Banner de Ayuda + Acordeones -->
-    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 2rem; align-items: start;">
+    <!-- Grid 2 Columnas: Tarjeta Visual + Acordeón -->
+    <div class="faq-layout-grid">
       
-      <!-- Card Izquierda -->
-      <div style="background: var(--bg-card); border: 1px solid var(--border-card); border-radius: 1.4rem; overflow: hidden; position: relative; height: 380px; box-shadow: var(--shadow-xl);">
-        <img src="/tours/sandski_laguna.png" alt="SandSki Huacachina" style="width: 100%; height: 100%; object-fit: cover;" />
-        <div style="position: absolute; inset: 0; background: linear-gradient(to top, rgba(0,0,0,0.88) 0%, transparent 60%); display: flex; flex-direction: column; justify-content: flex-end; padding: 1.8rem;">
-          <span style="color: var(--neon-yellow); font-weight: 800; font-size: 0.75rem; text-transform: uppercase;">ATENCIÓN DIRECTA</span>
-          <h3 style="font-size: 1.25rem; font-weight: 900; color: #fff; margin-top: 0.2rem;">
-            {idioma === 'en' ? 'First time skiing or sandboarding?' : '¿Primera vez en SandSki o Sandboard?'}
+      <!-- Col 1: Tarjeta Visual de Soporte Directo -->
+      <div class="faq-visual-card glass-card">
+        <img src="/tours/sandski_laguna.png" alt="SandSki Huacachina" class="faq-visual-img" loading="lazy" />
+        <div class="faq-visual-overlay">
+          <span class="faq-visual-tag">
+            {t.visual_tag}
+          </span>
+          <h3 class="faq-visual-title">
+            {t.visual_titulo}
           </h3>
-          <p style="font-size: 0.8rem; color: #ddd; margin: 0.4rem 0 1rem 0;">
-            {idioma === 'en' ? 'Our certified instructors guide you on every slope.' : 'Nuestros instructores te acompañan en cada bajada.'}
+          <p class="faq-visual-desc">
+            {t.visual_desc}
           </p>
-          <a href={NEGOCIO.redes.whatsapp} target="_blank" rel="noopener noreferrer" style="background: linear-gradient(135deg, #ffe600, #ff4500); color: #000; font-weight: 800; padding: 0.75rem 1.3rem; border-radius: 0.8rem; font-size: 0.82rem; text-decoration: none; width: fit-content;">
-            <i class="fa-brands fa-whatsapp"></i> {idioma === 'en' ? 'Talk with a Guide' : 'Hablar con un Guía Oficial'}
+          <a href={app.whatsappUrl} target="_blank" rel="noopener noreferrer" class="btn-speed faq-visual-btn">
+            <i class="fa-brands fa-whatsapp"></i>
+            <span>{t.visual_btn}</span>
           </a>
         </div>
       </div>
 
-      <!-- Acordeones -->
-      <div style="display: flex; flex-direction: column; gap: 0.8rem;">
-        {FAQS.map((faq, idx) => (
-          <details style="background: var(--bg-card); border: 1px solid var(--border-card); border-radius: 0.9rem; padding: 1.1rem; cursor: pointer; box-shadow: var(--shadow-xl);" open={idx === 0}>
-            <summary style="font-weight: 700; font-size: 0.9rem; color: var(--neon-yellow); outline: none;">
-              {idioma === 'en' ? faq.pregunta_en : faq.pregunta_es}
+      <!-- Col 2: Acordeón de FAQs Interactivo -->
+      <div class="faq-accordion-list">
+        {faqs.map((faq, index) => (
+          <details class="glass-card faq-card" open={index === 0}>
+            <summary class="faq-question">
+              <span>{faq.pregunta}</span>
+              <i class="fa-solid fa-chevron-down faq-chevron"></i>
             </summary>
-            <p style="font-size: 0.82rem; color: var(--text-muted); margin-top: 0.6rem; line-height: 1.55;">
-              {idioma === 'en' ? faq.respuesta_en : faq.respuesta_es}
+            <p class="faq-answer">
+              {faq.respuesta}
             </p>
           </details>
         ))}

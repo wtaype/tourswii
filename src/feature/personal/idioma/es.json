@@ -1,0 +1,34 @@
+{
+  "sidebar": {
+    "titulo": "Operaciones Hawka",
+    "resumen": "Resumen de Caja",
+    "recepcion": "Recepción Base",
+    "salidas": "Despacho Salidas",
+    "inventario": "Stock de Botas",
+    "tarifas": "Tarifario en Vivo"
+  },
+  "caja": {
+    "total_pen": "Total Recaudado (PEN)",
+    "total_usd": "Total Dólares (USD)",
+    "pasajeros": "Pasajeros Atendidos",
+    "canales_titulo": "Cobros Registrados por Canal"
+  },
+  "recepcion": {
+    "titulo": "Check-in Rápido en Base Hawka",
+    "badge_vivo": "EN VIVO",
+    "btn_listo": "Listo"
+  },
+  "salidas": {
+    "titulo": "Programación de Salidas & Conductores"
+  },
+  "inventario": {
+    "esquis": "Esquís Alpinos",
+    "sandboard": "Tablas Sandboard Pro",
+    "snowboard": "Snowboard Dunas",
+    "bodyboard": "Tablas Bodyboard",
+    "botas_titulo": "Disponibilidad de Botas de Nieve (36 - 45)"
+  },
+  "tarifas": {
+    "titulo": "Tarifario Oficial & Precios en Vivo"
+  }
+}
