@@ -1,6 +1,6 @@
 ---
 // src/core/layouts/Principal.astro
-// 🌟 Layout Maestro Unificado Ultra-Liviano (<75 líneas)
+// 🌟 Layout Maestro Unificado Ultra-Liviano (0 Peticiones HTTP Bloqueantes - Workwii Style)
 import { ClientRouter } from 'astro:transitions';
 import Topbar from '../componentes/Topbar.astro';
 import Header from '../componentes/Header.astro';
@@ -16,8 +16,10 @@ import estilosTema from '../wicss/witema.css?raw';
 import appCss from '../wicss/app.css?raw';
 import inicioCss from '../../feature/inicio/inicio.css?raw';
 import authCss from '../../feature/auth/auth.css?raw';
+import googleCss from '../../../public/google/fonts.css?raw';
+import awesomeCss from '../../../public/fontawesome/css/all.min.css?raw';
 
-const globalCss = estilosTema + '\n' + appCss + '\n' + inicioCss + '\n' + authCss;
+const globalCss = estilosTema + '\n' + appCss + '\n' + inicioCss + '\n' + authCss + '\n' + googleCss + '\n' + awesomeCss;
 
 interface Props {
   idioma?: 'es' | 'en';
@@ -49,14 +51,10 @@ const jsonLd = getJsonLd(ruta);
   <!-- Schema.org JSON-LD -->
   <script type="application/ld+json" set:html={JSON.stringify(jsonLd)} />
 
-  <!-- Fuentes e Iconos Locales -->
-  <link rel="stylesheet" href="/google/fonts.css" />
-  <link rel="stylesheet" href="/fontawesome/css/all.min.css" />
-
-  <!-- ClientRouter -->
+  <!-- ClientRouter para navegación instantánea SPA -->
   <ClientRouter />
 
-  <!-- Estilos Inlined Globales (0 peticiones bloqueantes) -->
+  <!-- Estilos Inlined Globales Unificados (0 Peticiones HTTP Externas) -->
   <style is:global data-astro-transition-persist="global-css" set:html={globalCss}></style>
 
   <!-- Anti-FOUC & Gestor Ligero de Tema (0 dependencias) -->

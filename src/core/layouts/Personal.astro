@@ -1,12 +1,14 @@
 ---
 // src/core/layouts/Personal.astro
-// 🛠️ Layout del Panel del Dueño & Staff Kevin Tours
+// 🛠️ Layout del Panel del Dueño & Staff Kevin Tours (0 Peticiones HTTP Bloqueantes)
 import { ClientRouter } from 'astro:transitions';
 import estilosTema from '../wicss/witema.css?raw';
 import appCss from '../wicss/app.css?raw';
 import personalCss from '../../feature/personal/personal.css?raw';
+import googleCss from '../../../public/google/fonts.css?raw';
+import awesomeCss from '../../../public/fontawesome/css/all.min.css?raw';
 
-const globalCss = estilosTema + '\n' + appCss + '\n' + personalCss;
+const globalCss = estilosTema + '\n' + appCss + '\n' + personalCss + '\n' + googleCss + '\n' + awesomeCss;
 
 interface Props {
   idioma?: 'es' | 'en';
@@ -23,14 +25,11 @@ const { idioma = 'es', titulo = 'Panel de Operaciones | Kevin Tours' } = Astro.p
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0" />
   <link rel="icon" type="image/x-icon" href="/favicon.ico" />
   <title>{titulo}</title>
-  
-  <link rel="stylesheet" href="/google/fonts.css" />
-  <link rel="stylesheet" href="/fontawesome/css/all.min.css" />
 
   <!-- ClientRouter -->
   <ClientRouter />
 
-  <!-- Estilos Inlined -->
+  <!-- Estilos Inlined Globales Unificados -->
   <style is:global data-astro-transition-persist="personal-css" set:html={globalCss}></style>
 
   <!-- Anti-FOUC Inmediato -->
