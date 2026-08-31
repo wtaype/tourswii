@@ -384,29 +384,127 @@
   margin-top: 0.2rem;
 }
 
-/* Ubicación Base Hawka */
-.grid-ubicacion {
+/* ══════════════════ UBICACIÓN BASE HAWKA (GRAN FORMATO HD) ══════════════════ */
+.grid-ubicacion-large {
   display: grid;
-  grid-template-columns: 1fr 1.2fr;
-  gap: 2.5rem;
-  align-items: center;
+  grid-template-columns: 1fr 1.35fr;
+  gap: 2.2rem;
+  align-items: stretch;
 }
 
-.map-card-container {
-  height: 360px;
+.location-info-card {
+  padding: 2.2rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  border-top: 4px solid var(--neon-yellow);
+}
+
+.location-card-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 0.8rem;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+.location-base-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  background: rgba(255, 230, 0, 0.12);
+  color: var(--neon-yellow);
+  font-size: 0.75rem;
+  font-weight: 800;
+  padding: 0.3rem 0.75rem;
+  border-radius: 999px;
+  border: 1px solid rgba(255, 230, 0, 0.3);
+}
+
+.location-status-live {
+  font-size: 0.7rem;
+  font-weight: 800;
+  color: var(--wa-green);
+  letter-spacing: 0.04em;
+}
+
+.location-card-title {
+  font-size: 1.35rem;
+  font-weight: 900;
+  text-transform: uppercase;
+  margin-bottom: 1.2rem;
+  line-height: 1.25;
+}
+
+.location-details-list {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  margin-bottom: 1.8rem;
+}
+
+.location-detail-item {
+  display: flex;
+  align-items: center;
+  gap: 0.9rem;
+  padding: 0.8rem 1rem;
+  background: var(--bg-subtle);
+  border-radius: 0.9rem;
+  border: 1px solid var(--border-card);
+}
+
+.location-icon-circle {
+  width: 2.3rem;
+  height: 2.3rem;
+  border-radius: 50%;
+  background: var(--bg-card);
+  border: 1px solid var(--border-card);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.05rem;
+  flex-shrink: 0;
+}
+
+.location-detail-label {
+  font-size: 0.68rem;
+  color: var(--text-muted);
+  text-transform: uppercase;
+  font-weight: 700;
+  display: block;
+}
+
+.location-detail-value {
+  font-size: 0.85rem;
+  font-weight: 700;
+  color: var(--text-main);
+  line-height: 1.3;
+}
+
+.location-btn-action {
+  width: 100%;
+  padding: 0.95rem;
+  font-size: 0.9rem;
+}
+
+.map-card-hd {
+  min-height: 480px;
+  height: 100%;
   border-radius: 1.4rem;
   overflow: hidden;
-  border: 1px solid var(--border-card);
+  position: relative;
   box-shadow: var(--shadow-xl);
 }
 
-.map-card-container iframe {
+.map-card-hd iframe {
   width: 100%;
   height: 100%;
+  min-height: 480px;
   border: 0;
 }
 
-/* Pilares 3x2 */
+/* ══════════════════ 6 PILARES DE CONFIANZA ══════════════════ */
 .grid-pilares-3x2 {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
@@ -414,29 +512,32 @@
 }
 
 .pilar-card {
-  padding: 1.8rem;
+  padding: 2.2rem 1.8rem;
   display: flex;
   flex-direction: column;
+  align-items: center;
+  text-align: center;
   height: 100%;
-  border-radius: 1.2rem;
+  border-radius: 1.3rem;
 }
 
 .pilar-icon-wrapper {
-  width: 3.2rem;
-  height: 3.2rem;
-  border-radius: 0.8rem;
+  width: 3.5rem;
+  height: 3.5rem;
+  border-radius: 1rem;
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 1.3rem;
-  margin-bottom: 1.1rem;
+  font-size: 1.45rem;
+  margin-bottom: 1.2rem;
 }
 
 .pilar-title {
-  font-size: 1.1rem;
+  font-size: 1.12rem;
   font-weight: 800;
   margin-bottom: 0.5rem;
   color: var(--text-main);
+  text-align: center;
 }
 
 .pilar-desc {
@@ -444,6 +545,7 @@
   color: var(--text-muted);
   line-height: 1.6;
   margin: 0;
+  text-align: center;
 }
 
 /* Reputación Internacional */
@@ -639,7 +741,7 @@
 }
 
 @media (max-width: 1024px) {
-  .grid-hero, .grid-ubicacion, .faq-layout-grid {
+  .grid-hero, .grid-ubicacion-large, .faq-layout-grid {
     grid-template-columns: 1fr;
     gap: 2.5rem;
   }
@@ -653,14 +755,30 @@
     grid-template-columns: repeat(2, 1fr);
     gap: 1.2rem;
   }
+  .map-card-hd, .map-card-hd iframe {
+    min-height: 380px;
+  }
 }
 
 @media (max-width: 640px) {
   .grid-pilares-3x2, .grid-reputacion {
     grid-template-columns: 1fr;
-    gap: 1rem;
+    gap: 1.2rem;
   }
   .faq-visual-card {
     height: 360px;
+  }
+  .location-info-card {
+    padding: 1.5rem;
+  }
+  .hero-main-title {
+    font-size: 1.65rem;
+    line-height: 1.2;
+  }
+  .hero-description {
+    font-size: 0.85rem;
+  }
+  .hero-ctas-group a {
+    width: 100%;
   }
 }

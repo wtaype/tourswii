@@ -1,6 +1,7 @@
 ---
 // src/core/componentes/Header.astro
-// 🌟 Cabecera Responsive y Bilingüe (Consume core/idioma/)
+// 🌟 Cabecera Responsive y Dinámica 100% desde app.js (Cero Solapamientos)
+import app from '../../app.js';
 import esJson from '../idioma/es.json';
 import enJson from '../idioma/en.json';
 
@@ -19,22 +20,27 @@ const {
 } = Astro.props;
 
 const t = idioma === 'en' ? enJson.nav : esJson.nav;
-const negocioT = idioma === 'en' ? enJson.negocio : esJson.negocio;
+const slogan = idioma === 'en' ? app.sloganEn : app.slogan;
+
+// Separar dinámicamente el nombre de la app (ej: 'Kevin Tours Evolution' -> 'KEVIN TOURS' + 'EVOLUTION')
+const titleWords = (app.app || 'Kevin Tours Evolution').split(' ');
+const mainTitle = titleWords.length > 1 ? titleWords.slice(0, -1).join(' ') : titleWords[0];
+const accentTitle = titleWords.length > 1 ? titleWords[titleWords.length - 1] : '';
 ---
 
 <header class="header-sticky">
   <div class="container-wide header-wrapper">
-    <!-- Logo -->
+    <!-- Logo 100% Dinámico desde app.js -->
     <a href={idioma === 'en' ? '/en' : '/'} class="header-logo">
       <div class="header-logo-icon">
         <i class="fa-solid fa-person-skiing"></i>
       </div>
-      <div>
+      <div class="header-logo-text">
         <span class="header-logo-title">
-          KEVIN TOURS <span class="text-gradient">EVOLUTION</span>
+          {mainTitle} {accentTitle && <span class="text-gradient">{accentTitle}</span>}
         </span>
         <span class="header-logo-slogan" id="txt_logo_sub">
-          {negocioT.slogan}
+          {slogan}
         </span>
       </div>
     </a>
@@ -69,17 +75,17 @@ const negocioT = idioma === 'en' ? enJson.negocio : esJson.negocio;
           </div>
         </button>
       ) : (
-        <>
+        <div class="header-desktop-actions">
           <a href="/cliente" class="btn-ingresar-link">
             <i class="fa-solid fa-arrow-right-to-bracket"></i> {t.ingresar}
           </a>
           <a href="#cotizador" class="btn-reservar-header">
             <i class="fa-solid fa-calendar-check"></i> {t.reservar}
           </a>
-        </>
+        </div>
       )}
 
-      <button type="button" id="btn_open_drawer" class="btn-hamburger">
+      <button type="button" id="btn_open_drawer" class="btn-hamburger" aria-label="Abrir menú">
         <i class="fa-solid fa-bars"></i>
       </button>
     </div>

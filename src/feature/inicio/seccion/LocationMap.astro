@@ -1,11 +1,9 @@
 ---
 // src/feature/inicio/seccion/LocationMap.astro
-// 📍 Punto de Encuentro Oficial en Google Maps (Consume idioma/es.json | en.json)
+// 📍 Punto de Encuentro Oficial en Google Maps (Gran Formato & 100% Dinámico)
 import app from '../../../app.js';
 import esJson from '../idioma/es.json';
 import enJson from '../idioma/en.json';
-import coreEs from '../../../core/idioma/es.json';
-import coreEn from '../../../core/idioma/en.json';
 
 interface Props {
   idioma?: 'es' | 'en';
@@ -13,55 +11,112 @@ interface Props {
 
 const { idioma = 'es' } = Astro.props;
 const t = idioma === 'en' ? enJson.ubicacion_seccion : esJson.ubicacion_seccion;
-const negocioT = idioma === 'en' ? coreEn.negocio : coreEs.negocio;
+const horario = idioma === 'en' ? app.horarioEn : app.horario;
+const baseRef = idioma === 'en' ? app.base.referenciaEn : app.base.referencia;
+const cert = idioma === 'en' ? app.certificacionEn : app.certificacion;
 ---
 
 <section id="ubicacion" class="section-pad">
   <div class="container-wide">
-    <div class="grid-ubicacion">
+    
+    <!-- Encabezado de Sección Centrado -->
+    <div class="section-header-center">
+      <span class="section-badge-center">
+        {t.badge}
+      </span>
+      <h2 class="section-title-center">
+        {t.titulo} <span class="text-gradient">{t.titulo_gradiente}</span>
+      </h2>
+      <p class="section-desc-center">
+        {t.descripcion}
+      </p>
+    </div>
+
+    <!-- Grid de Ubicación en Gran Formato (Info + Gran Mapa) -->
+    <div class="grid-ubicacion-large">
       
-      <!-- Datos de la Base Física -->
-      <div class="glass-card" style="padding: 2rem;">
-        <span class="section-badge-center" style="display: block; margin-bottom: 0.4rem;">
-          {t.badge}
-        </span>
-        <h3 class="font-heading" style="font-size: 1.5rem; font-weight: 900; margin-bottom: 1.2rem; text-transform: uppercase;">
-          {t.titulo} <span class="text-gradient">{t.titulo_gradiente}</span>
+      <!-- Ficha de Datos Operativos Base Hawka -->
+      <div class="glass-card location-info-card">
+        <div class="location-card-header">
+          <div class="location-base-badge">
+            <i class="fa-solid fa-hotel"></i>
+            <span>{app.base.nombre}</span>
+          </div>
+          <span class="location-status-live">
+            <i class="fa-solid fa-circle-dot"></i> ATENCIÓN PRESENCIAL
+          </span>
+        </div>
+
+        <h3 class="location-card-title">
+          Recepción Oficial & Punto de Partida
         </h3>
 
-        <div class="personal-rows-list" style="margin-bottom: 1.8rem;">
-          <div class="modal-data-row">
-            <i class="fa-solid fa-map-pin" style="color: var(--neon-yellow); font-size: 1.1rem; width: 1.4rem;"></i>
-            <span style="font-size: 0.85rem; font-weight: 600;">{app.base.direccion}</span>
+        <div class="location-details-list">
+          <div class="location-detail-item">
+            <div class="location-icon-circle" style="color: var(--neon-yellow);">
+              <i class="fa-solid fa-location-dot"></i>
+            </div>
+            <div>
+              <span class="location-detail-label">Dirección Exacta</span>
+              <strong class="location-detail-value">{app.base.direccion}</strong>
+            </div>
           </div>
-          <div class="modal-data-row">
-            <i class="fa-solid fa-hotel" style="color: var(--neon-yellow); font-size: 1.1rem; width: 1.4rem;"></i>
-            <span style="font-size: 0.85rem; font-weight: 700; color: var(--neon-yellow);">{negocioT.base_referencia}</span>
+
+          <div class="location-detail-item">
+            <div class="location-icon-circle" style="color: var(--fire-orange);">
+              <i class="fa-solid fa-map-pin"></i>
+            </div>
+            <div>
+              <span class="location-detail-label">Referencia de Encuentro</span>
+              <strong class="location-detail-value" style="color: var(--neon-yellow);">{baseRef}</strong>
+            </div>
           </div>
-          <div class="modal-data-row">
-            <i class="fa-brands fa-whatsapp" style="color: var(--wa-green); font-size: 1.1rem; width: 1.4rem;"></i>
-            <span style="font-size: 0.85rem; font-weight: 700;">{app.telefono}</span>
+
+          <div class="location-detail-item">
+            <div class="location-icon-circle" style="color: var(--glow-cyan);">
+              <i class="fa-solid fa-clock"></i>
+            </div>
+            <div>
+              <span class="location-detail-label">Horario de Atención</span>
+              <strong class="location-detail-value">{horario}</strong>
+            </div>
           </div>
-          <div class="modal-data-row">
-            <i class="fa-solid fa-clock" style="color: var(--fire-orange); font-size: 1.1rem; width: 1.4rem;"></i>
-            <span style="font-size: 0.85rem;">{negocioT.horario}</span>
+
+          <div class="location-detail-item">
+            <div class="location-icon-circle" style="color: var(--wa-green);">
+              <i class="fa-brands fa-whatsapp"></i>
+            </div>
+            <div>
+              <span class="location-detail-label">WhatsApp Directo</span>
+              <strong class="location-detail-value">{app.telefono}</strong>
+            </div>
+          </div>
+
+          <div class="location-detail-item">
+            <div class="location-icon-circle" style="color: #a855f7;">
+              <i class="fa-solid fa-certificate"></i>
+            </div>
+            <div>
+              <span class="location-detail-label">Garantía y Seguridad</span>
+              <strong class="location-detail-value">{cert} · Lockers Gratuitos</strong>
+            </div>
           </div>
         </div>
 
-        <a href={app.base.mapsUrl} target="_blank" rel="noopener noreferrer" class="btn-speed" style="width: 100%; padding: 0.85rem; font-size: 0.85rem;">
-          <i class="fa-solid fa-location-arrow"></i>
+        <a href={app.base.mapsUrl} target="_blank" rel="noopener noreferrer" class="btn-speed location-btn-action">
+          <i class="fa-solid fa-diamond-turn-right"></i>
           <span>{t.btn_maps}</span>
         </a>
       </div>
 
-      <!-- Mapa Embebido / Vista Interactiva -->
-      <div class="map-card-container">
+      <!-- Gran Mapa Interactivo HD -->
+      <div class="map-card-hd glass-card">
         <iframe
-          src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3870.287232230198!2d-75.7655102!3d-14.0874593!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x9110e3047a0705a7%3A0x6b24508497fa9fb!2sHospedaje%20Hawka!5e0!3m2!1ses!2spe!4v1700000000000!5m2!1ses!2spe"
+          src={app.base.embedUrl}
           allowfullscreen=""
           loading="lazy"
           referrerpolicy="no-referrer-when-downgrade"
-          title="Ubicación Kevin Tours Hospedaje Hawka"
+          title="Ubicación Kevin Tours Hospedaje Hawka Google Maps"
         ></iframe>
       </div>
 

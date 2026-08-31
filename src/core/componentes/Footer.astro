@@ -1,6 +1,6 @@
 ---
 // src/core/componentes/Footer.astro
-// 🌐 Pie de Página Centrado y Oficial (100% Bilingüe con core/idioma/)
+// 🌐 Pie de Página 100% Dinámico desde app.js y wii.js (100% Centrado en Móvil)
 import app from '../../app.js';
 import esJson from '../idioma/es.json';
 import enJson from '../idioma/en.json';
@@ -12,22 +12,31 @@ interface Props {
 const { idioma = 'es' } = Astro.props;
 const t = idioma === 'en' ? enJson.footer : esJson.footer;
 const navT = idioma === 'en' ? enJson.nav : esJson.nav;
-const negocioT = idioma === 'en' ? enJson.negocio : esJson.negocio;
+const slogan = idioma === 'en' ? app.sloganEn : app.slogan;
+const horario = idioma === 'en' ? app.horarioEn : app.horario;
+const cert = idioma === 'en' ? app.certificacionEn : app.certificacion;
+
+// Separar título dinámico
+const titleWords = (app.app || 'Kevin Tours Evolution').split(' ');
+const mainTitle = titleWords.length > 1 ? titleWords.slice(0, -1).join(' ') : titleWords[0];
+const accentTitle = titleWords.length > 1 ? titleWords[titleWords.length - 1] : '';
 ---
 
 <footer class="footer-container">
   <div class="container-wide">
     <div class="footer-grid">
       
-      <!-- Col 1: Marca y Redes -->
-      <div>
+      <!-- Col 1: Marca Dinámica y Redes (Centrado en Móvil) -->
+      <div class="footer-brand-box">
         <div class="header-logo">
           <div class="header-logo-icon">
             <i class="fa-solid fa-person-skiing"></i>
           </div>
-          <div>
-            <strong class="header-logo-title">KEVIN TOURS <span class="text-gradient">EVOLUTION</span></strong>
-            <span class="header-logo-slogan">{negocioT.slogan}</span>
+          <div class="header-logo-text">
+            <strong class="header-logo-title">
+              {mainTitle} {accentTitle && <span class="text-gradient">{accentTitle}</span>}
+            </strong>
+            <span class="header-logo-slogan">{slogan}</span>
           </div>
         </div>
         <p class="footer-desc">
@@ -46,7 +55,7 @@ const negocioT = idioma === 'en' ? enJson.negocio : esJson.negocio;
         </div>
       </div>
 
-      <!-- Col 2: 4 Disciplinas Traducidas -->
+      <!-- Col 2: 4 Disciplinas -->
       <div>
         <h4 class="footer-col-title">{t.col_disciplinas}</h4>
         <ul class="footer-col-list">
@@ -71,32 +80,33 @@ const negocioT = idioma === 'en' ? enJson.negocio : esJson.negocio;
         </ul>
       </div>
 
-      <!-- Col 4: Base Física Hawka Traducida -->
-      <div>
+      <!-- Col 4: Base Física Hawka Dinámica con Botón Prominente -->
+      <div class="footer-base-col">
         <h4 class="footer-col-title">{t.col_base}</h4>
         <p class="footer-desc">
           <i class="fa-solid fa-location-dot"></i> {app.base.direccion}
         </p>
         <p class="footer-desc">
-          <i class="fa-solid fa-clock"></i> {negocioT.horario}
+          <i class="fa-solid fa-clock"></i> {horario}
         </p>
         <p class="footer-desc">
-          <i class="fa-solid fa-certificate"></i> {negocioT.certificacion}
+          <i class="fa-solid fa-certificate"></i> {cert}
         </p>
-        <a href={app.base.mapsUrl} target="_blank" rel="noopener noreferrer" class="btn-glass" style="margin-top: 0.8rem; width: 100%; font-size: 0.75rem;">
-          <i class="fa-solid fa-map-location-dot"></i> {t.btn_maps}
+        <a href={app.base.mapsUrl} target="_blank" rel="noopener noreferrer" class="btn-speed footer-maps-btn">
+          <i class="fa-solid fa-location-arrow"></i>
+          <span>{t.btn_maps}</span>
         </a>
       </div>
 
     </div>
 
-    <!-- Barra Inferior de Copyright y RUC -->
+    <!-- Barra Inferior de Copyright, RUC y Autoría Dinámica -->
     <div class="footer-bottom-bar">
       <div>
         <span>© 2026 {app.nombreComercial}. RUC: {app.ruc}. {t.derechos}</span>
       </div>
       <div>
-        <span>{negocioT.certificacion} · {app.by}</span>
+        <span>{cert} · {app.by}</span>
       </div>
     </div>
   </div>

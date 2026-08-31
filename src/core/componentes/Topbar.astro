@@ -1,26 +1,25 @@
 ---
 // src/core/componentes/Topbar.astro
-// 🏁 Barra Superior de Certificación MTC y WhatsApp Oficial (Consume core/idioma/)
+// 🏁 Barra Superior Dinámica desde app.js (Cero CSS Inline)
 import app from '../../app.js';
-import esJson from '../idioma/es.json';
-import enJson from '../idioma/en.json';
 
 interface Props {
   idioma?: 'es' | 'en';
 }
 
 const { idioma = 'es' } = Astro.props;
-const t = idioma === 'en' ? enJson.topbar : esJson.topbar;
+const cert = idioma === 'en' ? app.certificacionEn : app.certificacion;
+const baseRef = idioma === 'en' ? app.base.referenciaEn : app.base.referencia;
 ---
 
 <div class="topbar-container">
   <div class="container-wide topbar-wrapper">
     <div class="topbar-left">
       <i class="fa-solid fa-shield-halved"></i>
-      <span id="txt_topbar_cert">{t.certificacion}</span>
+      <span id="txt_topbar_cert">{cert}</span>
     </div>
     <div class="topbar-right topbar-hide-mobile">
-      <span><i class="fa-solid fa-location-dot"></i> {t.base}</span>
+      <span><i class="fa-solid fa-location-dot"></i> {baseRef}</span>
       <a href={app.whatsappUrl} target="_blank" rel="noopener noreferrer" class="topbar-phone-pill">
         <i class="fa-brands fa-whatsapp"></i> {app.telefono}
       </a>
