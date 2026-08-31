@@ -22,7 +22,7 @@ const {
 const t = idioma === 'en' ? enJson.nav : esJson.nav;
 const slogan = idioma === 'en' ? app.sloganEn : app.slogan;
 
-// Separar dinámicamente el nombre de la app (ej: 'Kevin Tours Evolution' -> 'KEVIN TOURS' + 'EVOLUTION')
+// Separar dinámicamente el nombre de la app
 const titleWords = (app.app || 'Kevin Tours Evolution').split(' ');
 const mainTitle = titleWords.length > 1 ? titleWords.slice(0, -1).join(' ') : titleWords[0];
 const accentTitle = titleWords.length > 1 ? titleWords[titleWords.length - 1] : '';
@@ -55,14 +55,14 @@ const accentTitle = titleWords.length > 1 ? titleWords[titleWords.length - 1] : 
       <a href="#faq" class="nav-link-item">{t.faq}</a>
     </nav>
 
-    <!-- Zona Derecha: Idioma + Tema + Acción/VIP + Hamburguesa -->
+    <!-- Zona Derecha: Idioma + Tema (Ultra Rápido) + Acción/VIP + Hamburguesa -->
     <div class="header-actions">
       <div class="pill-lang-box">
         <a href="/" class={`pill-lang-btn ${idioma === 'es' ? 'active' : ''}`} id="btn_lang_es">ES</a>
         <a href="/en" class={`pill-lang-btn ${idioma === 'en' ? 'active' : ''}`} id="btn_lang_en">EN</a>
       </div>
 
-      <button type="button" id="btn_toggle_theme" class="btn-theme-circle" title="Modo Claro / Oscuro">
+      <button type="button" id="btn_toggle_theme" class="btn-theme-circle" onclick="toggleWiTema()" title="Modo Claro / Oscuro">
         <i class="fa-solid fa-moon" id="icon_theme"></i>
       </button>
 

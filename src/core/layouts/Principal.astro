@@ -1,6 +1,6 @@
 ---
 // src/core/layouts/Principal.astro
-// 🌟 Layout Maestro Unificado para Web Pública y Cliente VIP (<85 líneas)
+// 🌟 Layout Maestro Unificado Ultra-Liviano (<75 líneas)
 import { ClientRouter } from 'astro:transitions';
 import Topbar from '../componentes/Topbar.astro';
 import Header from '../componentes/Header.astro';
@@ -49,85 +49,104 @@ const jsonLd = getJsonLd(ruta);
   <!-- Schema.org JSON-LD -->
   <script type="application/ld+json" set:html={JSON.stringify(jsonLd)} />
 
-  <!-- Fuentes e Iconos FontAwesome Oficiales Locales -->
+  <!-- Fuentes e Iconos Locales -->
   <link rel="stylesheet" href="/google/fonts.css" />
   <link rel="stylesheet" href="/fontawesome/css/all.min.css" />
 
-  <!-- ClientRouter para navegación instantánea SPA (Workwii Style) -->
+  <!-- ClientRouter -->
   <ClientRouter />
 
-  <!-- Estilos Inlined Globales Unificados (0 peticiones HTTP bloqueantes) -->
+  <!-- Estilos Inlined Globales (0 peticiones bloqueantes) -->
   <style is:global data-astro-transition-persist="global-css" set:html={globalCss}></style>
 
-  <!-- Anti-FOUC Inmediato y Sincronización en astro:after-swap -->
+  <!-- Anti-FOUC & Gestor Ligero de Tema (0 dependencias) -->
   <script is:inline>
-    (() => {
-      const applyTheme = () => {
-        try {
-          const saved = localStorage.getItem('wiTema');
-          const system = window.matchMedia('(prefers-color-scheme: dark)').matches ? 'futuro' : 'luz';
-          const theme = (saved === 'luz' || saved === 'futuro') ? saved : system;
-          document.documentElement.dataset.theme = theme;
-        } catch (e) {}
-      };
-      applyTheme();
-      document.addEventListener('astro:after-swap', applyTheme);
-    })();
+    function applyWiTema() {
+      try {
+        const saved = localStorage.getItem('wiTema');
+        const system = window.matchMedia('(prefers-color-scheme: dark)').matches ? 'futuro' : 'luz';
+        const theme = (saved === 'luz' || saved === 'futuro') ? saved : system;
+        document.documentElement.dataset.theme = theme;
+        const icon = document.getElementById('icon_theme');
+        if (icon) icon.className = theme === 'futuro' ? 'fa-solid fa-moon' : 'fa-solid fa-sun';
+      } catch (e) {}
+    }
+
+    function toggleWiTema() {
+      const current = document.documentElement.dataset.theme === 'luz' ? 'luz' : 'futuro';
+      const next = current === 'futuro' ? 'luz' : 'futuro';
+      document.documentElement.dataset.theme = next;
+      try { localStorage.setItem('wiTema', next); } catch (e) {}
+      const icon = document.getElementById('icon_theme');
+      if (icon) icon.className = next === 'futuro' ? 'fa-solid fa-moon' : 'fa-solid fa-sun';
+    }
+
+    applyWiTema();
+    document.addEventListener('astro:after-swap', applyWiTema);
+    document.addEventListener('DOMContentLoaded', applyWiTema);
   </script>
 </head>
-<body>
 
-  <!-- Barra Superior y Cabecera -->
-  <Topbar />
-  <Header idioma={idioma} esVip={esVip} usuarioNombre={USUARIO_VIP.nombre} usuarioAvatar={USUARIO_VIP.avatar} />
-  <DrawerMobile idioma={idioma} esVip={esVip} usuarioNombre={USUARIO_VIP.nombre} usuarioTalla={USUARIO_VIP.tallaBota} />
+<body>
+  <!-- Topbar Oficial -->
+  <Topbar idioma={idioma} />
+
+  <!-- Cabecera Sticky Responsive Bilingüe -->
+  <Header
+    idioma={idioma}
+    esVip={esVip}
+    usuarioNombre={USUARIO_VIP.nombre}
+    usuarioAvatar={USUARIO_VIP.avatar}
+  />
+
+  <!-- Menú Drawer Móvil -->
+  <DrawerMobile
+    idioma={idioma}
+    esVip={esVip}
+    usuarioNombre={USUARIO_VIP.nombre}
+    usuarioTalla={USUARIO_VIP.tallaBota}
+  />
 
   <!-- Contenido Dinámico de la Página -->
-  <slot />
+  <main id="main_content">
+    <slot />
+  </main>
 
-  <!-- Pie de Página y Flotantes -->
+  <!-- Pie de Página Centrado y Oficial -->
   <Footer idioma={idioma} />
+
+  <!-- Botón Flotante Oficial de WhatsApp -->
   <WhatsAppFloat />
+
+  <!-- Modal Universal de Usuario / VIP -->
   <UserModal idioma={idioma} />
 
+  <!-- Manejador Ligero de Drawer Móvil -->
+  <script>
+    function initDrawer() {
+      const btnOpen = document.getElementById('btn_open_drawer');
+      const btnClose = document.getElementById('btn_close_drawer');
+      const backdrop = document.getElementById('drawer_backdrop');
+      const drawer = document.getElementById('mobile_drawer');
+
+      const toggleDrawer = (open: boolean) => {
+        if (!drawer || !backdrop) return;
+        drawer.classList.toggle('open', open);
+        backdrop.classList.toggle('open', open);
+        document.body.style.overflow = open ? 'hidden' : '';
+      };
+
+      if (btnOpen) btnOpen.onclick = () => toggleDrawer(true);
+      if (btnClose) btnClose.onclick = () => toggleDrawer(false);
+      if (backdrop) backdrop.onclick = () => toggleDrawer(false);
+
+      document.querySelectorAll('.drawer-item').forEach(link => {
+        link.addEventListener('click', () => toggleDrawer(false));
+      });
+    }
+
+    document.addEventListener('DOMContentLoaded', initDrawer);
+    document.addEventListener('astro:page-load', initDrawer);
+  </script>
 </body>
 </html>
-
-<script>
-  import { witema, setTema } from '../widev/tema.js';
-
-  function initInteractions() {
-    witema('futuro');
-
-    // Botón de alternar tema
-    const btnTheme = document.getElementById('btn_toggle_theme');
-    btnTheme?.addEventListener('click', (e) => {
-      e.preventDefault();
-      const current = document.documentElement.dataset.theme || 'futuro';
-      const next = current === 'futuro' ? 'luz' : 'futuro';
-      setTema(next);
-    });
-
-    // Control de Drawer Móvil
-    const drawer = document.getElementById('mobile_drawer');
-    const backdrop = document.getElementById('drawer_backdrop');
-    const openBtn = document.getElementById('btn_open_drawer');
-    const closeBtn = document.getElementById('btn_close_drawer');
-
-    const toggleDrawer = (open: boolean) => {
-      drawer?.classList.toggle('open', open);
-      backdrop?.classList.toggle('open', open);
-      document.body.style.overflow = open ? 'hidden' : '';
-    };
-
-    openBtn?.addEventListener('click', () => toggleDrawer(true));
-    closeBtn?.addEventListener('click', () => toggleDrawer(false));
-    backdrop?.addEventListener('click', () => toggleDrawer(false));
-    document.querySelectorAll('.drawer-item').forEach(item => {
-      item.addEventListener('click', () => toggleDrawer(false));
-    });
-  }
-
-  document.addEventListener('DOMContentLoaded', initInteractions);
-  document.addEventListener('astro:page-load', initInteractions);
-</script>

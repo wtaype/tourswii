@@ -1,105 +1,57 @@
 ---
 // src/core/layouts/Personal.astro
-// 🛠️ Layout Maestro para Gestión del Dueño de Tours (Kevin) & Staff Base Hawka (<85 líneas)
+// 🛠️ Layout del Panel del Dueño & Staff Kevin Tours
 import { ClientRouter } from 'astro:transitions';
-import PersonalHeader from '../../feature/personal/componentes/PersonalHeader.astro';
-import PersonalNav from '../../feature/personal/componentes/PersonalNav.astro';
-import Sidebar from '../componentes/Sidebar.astro';
-
-import { getMeta } from '../seo.js';
 import estilosTema from '../wicss/witema.css?raw';
 import appCss from '../wicss/app.css?raw';
 import personalCss from '../../feature/personal/personal.css?raw';
 
 const globalCss = estilosTema + '\n' + appCss + '\n' + personalCss;
-const meta = getMeta('/personal');
+
+interface Props {
+  idioma?: 'es' | 'en';
+  titulo?: string;
+}
+
+const { idioma = 'es', titulo = 'Panel de Operaciones | Kevin Tours' } = Astro.props;
 ---
 
 <!DOCTYPE html>
-<html lang="es" data-theme="futuro" class="scroll-smooth">
+<html lang={idioma} data-theme="futuro">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>{meta.title} - Panel de Operaciones</title>
-  <meta name="description" content="Panel de Control Operativo de Kevin Tours en Base Hospedaje Hawka." />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0" />
+  <link rel="icon" type="image/x-icon" href="/favicon.ico" />
+  <title>{titulo}</title>
   
-  <!-- Fuentes e Iconos FontAwesome Oficiales Locales -->
   <link rel="stylesheet" href="/google/fonts.css" />
   <link rel="stylesheet" href="/fontawesome/css/all.min.css" />
 
+  <!-- ClientRouter -->
   <ClientRouter />
-  <style is:global data-astro-transition-persist="global-css" set:html={globalCss}></style>
+
+  <!-- Estilos Inlined -->
+  <style is:global data-astro-transition-persist="personal-css" set:html={globalCss}></style>
 
   <!-- Anti-FOUC Inmediato -->
   <script is:inline>
-    (() => {
-      const applyTheme = () => {
-        try {
-          const saved = localStorage.getItem('wiTema');
-          const system = window.matchMedia('(prefers-color-scheme: dark)').matches ? 'futuro' : 'luz';
-          const theme = (saved === 'luz' || saved === 'futuro') ? saved : system;
-          document.documentElement.dataset.theme = theme;
-        } catch (e) {}
-      };
-      applyTheme();
-      document.addEventListener('astro:after-swap', applyTheme);
-    })();
+    function applyWiTema() {
+      try {
+        const saved = localStorage.getItem('wiTema');
+        const system = window.matchMedia('(prefers-color-scheme: dark)').matches ? 'futuro' : 'luz';
+        const theme = (saved === 'luz' || saved === 'futuro') ? saved : system;
+        document.documentElement.dataset.theme = theme;
+      } catch (e) {}
+    }
+    applyWiTema();
+    document.addEventListener('astro:after-swap', applyWiTema);
+    document.addEventListener('DOMContentLoaded', applyWiTema);
   </script>
 </head>
-<body class="personal-body">
 
-  <!-- Header Superior Fijo -->
-  <PersonalHeader />
-
-  <!-- Estructura Principal con Sidebar en Desktop -->
-  <div class="container-wide personal-layout-wrapper">
-    <Sidebar />
-    <main class="personal-content-area">
-      <slot />
-    </main>
+<body>
+  <div class="personal-layout-container">
+    <slot />
   </div>
-
-  <!-- Bottom Navigation en Móvil -->
-  <PersonalNav />
-
 </body>
 </html>
-
-<script>
-  import { witema, setTema } from '../widev/tema.js';
-
-  function initPersonalLayout() {
-    witema('futuro');
-
-    const btnTheme = document.getElementById('btn_toggle_theme');
-    btnTheme?.addEventListener('click', (e) => {
-      e.preventDefault();
-      const current = document.documentElement.dataset.theme || 'futuro';
-      const next = current === 'futuro' ? 'luz' : 'futuro';
-      setTema(next);
-    });
-
-    const allTabButtons = document.querySelectorAll('.personal-nav-item, .staff-bottom-btn');
-    const panels = document.querySelectorAll('.staff-panel-tab');
-
-    allTabButtons.forEach(btn => {
-      btn.addEventListener('click', () => {
-        const targetId = btn.getAttribute('data-tab');
-        allTabButtons.forEach(b => {
-          if (b.getAttribute('data-tab') === targetId) {
-            b.classList.add('active');
-          } else {
-            b.classList.remove('active');
-          }
-        });
-
-        panels.forEach(p => (p as HTMLElement).style.display = 'none');
-        const target = document.getElementById(targetId || '');
-        if (target) target.style.display = 'block';
-      });
-    });
-  }
-
-  document.addEventListener('DOMContentLoaded', initPersonalLayout);
-  document.addEventListener('astro:page-load', initPersonalLayout);
-</script>
