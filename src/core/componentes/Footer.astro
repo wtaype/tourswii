@@ -1,6 +1,6 @@
 ---
 // src/core/componentes/Footer.astro
-// 🌐 Pie de Página Centrado y Oficial (Consume core/idioma/)
+// 🌐 Pie de Página Centrado y Oficial (100% Bilingüe con core/idioma/)
 import app from '../../app.js';
 import esJson from '../idioma/es.json';
 import enJson from '../idioma/en.json';
@@ -12,6 +12,7 @@ interface Props {
 const { idioma = 'es' } = Astro.props;
 const t = idioma === 'en' ? enJson.footer : esJson.footer;
 const navT = idioma === 'en' ? enJson.nav : esJson.nav;
+const negocioT = idioma === 'en' ? enJson.negocio : esJson.negocio;
 ---
 
 <footer class="footer-container">
@@ -26,7 +27,7 @@ const navT = idioma === 'en' ? enJson.nav : esJson.nav;
           </div>
           <div>
             <strong class="header-logo-title">KEVIN TOURS <span class="text-gradient">EVOLUTION</span></strong>
-            <span class="header-logo-slogan">{app.slogan}</span>
+            <span class="header-logo-slogan">{negocioT.slogan}</span>
           </div>
         </div>
         <p class="footer-desc">
@@ -45,14 +46,13 @@ const navT = idioma === 'en' ? enJson.nav : esJson.nav;
         </div>
       </div>
 
-      <!-- Col 2: Disciplinas -->
+      <!-- Col 2: 4 Disciplinas Traducidas -->
       <div>
         <h4 class="footer-col-title">{t.col_disciplinas}</h4>
         <ul class="footer-col-list">
-          <li><a href="#tours">🎿 SandSki Profesional</a></li>
-          <li><a href="#tours">🏂 Sandboard Pro con Botas</a></li>
-          <li><a href="#tours">🏔️ Snowboard en Dunas</a></li>
-          <li><a href="#tours">🏄‍♂️ Bodyboard en Arena</a></li>
+          {t.disciplinas_lista.map(item => (
+            <li><a href={item.href}>{item.nombre}</a></li>
+          ))}
         </ul>
       </div>
 
@@ -71,17 +71,17 @@ const navT = idioma === 'en' ? enJson.nav : esJson.nav;
         </ul>
       </div>
 
-      <!-- Col 4: Base Física Hawka -->
+      <!-- Col 4: Base Física Hawka Traducida -->
       <div>
         <h4 class="footer-col-title">{t.col_base}</h4>
         <p class="footer-desc">
           <i class="fa-solid fa-location-dot"></i> {app.base.direccion}
         </p>
         <p class="footer-desc">
-          <i class="fa-solid fa-clock"></i> {app.horario}
+          <i class="fa-solid fa-clock"></i> {negocioT.horario}
         </p>
         <p class="footer-desc">
-          <i class="fa-solid fa-certificate"></i> {app.certificacion}
+          <i class="fa-solid fa-certificate"></i> {negocioT.certificacion}
         </p>
         <a href={app.base.mapsUrl} target="_blank" rel="noopener noreferrer" class="btn-glass" style="margin-top: 0.8rem; width: 100%; font-size: 0.75rem;">
           <i class="fa-solid fa-map-location-dot"></i> {t.btn_maps}
@@ -96,7 +96,7 @@ const navT = idioma === 'en' ? enJson.nav : esJson.nav;
         <span>© 2026 {app.nombreComercial}. RUC: {app.ruc}. {t.derechos}</span>
       </div>
       <div>
-        <span>{app.certificacion} · {app.by}</span>
+        <span>{negocioT.certificacion} · {app.by}</span>
       </div>
     </div>
   </div>

@@ -1,6 +1,6 @@
 // src/wii.js
 export const id = 'tours-web';
-export const app = 'Kevin Tours Evolution';
+export const app = 'Sandboard Huacachina Evolution';
 export const by = '@wilder.taype';
 export const linkweb = 'https://tours.amorwii.com';
 export const linkme = 'https://wtaype.github.io/';

@@ -1,4 +1,10 @@
 {
+  "negocio": {
+    "slogan": "ESCUELA OFICIAL DE SANDSKI & SANDBOARD PRO HUACACHINA",
+    "certificacion": "Escuela Oficial MTC N° 11000",
+    "horario": "Lunes a Domingo: 8:00 AM – 7:00 PM",
+    "base_referencia": "Recepción Hospedaje Hawka"
+  },
   "topbar": {
     "certificacion": "Escuela Oficial MTC N° 11000",
     "base": "Recepción Hospedaje Hawka"
@@ -18,6 +24,12 @@
   "footer": {
     "descripcion": "Escuela oficial de SandSki alpino y Sandboard profesional en las dunas gigantes de Huacachina, Ica. Base física en Hospedaje Hawka.",
     "col_disciplinas": "4 Disciplinas",
+    "disciplinas_lista": [
+      { "nombre": "🎿 SandSki Profesional", "href": "#tours" },
+      { "nombre": "🏂 Sandboard Pro con Botas", "href": "#tours" },
+      { "nombre": "🏔️ Snowboard en Dunas", "href": "#tours" },
+      { "nombre": "🏄‍♂️ Bodyboard en Arena", "href": "#tours" }
+    ],
     "col_navegacion": "Navegación",
     "col_base": "Base Física Hawka",
     "portal_vip": "Portal Cliente VIP",

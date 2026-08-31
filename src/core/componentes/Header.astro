@@ -1,7 +1,6 @@
 ---
 // src/core/componentes/Header.astro
 // 🌟 Cabecera Responsive y Bilingüe (Consume core/idioma/)
-import app from '../../app.js';
 import esJson from '../idioma/es.json';
 import enJson from '../idioma/en.json';
 
@@ -20,6 +19,7 @@ const {
 } = Astro.props;
 
 const t = idioma === 'en' ? enJson.nav : esJson.nav;
+const negocioT = idioma === 'en' ? enJson.negocio : esJson.negocio;
 ---
 
 <header class="header-sticky">
@@ -34,7 +34,7 @@ const t = idioma === 'en' ? enJson.nav : esJson.nav;
           KEVIN TOURS <span class="text-gradient">EVOLUTION</span>
         </span>
         <span class="header-logo-slogan" id="txt_logo_sub">
-          {app.slogan}
+          {negocioT.slogan}
         </span>
       </div>
     </a>
