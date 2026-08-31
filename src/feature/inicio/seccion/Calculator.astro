@@ -1,6 +1,6 @@
 ---
 // src/feature/inicio/seccion/Calculator.astro
-// 🧮 Tarjeta Flotante del Cotizador Oficial en Vivo (Consume idioma/es.json | en.json)
+// 🧮 Tarjeta Flotante del Cotizador Oficial en Vivo (Persistencia wiCotizacion & Animaciones Suaves)
 import app from '../../../app.js';
 import esJson from '../idioma/es.json';
 import enJson from '../idioma/en.json';
@@ -69,7 +69,7 @@ const disciplinas = idioma === 'en' ? enJson.disciplinas : esJson.disciplinas;
         </div>
       </div>
 
-      <!-- Resumen Calculado -->
+      <!-- Resumen Calculado con Micro-Animación -->
       <div class="calc-total-box">
         <div>
           <span class="calc-total-label">
@@ -99,9 +99,40 @@ const disciplinas = idioma === 'en' ? enJson.disciplinas : esJson.disciplinas;
 
   let monedaActual = 'PEN';
 
+  function guardarPersistencia(tourNombre: string, pax: string, horario: string, total: string) {
+    try {
+      localStorage.setItem('wiCotizacion', JSON.stringify({
+        tourNombre,
+        pax,
+        horario,
+        total,
+        moneda: monedaActual,
+        timestamp: Date.now()
+      }));
+    } catch (e) {}
+  }
+
+  function recuperarPersistencia() {
+    try {
+      const saved = localStorage.getItem('wiCotizacion');
+      if (!saved) return;
+      const data = JSON.parse(saved);
+      if (data.moneda && (data.moneda === 'PEN' || data.moneda === 'USD')) {
+        monedaActual = data.moneda;
+        document.getElementById('calc_cur_pen')?.classList.toggle('active', monedaActual === 'PEN');
+        document.getElementById('calc_cur_usd')?.classList.toggle('active', monedaActual === 'USD');
+      }
+      const inpPax = document.getElementById('cot_personas') as HTMLInputElement;
+      if (inpPax && data.pax) inpPax.value = data.pax;
+      const selHorario = document.getElementById('cot_horario') as HTMLSelectElement;
+      if (selHorario && data.horario) selHorario.value = data.horario;
+    } catch (e) {}
+  }
+
   function recalcularTotal() {
     const selTour = document.getElementById('cot_tour') as HTMLSelectElement;
     const inpPax = document.getElementById('cot_personas') as HTMLInputElement;
+    const selHorario = document.getElementById('cot_horario') as HTMLSelectElement;
     const txtTotal = document.getElementById('cot_total_txt');
     if (!selTour || !inpPax || !txtTotal) return;
 
@@ -110,13 +141,24 @@ const disciplinas = idioma === 'en' ? enJson.disciplinas : esJson.disciplinas;
     const pax = Math.max(1, parseInt(inpPax.value, 10) || 1);
     const subtotal = precio * pax;
     const simbolo = monedaActual === 'USD' ? '$' : 'S/';
+    const totalFormateado = `${simbolo} ${subtotal.toFixed(2)}`;
 
-    txtTotal.textContent = `${simbolo} ${subtotal.toFixed(2)}`;
+    txtTotal.textContent = totalFormateado;
+    txtTotal.style.animation = 'none';
+    // Trigger reflow
+    void txtTotal.offsetHeight;
+    txtTotal.style.animation = 'slideInSmooth 0.2s cubic-bezier(0.16, 1, 0.3, 1)';
+
+    const tourNombre = opt.dataset.nombre || opt.text;
+    guardarPersistencia(tourNombre, inpPax.value, selHorario?.value || '', totalFormateado);
   }
 
   function initCalculator() {
+    recuperarPersistencia();
+
     document.getElementById('cot_tour')?.addEventListener('change', recalcularTotal);
     document.getElementById('cot_personas')?.addEventListener('input', recalcularTotal);
+    document.getElementById('cot_horario')?.addEventListener('change', recalcularTotal);
 
     document.getElementById('calc_cur_pen')?.addEventListener('click', () => {
       monedaActual = 'PEN';
